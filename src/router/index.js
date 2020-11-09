@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Landing from "../views/Landing.vue";
+import Landing from "../views/User/Landing.vue";
 
 Vue.use(VueRouter);
 

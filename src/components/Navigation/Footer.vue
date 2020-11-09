@@ -1,5 +1,5 @@
 <template>
-  <div class="landing-page">Landing Page</div>
+  <div class="footer">footer</div>
 </template>
 
 <script>
