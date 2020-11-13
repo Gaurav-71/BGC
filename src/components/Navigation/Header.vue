@@ -105,10 +105,6 @@
         >Home</v-btn
       >
 
-      <v-btn to="/about" class="hover-color" :color="$store.getters.getNavColor"
-        >About</v-btn
-      >
-
       <v-btn
         to="/speakers"
         class="hover-color"
@@ -124,7 +120,7 @@
             v-bind="attrs"
             v-on="on"
           >
-            Events
+            Conferences
           </v-btn>
         </template>
         <v-list>
@@ -137,6 +133,10 @@
           </v-list-item>
         </v-list>
       </v-menu>
+
+      <v-btn to="/team" class="hover-color" :color="$store.getters.getNavColor"
+        >Resources</v-btn
+      >
 
       <v-btn to="/team" class="hover-color" :color="$store.getters.getNavColor"
         >Team</v-btn
@@ -152,7 +152,7 @@
     <v-spacer></v-spacer>
     <v-btn
       v-if="!$store.getters.getLogStatus"
-      to="/register"
+      to="/covid-19/testing"
       class="ml-0"
       raised
       rounded
@@ -160,7 +160,7 @@
     >
       <span class="py-3">COVID-19 Testing</span>
     </v-btn>
-    <v-btn @click="logout" v-else class="ml-3" raised>
+    <v-btn @click="logout" v-else class="ml-3" raised rounded color="red">
       <v-icon color="yellow">mdi-open-in-new</v-icon>
       <span class="ml-2">Sign Out</span>
     </v-btn>
@@ -218,6 +218,7 @@ export default {
 @import "../../scss/main.scss";
 .hover-color {
   transition: color 0.3s ease-in;
+  box-shadow: none;
 }
 .hover-color:hover {
   color: $accent !important;

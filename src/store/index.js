@@ -5,7 +5,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    navColor: "transparent",
+    navColor: "#093630",
+    isLoggedIn: false,
   },
   mutations: {},
   actions: {},
@@ -13,6 +14,9 @@ export default new Vuex.Store({
   getters: {
     getNavColor: (store) => {
       return store.navColor;
+    },
+    getLogStatus: (store) => {
+      return store.isLoggedIn;
     },
   },
 });
