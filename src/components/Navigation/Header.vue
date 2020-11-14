@@ -88,7 +88,7 @@
     <v-toolbar-title>
       <v-img
         alt="Vuetify Logo"
-        class="shrink m-3 mr-16"
+        class="shrink my-3 mr-5"
         contain
         src="../../assets/Header/logo.png"
         transition="scale-transition"
@@ -149,18 +149,63 @@
         >Contact Us</v-btn
       >
     </v-toolbar-items>
+    <v-toolbar-items v-else class="hidden-md-and-down d-md-block">
+      <v-btn
+        to="/admin/messages"
+        class="hover-color"
+        :color="$store.getters.getNavColor"
+        ><div class="my-flex">
+          <i class="fa fa-envelope size" aria-hidden="true"></i>
+          <p>Messages</p>
+        </div></v-btn
+      >
+
+      <v-menu dark>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            class="hover-color"
+            :color="$store.getters.getNavColor"
+            v-bind="attrs"
+            v-on="on"
+          >
+            <div class="my-flex">
+              <i class="fa fa-plus size" aria-hidden="true"></i>
+              <p>Create</p>
+            </div>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item
+            v-for="(item, index) in items"
+            :key="index"
+            @click="route(index)"
+          >
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+
+      <v-btn
+        to="/admin/settings"
+        class="hover-color"
+        :color="$store.getters.getNavColor"
+        ><div class="my-flex">
+          <i class="fa fa-gear size" aria-hidden="true"></i>
+          <p>Settings</p>
+        </div>
+      </v-btn>
+    </v-toolbar-items>
     <v-spacer></v-spacer>
     <v-btn
       v-if="!$store.getters.getLogStatus"
       to="/covid-19/testing"
-      class="ml-0"
       raised
       rounded
       color="teal"
     >
       <span class="py-3">COVID-19 Testing</span>
     </v-btn>
-    <v-btn @click="logout" v-else class="ml-3" raised rounded color="red">
+    <v-btn @click="logout" v-else class="ml-3" raised rounded color="teal">
       <v-icon color="yellow">mdi-open-in-new</v-icon>
       <span class="ml-2">Sign Out</span>
     </v-btn>
@@ -188,7 +233,6 @@ export default {
     };
   },
   methods: {
-    /*
     logout() {
       this.$store
         .dispatch("logout")
@@ -199,7 +243,7 @@ export default {
         .catch((err) => {
           alert(err);
         });
-    },*/
+    },
   },
   mounted() {
     /*this.$store
@@ -216,6 +260,16 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../scss/main.scss";
+.my-flex {
+  padding-top: 0.7rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .size {
+    margin-bottom: 0.3rem;
+    font-size: 20px;
+  }
+}
 .hover-color {
   transition: color 0.3s ease-in;
   box-shadow: none;

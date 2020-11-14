@@ -6,7 +6,17 @@ import Landing from "../views/User/Landing.vue";
 import Corona from "../views/User/Corona.vue";
 
 //admin
+import Login from "../views/Admin/Login.vue";
 import Home from "../views/Admin/Home.vue";
+import Dashboard from "../views/Admin/Dashboard.vue";
+import Messages from "../views/Admin/Messages.vue";
+import Settings from "../views/Admin/Settings.vue";
+
+//admin > create
+import Announcement from "../views/Admin/Create/Announcement.vue";
+import Internship from "../views/Admin/Create/Internship.vue";
+import Resource from "../views/Admin/Create/Resource.vue";
+import Training from "../views/Admin/Create/Training.vue";
 
 Vue.use(VueRouter);
 
@@ -21,17 +31,53 @@ const routes = [
     name: "Corona",
     component: Corona,
   },
-  /*{
+  {
+    path: "/admin/login",
+    name: "Login",
+    component: Login,
+  },
+  {
     path: "/admin",
     name: "Home",
     component: Home,
-    meta: {
-      //requiresAuth: true,
-    },
-    children: [{
-      path: "/"
-    }],
-  },*/
+    children: [
+      {
+        path: "/",
+        name: "Dashboard",
+        component: Dashboard,
+      },
+      {
+        path: "/admin/messages",
+        name: "Messages",
+        component: Messages,
+      },
+      {
+        path: "/admin/settings",
+        name: "Settings",
+        component: Settings,
+      },
+      {
+        path: "/admin/create/training",
+        name: "Training",
+        component: Training,
+      },
+      {
+        path: "/admin/create/internship",
+        name: "Internship",
+        component: Internship,
+      },
+      {
+        path: "/admin/create/announcement",
+        name: "Announcement",
+        component: Announcement,
+      },
+      {
+        path: "/admin/create/resource",
+        name: "Resource",
+        component: Resource,
+      },
+    ],
+  },
 ];
 
 const router = new VueRouter({
