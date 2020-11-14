@@ -160,7 +160,7 @@
         </div></v-btn
       >
 
-      <v-menu dark>
+      <v-menu dark offset-y>
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             class="hover-color"
@@ -225,14 +225,30 @@ export default {
     return {
       sideNav: false,
       items: [
-        { title: "2015" },
-        { title: "2016" },
-        { title: "2017" },
-        { title: "2019" },
+        { title: "Training" },
+        { title: "Workshop" },
+        { title: "Announcement" },
+        { title: "Resources" },
       ],
     };
   },
   methods: {
+    route(index) {
+      switch (index) {
+        case 0:
+          this.$router.push("/admin/create/training");
+          break;
+        case 1:
+          this.$router.push("/admin/create/workshop");
+          break;
+        case 2:
+          this.$router.push("/admin/create/announcement");
+          break;
+        case 3:
+          this.$router.push("/admin/create/resource");
+          break;
+      }
+    },
     logout() {
       this.$store
         .dispatch("logout")

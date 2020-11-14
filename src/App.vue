@@ -26,6 +26,21 @@ export default {
     Header,
     Footer,
   },
+  data() {
+    return {
+      unsubscribe: null,
+    };
+  },
+  mounted() {
+    this.$store
+      .dispatch("loadProfile")
+      .then((resp) => {
+        this.unsubscribe = resp;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
 };
 </script>
 

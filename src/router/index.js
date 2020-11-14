@@ -17,6 +17,7 @@ import Announcement from "../views/Admin/Create/Announcement.vue";
 import Internship from "../views/Admin/Create/Internship.vue";
 import Resource from "../views/Admin/Create/Resource.vue";
 import Training from "../views/Admin/Create/Training.vue";
+import Workshop from "../views/Admin/Create/Workshop.vue";
 
 Vue.use(VueRouter);
 
@@ -65,6 +66,11 @@ const routes = [
         path: "/admin/create/internship",
         name: "Internship",
         component: Internship,
+      },
+      {
+        path: "/admin/create/workshop",
+        name: "Workshop",
+        component: Workshop,
       },
       {
         path: "/admin/create/announcement",

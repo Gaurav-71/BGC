@@ -8,31 +8,22 @@
       <div class="contact-container ma-1">
         <ul style="list-style-type: none">
           <li>
-            <a href="tel:+91 6364-335551">
+            <a :href="'tel:' + $store.getters.getProfile.data.phNo">
               <i class="fa fa-phone size" aria-hidden="true"></i>
             </a>
             <a href="mailto: bgc.genomics@gmail.com">
               <i class="fa fa-envelope size" aria-hidden="true"></i>
             </a>
-            <a
-              href="https://www.facebook.com/bengaluru.genomics.center"
-              target="_blank"
-            >
+            <a :href="$store.getters.getProfile.data.facebook" target="_blank">
               <i class="fa fa-facebook size" aria-hidden="true"></i>
             </a>
-            <a
-              href="https://www.youtube.com/channel/UCnx0R9byth5-JAlRiFjPkAw?view_as=subscriber"
-              target="_blank"
-            >
+            <a :href="$store.getters.getProfile.data.youtube" target="_blank">
               <i class="fa fa-youtube size" aria-hidden="true"></i>
             </a>
-            <a
-              href="https://www.linkedin.com/in/bengaluru-genomics-center"
-              target="_blank"
-            >
+            <a :href="$store.getters.getProfile.data.linkedin" target="_blank">
               <i class="fa fa-linkedin size" aria-hidden="true"></i>
             </a>
-            <a href="https://goo.gl/maps/QbDm5gpaArCXteUQA" target="_blank">
+            <a :href="$store.getters.getProfile.data.maps" target="_blank">
               <i class="fa fa-map size" aria-hidden="true"></i>
             </a>
             <a>

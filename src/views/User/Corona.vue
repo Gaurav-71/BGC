@@ -14,7 +14,7 @@
               <v-btn color="rgb(230, 190, 138)" rounded raised>
                 <v-icon>mdi-phone</v-icon>
                 <a
-                  href="tel:+91 6364-335551"
+                  :href="'tel:' + $store.getters.getProfile.data.phNo"
                   style="text-decoration: none; color: #1c8d76"
                   class="ml-2"
                   >Book a test</a
