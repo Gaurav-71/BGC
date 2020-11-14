@@ -178,7 +178,7 @@ export default {
     padding: 1rem;
     background: $secondary;
     width: 100%;
-    margin-top: 1rem;
+    margin-top: 1.5rem;
 
     .custom-btn {
       width: 100%;

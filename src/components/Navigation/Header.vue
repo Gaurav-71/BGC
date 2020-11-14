@@ -98,7 +98,7 @@
 
     <v-spacer></v-spacer>
     <v-toolbar-items
-      v-if="!$store.getters.getLogStatus"
+      v-if="$store.getters.getLogStatus == 'false'"
       class="hidden-md-and-down d-md-block"
     >
       <v-btn to="/" class="hover-color" :color="$store.getters.getNavColor" dark
@@ -197,7 +197,7 @@
     </v-toolbar-items>
     <v-spacer></v-spacer>
     <v-btn
-      v-if="!$store.getters.getLogStatus"
+      v-if="$store.getters.getLogStatus == 'false'"
       to="/covid-19/testing"
       raised
       rounded
@@ -253,7 +253,6 @@ export default {
       this.$store
         .dispatch("logout")
         .then(() => {
-          this.$store.state.isLoggedIn = false;
           this.$router.push("/");
         })
         .catch((err) => {
