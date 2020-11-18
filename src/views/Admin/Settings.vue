@@ -1,15 +1,6 @@
 <template>
   <div class="settings">
-    <div class="custom-heading elevation-2">
-      <div class="custom-flex">
-        <img src="../../assets/Settings/settings.svg" alt="settings" />
-        <div class="custom-text">
-          <h1>Settings</h1>
-          <h4>Update your contact information and much more</h4>
-        </div>
-      </div>
-      <v-divider class="elevation-1"></v-divider>
-    </div>
+    <Heading :headingObj="headingObj" />
     <div class="custom-form elevation-2">
       <v-form
         ref="form"
@@ -89,9 +80,19 @@
 </template>
 
 <script>
+import Heading from "../../components/Design/Heading";
+
 export default {
+  components: {
+    Heading,
+  },
   data() {
     return {
+      headingObj: {
+        h1: "Settings",
+        h4: "Update your contact information and much more",
+        src: "settings.svg",
+      },
       valid: true,
       profile: null,
       profileCopy: null,
@@ -147,39 +148,11 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  .custom-heading {
-    padding: 1rem;
-    background: white;
-    width: 100%;
-    .custom-flex {
-      display: flex;
-      align-items: center;
-      padding: 0 1rem;
-      img {
-        width: 50px;
-        height: 50px;
-      }
-      .custom-text {
-        padding-left: 0.5rem;
-        h1 {
-          padding: 0 0 0 0.5rem;
-          margin: 0;
-          color: $accent;
-        }
-        h4 {
-          margin: 0;
-          padding: 0 0 0.5rem 0.5rem;
-          color: $primary;
-        }
-      }
-    }
-  }
+
   .custom-form {
     padding: 1rem;
     background: $secondary;
     width: 100%;
-    margin-top: 1.5rem;
-
     .custom-btn {
       width: 100%;
       margin: 1.5rem 0 0.5rem 0;

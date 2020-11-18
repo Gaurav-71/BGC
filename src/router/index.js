@@ -4,12 +4,13 @@ import VueRouter from "vue-router";
 //user
 import Landing from "../views/User/Landing.vue";
 import Corona from "../views/User/Corona.vue";
+import Messages from "../views/User/Messages.vue";
 
 //admin
 import Login from "../views/Admin/Login.vue";
 import Home from "../views/Admin/Home.vue";
 import Dashboard from "../views/Admin/Dashboard.vue";
-import Messages from "../views/Admin/Messages.vue";
+import AdminMessages from "../views/Admin/Messages.vue";
 import Settings from "../views/Admin/Settings.vue";
 
 //admin > create
@@ -33,6 +34,11 @@ const routes = [
     component: Corona,
   },
   {
+    path: "/contact-us",
+    name: "Messages",
+    component: Messages,
+  },
+  {
     path: "/admin/login",
     name: "Login",
     component: Login,
@@ -49,8 +55,8 @@ const routes = [
       },
       {
         path: "/admin/messages",
-        name: "Messages",
-        component: Messages,
+        name: "AdminMessages",
+        component: AdminMessages,
       },
       {
         path: "/admin/settings",

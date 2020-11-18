@@ -12,6 +12,7 @@ export default new Vuex.Store({
     isLoggedIn: localStorage.getItem("isLoggedIn"),
     isLoggingIn: true,
     profile: null,
+    messages: null,
   },
   mutations: {
     login: (state) => {
@@ -24,7 +25,9 @@ export default new Vuex.Store({
     },
     setProfile: (state, profile) => {
       state.profile = profile;
-      console.log(state.profile);
+    },
+    setMessages: (state, messages) => {
+      state.messages = messages;
     },
   },
   actions: {
@@ -46,17 +49,30 @@ export default new Vuex.Store({
       this.state.isLoggingIn = true;
       context.commit("logout");
     },
-    async loadProfile({ state, commit }) {
+    async downloadProfile({ state, commit }) {
       let resp = await db.collection("Profile").onSnapshot((snapshot) => {
-        let user = [];
+        let profile = [];
         snapshot.forEach((doc) => {
           let data = { id: doc.id, data: doc.data() };
-          user.push(data);
+          profile.push(data);
         });
-
-        commit("setProfile", user[0]);
+        commit("setProfile", profile[0]);
       });
       return resp;
+    },
+    async downloadMessages({ state, commit }) {
+      let resp = await db.collection("Messages").onSnapshot((snapshot) => {
+        let message = [];
+        snapshot.forEach((doc) => {
+          let data = doc.data();
+          message.push(data);
+        });
+        commit("setMessages", message);
+      });
+      return resp;
+    },
+    async uploadMessage(context, payload) {
+      await db.collection("Messages").add(payload);
     },
     async editProfile({ state }, user) {
       await db
@@ -74,6 +90,9 @@ export default new Vuex.Store({
     },
     getProfile: (store) => {
       return store.profile;
+    },
+    getMessages: (store) => {
+      return store.messages;
     },
   },
 });

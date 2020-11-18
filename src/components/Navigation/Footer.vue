@@ -56,7 +56,18 @@ export default {
   data() {
     return {
       icons: ["mdi-facebook", "mdi-linkedin", "mdi-youtube"],
+      unsubscribe: null,
     };
+  },
+  mounted() {
+    this.$store
+      .dispatch("downloadProfile")
+      .then((resp) => {
+        this.unsubscribe = resp;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
   methods: {
     route() {
