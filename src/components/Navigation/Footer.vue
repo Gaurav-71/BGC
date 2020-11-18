@@ -119,7 +119,7 @@ footer {
             margin: 0 1rem;
           }
           @include responsive($small-phone) {
-            font-size: 20px;
+            font-size: 15px;
           }
         }
       }

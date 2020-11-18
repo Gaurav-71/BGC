@@ -181,6 +181,9 @@ export default {
     display: flex;
     align-items: center;
     justify-self: center;
+    @include responsive($phone) {
+      flex-wrap: wrap;
+    }
     .left {
       width: 50%;
       max-height: 68vh;
@@ -188,6 +191,10 @@ export default {
       flex-direction: column;
       align-items: center;
       justify-self: center;
+      @include responsive($phone) {
+        width: 100%;
+        max-height: 20vh;
+      }
       .top {
         width: 100%;
         display: grid;
@@ -205,6 +212,9 @@ export default {
               padding: 0;
               margin-left: 0.6rem;
               @include responsive($tablet-portrait) {
+                display: none;
+              }
+              @include responsive($phone) {
                 display: none;
               }
             }
@@ -235,6 +245,7 @@ export default {
         display: grid;
         grid-template-columns: auto 1px auto;
         .action {
+          overflow-x: hidden;
           .v-btn {
             background: $secondary;
             display: flex;
@@ -254,6 +265,13 @@ export default {
                 font-size: x-small;
                 margin: 0;
               }
+              @include responsive($phone) {
+                font-size: x-small;
+                margin: 0;
+              }
+              @include responsive($small-phone) {
+                font-size: 8px;
+              }
             }
             .lowercase {
               text-transform: lowercase;
@@ -261,6 +279,9 @@ export default {
             .size {
               color: white;
               font-size: 23px;
+              @include responsive($phone) {
+                display: none;
+              }
             }
           }
         }
@@ -281,6 +302,16 @@ export default {
       @include responsive($tablet-portrait) {
         width: 100%;
       }
+      @include responsive($phone) {
+        width: 100%;
+        max-height: 47.5vh;
+        padding: 5rem 0 0 0;
+      }
+      @include responsive($small-phone) {
+        padding-top: 8rem;
+        max-height: 80vh;
+      }
+
       h1 {
         color: $primary;
         margin-bottom: 0;
@@ -328,6 +359,9 @@ export default {
       textarea::placeholder {
         color: #333333;
         font-weight: bold;
+        @include responsive($small-phone) {
+          font-size: x-small;
+        }
       }
       .btn {
         width: 100%;
