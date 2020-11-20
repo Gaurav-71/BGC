@@ -13,6 +13,7 @@ export default new Vuex.Store({
     isLoggingIn: true,
     profile: null,
     messages: null,
+    conferences: null,
   },
   mutations: {
     login: (state) => {
@@ -28,6 +29,9 @@ export default new Vuex.Store({
     },
     setMessages: (state, messages) => {
       state.messages = messages;
+    },
+    setConferences: (state, conferences) => {
+      state.conferences = conferences;
     },
   },
   actions: {
@@ -61,24 +65,56 @@ export default new Vuex.Store({
       return resp;
     },
     async downloadMessages({ state, commit }) {
-      let resp = await db.collection("Messages").onSnapshot((snapshot) => {
-        let message = [];
-        snapshot.forEach((doc) => {
-          let data = doc.data();
-          message.push(data);
+      let resp = await db
+        .collection("Messages")
+        .orderBy("timestamp", "desc")
+        .onSnapshot((snapshot) => {
+          let message = [];
+          snapshot.forEach((doc) => {
+            let data = doc.data();
+            message.push(data);
+          });
+          commit("setMessages", message);
         });
-        commit("setMessages", message);
-      });
       return resp;
     },
-    async uploadMessage(context, payload) {
-      await db.collection("Messages").add(payload);
+    async downloadConferences({ state, commit }) {
+      let resp = await db
+        .collection("Conferences")
+        .orderBy("timestamp", "desc")
+        .onSnapshot((snapshot) => {
+          let conferences = [];
+          snapshot.forEach((doc) => {
+            let data = { id: doc.id, data: doc.data() };
+            conferences.push(data);
+          });
+          commit("setConferences", conferences);
+        });
+      return resp;
+    },
+    async uploadMessage(context, message) {
+      await db.collection("Messages").add(message);
+    },
+    async uploadConference(context, conference) {
+      await db.collection("Conferences").add(conference);
     },
     async editProfile({ state }, user) {
       await db
         .collection("Profile")
         .doc(state.profile.id)
         .update(user);
+    },
+    async editConference({ state }, conference) {
+      await db
+        .collection("Conferences")
+        .doc(conference.id)
+        .update(conference.data);
+    },
+    async deleteConference({ state }, id) {
+      await db
+        .collection("Conferences")
+        .doc(id)
+        .delete();
     },
   },
   getters: {
@@ -93,6 +129,9 @@ export default new Vuex.Store({
     },
     getMessages: (store) => {
       return store.messages;
+    },
+    getConferences: (store) => {
+      return store.conferences;
     },
   },
 });
