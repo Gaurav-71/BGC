@@ -125,11 +125,12 @@
         </template>
         <v-list>
           <v-list-item
-            v-for="(item, index) in items"
-            :key="index"
-            @click="route(index)"
+            v-for="conference in $store.getters.getConferences"
+            :key="conference.id"
+            :href="conference.data.link"
+            target="_blank"
           >
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
+            <v-list-item-title>{{ conference.data.name }}</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -261,14 +262,14 @@ export default {
     },
   },
   mounted() {
-    /*this.$store
-      .dispatch("loadCount")
+    this.$store
+      .dispatch("downloadConferences")
       .then((resp) => {
         this.unsubscribe = resp;
       })
       .catch((err) => {
         alert(err);
-      });*/
+      });
   },
 };
 </script>
