@@ -1,6 +1,23 @@
 <template>
   <div class="internships">
     <Heading :headingObj="headingObj" />
+    <v-expansion-panels class="mt-0 mb-6">
+      <v-expansion-panel>
+        <v-expansion-panel-header>
+          <b>View Post Guidelines</b>
+          <template v-slot:actions>
+            <v-icon color="secondary"> mdi-eye </v-icon>
+          </template>
+        </v-expansion-panel-header>
+        <v-divider></v-divider>
+        <v-expansion-panel-content class="pt-3">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat.
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
     <main>
       <div class="left elevation-2 pa-3 pt-7">
         <v-text-field
@@ -203,10 +220,8 @@ export default {
       width: 50%;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 0 0 0 2rem;
-
+      align-items: flex-end;
+      justify-content: flex-start;
       @include responsive($tablet-portrait) {
         width: 100%;
       }
