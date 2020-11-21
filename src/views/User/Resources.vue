@@ -1,11 +1,11 @@
 <template>
-  <div class="announcements">
+  <div class="resources">
     <Heading :headingObj="headingObj" />
   </div>
 </template>
 
 <script>
-import Heading from "../../../components/Design/Heading";
+import Heading from "../../components/Design/Heading";
 export default {
   components: {
     Heading,
@@ -13,10 +13,9 @@ export default {
   data() {
     return {
       headingObj: {
-        h1: "Announcements",
-        h4:
-          "Find all updates related to BGC internships, trainings, and workshops here",
-        src: "announcements.svg",
+        h1: "Resources",
+        h4: "",
+        src: "resources.svg",
       },
     };
   },
@@ -24,8 +23,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../../scss/main.scss";
-.announcements {
+@import "../../scss/main.scss";
+.resources {
   margin-top: 4rem;
   min-height: calc(100vh - 4rem);
   background: $background;

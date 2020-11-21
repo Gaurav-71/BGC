@@ -104,13 +104,27 @@
       <v-btn to="/" class="hover-color" :color="$store.getters.getNavColor" dark
         >Home</v-btn
       >
-
-      <v-btn
-        to="/speakers"
-        class="hover-color"
-        :color="$store.getters.getNavColor"
-        >Services</v-btn
-      >
+      <v-menu dark>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            class="hover-color"
+            :color="$store.getters.getNavColor"
+            v-bind="attrs"
+            v-on="on"
+          >
+            Services
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item
+            v-for="(item, index) in items"
+            :key="index"
+            @click="route(index, 1)"
+          >
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
 
       <v-menu dark>
         <template v-slot:activator="{ on, attrs }">
@@ -129,18 +143,18 @@
             :key="conference.id"
             :href="conference.data.link"
             target="_blank"
+            color="red"
           >
             <v-list-item-title>{{ conference.data.name }}</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
 
-      <v-btn to="/team" class="hover-color" :color="$store.getters.getNavColor"
-        >Resources</v-btn
-      >
-
-      <v-btn to="/team" class="hover-color" :color="$store.getters.getNavColor"
-        >Team</v-btn
+      <v-btn
+        to="/announcements"
+        class="hover-color"
+        :color="$store.getters.getNavColor"
+        >Announcements</v-btn
       >
 
       <v-btn
@@ -179,7 +193,7 @@
           <v-list-item
             v-for="(item, index) in items"
             :key="index"
-            @click="route(index)"
+            @click="route(index, 2)"
           >
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>
@@ -226,28 +240,51 @@ export default {
     return {
       sideNav: false,
       items: [
+        { title: "Internship" },
         { title: "Training" },
         { title: "Workshop" },
-        { title: "Announcement" },
         { title: "Resources" },
+        { title: "Announcements" },
       ],
+      offest: true,
     };
   },
   methods: {
-    route(index) {
-      switch (index) {
-        case 0:
-          this.$router.push("/admin/create/training");
-          break;
-        case 1:
-          this.$router.push("/admin/create/workshop");
-          break;
-        case 2:
-          this.$router.push("/admin/create/announcement");
-          break;
-        case 3:
-          this.$router.push("/admin/create/resource");
-          break;
+    route(index, loggedIn) {
+      if (loggedIn == 1) {
+        switch (index) {
+          case 0:
+            this.$router.push("/internships");
+            break;
+          case 1:
+            this.$router.push("/training");
+            break;
+          case 2:
+            this.$router.push("/workshop");
+            break;
+
+          case 3:
+            this.$router.push("/resources");
+            break;
+        }
+      } else {
+        switch (index) {
+          case 0:
+            this.$router.push("/admin/create/internship");
+            break;
+          case 1:
+            this.$router.push("/admin/create/training");
+            break;
+          case 2:
+            this.$router.push("/admin/create/workshop");
+            break;
+          case 3:
+            this.$router.push("/admin/create/resources");
+            break;
+          case 4:
+            this.$router.push("/admin/create/announcement");
+            break;
+        }
       }
     },
     logout() {

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Heading from "../../../components/Design/Heading";
+import Heading from "../../components/Design/Heading";
 export default {
   components: {
     Heading,
@@ -24,7 +24,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../../scss/main.scss";
+@import "../../scss/main.scss";
 .announcements {
   margin-top: 4rem;
   min-height: calc(100vh - 4rem);

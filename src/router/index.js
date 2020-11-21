@@ -5,6 +5,11 @@ import VueRouter from "vue-router";
 import Landing from "../views/User/Landing.vue";
 import Corona from "../views/User/Corona.vue";
 import Messages from "../views/User/Messages.vue";
+import UserAnnouncement from "../views/User/Announcements.vue";
+import UserTraining from "../views/User/Training.vue";
+import UserResource from "../views/User/Resources.vue";
+import UserWorkshop from "../views/User/Workshop.vue";
+import UserInternship from "../views/User/Internships.vue";
 
 //admin
 import Login from "../views/Admin/Login.vue";
@@ -42,6 +47,31 @@ const routes = [
     path: "/admin/login",
     name: "Login",
     component: Login,
+  },
+  {
+    path: "/announcements",
+    name: "UserAnnouncement",
+    component: UserAnnouncement,
+  },
+  {
+    path: "/internships",
+    name: "UserInternship",
+    component: UserInternship,
+  },
+  {
+    path: "/training",
+    name: "UserTraining",
+    component: UserTraining,
+  },
+  {
+    path: "/workshop",
+    name: "UserWorkshop",
+    component: UserWorkshop,
+  },
+  {
+    path: "/resources",
+    name: "UserResource",
+    component: UserResource,
   },
   {
     path: "/admin",
@@ -84,7 +114,7 @@ const routes = [
         component: Announcement,
       },
       {
-        path: "/admin/create/resource",
+        path: "/admin/create/resources",
         name: "Resource",
         component: Resource,
       },
