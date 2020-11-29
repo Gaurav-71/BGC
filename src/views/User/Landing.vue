@@ -12,6 +12,11 @@ export default {
   components: {
     DNA,
   },
+  created() {
+    if (this.$store.getters.getLogStatus != "false") {
+      this.$router.push("/admin");
+    }
+  },
 };
 </script>
 

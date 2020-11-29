@@ -1,0 +1,184 @@
+@import "../../../scss/main.scss";
+.services {
+  margin-top: 4rem;
+  min-height: calc(100vh - 4rem);
+  background: $background;
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @include responsive($tablet-portrait) {
+    min-height: auto;
+  }
+  main {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-self: center;
+    @include responsive($tablet-portrait) {
+      flex-wrap: wrap;
+    }
+    @include responsive($phone) {
+      flex-wrap: wrap;
+    }
+
+    .left {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-self: center;
+      background: white;
+      .v-text-field {
+        width: 95%;
+      }
+      .flex {
+        width: 95%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        @include responsive($phone) {
+          flex-wrap: wrap;
+        }
+        .margin {
+          margin-left: 1rem;
+          @include responsive($phone) {
+            margin: 0;
+          }
+        }
+      }
+      .publish {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: $secondary !important;
+        color: $accent;
+        .v-icon {
+          margin-right: 0.5rem;
+        }
+      }
+      .btn-flex {
+        width: 95%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .red {
+          background: rgba(255, 0, 0, 0.795) !important;
+          color: white;
+          margin-right: 1rem;
+        }
+      }
+      @include responsive($tablet-portrait) {
+        width: 100%;
+      }
+      @include responsive($phone) {
+        width: 100%;
+      }
+    }
+    .right {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 0 0 0 0.8rem;
+      h1 {
+        width: 100%;
+        text-align: center;
+        margin: 0 0 1rem 0;
+        background: $secondary;
+        color: $accent;
+        font-weight: 400;
+      }
+      .v-card {
+        border: 2px solid $secondary;
+        border-bottom-left-radius: inherit;
+        border-bottom-right-radius: inherit;
+        .custom-border {
+          border-top: 2px solid $secondary;
+          border-bottom: 2px solid $secondary;
+        }
+        .post-title {
+          color: $secondary;
+        }
+        .post-date {
+          color: $accent;
+        }
+        .actions {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          background: $secondary;
+          padding: 1rem;
+          .register-btn,
+          .brochure-btn {
+            flex-basis: 50%;
+            width: 100%;
+            background: $accent;
+            color: $secondary;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .v-icon {
+              margin-right: 0.5rem;
+            }
+          }
+          .brochure-btn {
+            background: white;
+          }
+        }
+      }
+      @include responsive($tablet-portrait) {
+        padding: 0;
+        margin-top: 2rem;
+        width: 100%;
+      }
+      @include responsive($phone) {
+        width: 100%;
+        padding: 0;
+        margin-top: 2rem;
+      }
+    }
+  }
+  .custom-form {
+    padding: 1rem;
+    background: $secondary;
+    width: 100%;
+    .container {
+      .v-btn {
+        background: $secondary !important;
+        color: $accent;
+      }
+      .error {
+        background: rgba(255, 0, 0, 0.795) !important;
+        color: white;
+        margin-right: 1rem;
+      }
+    }
+    .flex {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0 2rem;
+      @include responsive($phone) {
+        flex-wrap: wrap;
+        //border-bottom: 5px solid $secondary;
+      }
+      .v-btn {
+        margin: 0 1rem;
+        background: $secondary;
+        color: $accent;
+      }
+    }
+    .custom-btn {
+      width: 100%;
+      margin: 1.5rem 0 0.5rem 0;
+      text-align: center;
+      .clr {
+        background: $accent;
+        color: $secondary;
+      }
+    }
+  }
+}

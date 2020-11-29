@@ -3,6 +3,7 @@ import Vuex from "vuex";
 
 import { auth } from "../main.js";
 import { db } from "../main.js";
+import { storage } from "../main.js";
 
 Vue.use(Vuex);
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
     profile: null,
     messages: null,
     conferences: null,
+    internships: null,
   },
   mutations: {
     login: (state) => {
@@ -32,6 +34,10 @@ export default new Vuex.Store({
     },
     setConferences: (state, conferences) => {
       state.conferences = conferences;
+    },
+    setInternships: (state, service) => {
+      state.internships = service;
+      console.log("saved locally", state.internships);
     },
   },
   actions: {
@@ -53,7 +59,7 @@ export default new Vuex.Store({
       this.state.isLoggingIn = true;
       context.commit("logout");
     },
-    async downloadProfile({ state, commit }) {
+    async downloadProfile({ commit }) {
       let resp = await db.collection("Profile").onSnapshot((snapshot) => {
         let profile = [];
         snapshot.forEach((doc) => {
@@ -64,7 +70,7 @@ export default new Vuex.Store({
       });
       return resp;
     },
-    async downloadMessages({ state, commit }) {
+    async downloadMessages({ commit }) {
       let resp = await db
         .collection("Messages")
         .orderBy("timestamp", "desc")
@@ -78,7 +84,7 @@ export default new Vuex.Store({
         });
       return resp;
     },
-    async downloadConferences({ state, commit }) {
+    async downloadConferences({ commit }) {
       let resp = await db
         .collection("Conferences")
         .orderBy("timestamp", "desc")
@@ -92,17 +98,249 @@ export default new Vuex.Store({
         });
       return resp;
     },
+    async downloadService({ commit }, serviceType) {
+      console.log("in service");
+      let resp = await db
+        .collection(serviceType)
+        .orderBy("timestamp", "asc")
+        .onSnapshot((snapshot) => {
+          let services = [];
+          snapshot.forEach((doc) => {
+            let data = { id: doc.id, data: doc.data(), edit: false };
+            services.push(data);
+          });
+          if (serviceType == "Internships") {
+            console.log("downloaded");
+            commit("setInternships", services);
+          }
+        });
+      return resp;
+    },
     async uploadMessage(context, message) {
       await db.collection("Messages").add(message);
     },
     async uploadConference(context, conference) {
       await db.collection("Conferences").add(conference);
     },
-    async editProfile({ state }, user) {
-      await db
-        .collection("Profile")
-        .doc(state.profile.id)
-        .update(user);
+    async uploadService(context, post) {
+      if (post.files.image != null && post.files.brochure != null) {
+        console.log("Both present");
+        let storageImageRef = storage.ref(
+          post.details.serviceType + "/images/" + Date.now()
+        );
+        let uploadImageFile = storageImageRef.put(post.files.image);
+        uploadImageFile.on(
+          "state_changed",
+          (snapshot) => {},
+          (error) => {
+            console.log("Couldn't Upload Post Due To Error : ", error);
+          },
+          async () => {
+            await uploadImageFile.snapshot.ref
+              .getDownloadURL()
+              .then(async (downloadURL) => {
+                post.details.image = downloadURL;
+                console.log("received img link", downloadURL);
+                let storageBrochureRef = storage.ref(
+                  post.details.serviceType + "/brochures/" + Date.now()
+                );
+                let uploadBrochureFile = storageBrochureRef.put(
+                  post.files.brochure
+                );
+                uploadBrochureFile.on(
+                  "state_changed",
+                  (snapshot) => {},
+                  (error) => {
+                    console.log("Couldn't Upload Post Due To Error : ", error);
+                  },
+                  async () => {
+                    await uploadBrochureFile.snapshot.ref
+                      .getDownloadURL()
+                      .then(async (downloadURL) => {
+                        post.details.brochure = downloadURL;
+                        console.log("received brochure link", downloadURL);
+                        post.details.timestamp = Date(Date.now());
+                        await db
+                          .collection(post.details.serviceType)
+                          .add(post.details);
+                        console.log("Published Post");
+                      });
+                  }
+                );
+              });
+          }
+        );
+      } else if (post.files.image != null) {
+        console.log("Only image");
+        let storageImageRef = storage.ref(
+          post.details.serviceType + "/images/" + Date.now()
+        );
+        let uploadImageFile = storageImageRef.put(post.files.image);
+        uploadImageFile.on(
+          "state_changed",
+          (snapshot) => {},
+          (error) => {
+            console.log("Couldn't Upload Post Due To Error : ", error);
+          },
+          async () => {
+            await uploadImageFile.snapshot.ref
+              .getDownloadURL()
+              .then(async (downloadURL) => {
+                post.details.image = downloadURL;
+                console.log("received image link", downloadURL);
+                post.details.timestamp = Date(Date.now());
+                await db.collection(post.details.serviceType).add(post.details);
+                console.log("Published Post");
+              });
+          }
+        );
+      } else if (post.files.brochure != null) {
+        console.log("Only brochure");
+        let storageBrochureRef = storage.ref(
+          post.details.serviceType + "/brochures/" + Date.now()
+        );
+        let uploadBrochureFile = storageBrochureRef.put(post.files.brochure);
+        uploadBrochureFile.on(
+          "state_changed",
+          (snapshot) => {},
+          (error) => {
+            console.log("Couldn't Upload Post Due To Error : ", error);
+          },
+          async () => {
+            await uploadBrochureFile.snapshot.ref
+              .getDownloadURL()
+              .then(async (downloadURL) => {
+                post.details.brochure = downloadURL;
+                console.log("received brochure link", downloadURL);
+                post.details.timestamp = Date(Date.now());
+                await db.collection(post.details.serviceType).add(post.details);
+                console.log("Published Post");
+              });
+          }
+        );
+      } else {
+        console.log("none");
+        post.details.timestamp = Date(Date.now());
+        console.log(Date.now());
+        await db.collection(post.details.serviceType).add(post.details);
+        console.log("Published Post");
+      }
+    },
+    async editService(context, service) {
+      if (service.files.image != null && service.files.brochure != null) {
+        console.log("Both present");
+        let storageImageRef = storage.ref(
+          service.details.serviceType + "/images/" + service.files.image.name
+        );
+        let uploadImageFile = storageImageRef.put(service.files.image);
+        uploadImageFile.on(
+          "state_changed",
+          (snapshot) => {},
+          (error) => {
+            console.log("Couldn't Upload service Due To Error : ", error);
+          },
+          async () => {
+            await uploadImageFile.snapshot.ref
+              .getDownloadURL()
+              .then(async (downloadURL) => {
+                service.details.image = downloadURL;
+                console.log("received img link", downloadURL);
+                let storageBrochureRef = storage.ref(
+                  service.details.serviceType +
+                    "/brochures/" +
+                    service.files.brochure.name
+                );
+                let uploadBrochureFile = storageBrochureRef.put(
+                  service.files.brochure
+                );
+                uploadBrochureFile.on(
+                  "state_changed",
+                  (snapshot) => {},
+                  (error) => {
+                    console.log(
+                      "Couldn't Upload service Due To Error : ",
+                      error
+                    );
+                  },
+                  async () => {
+                    await uploadBrochureFile.snapshot.ref
+                      .getDownloadURL()
+                      .then(async (downloadURL) => {
+                        service.details.brochure = downloadURL;
+                        console.log("received brochure link", downloadURL);
+                        await db
+                          .collection(service.details.serviceType)
+                          .doc(service.id)
+                          .update(service.details);
+                        console.log("updated service");
+                      });
+                  }
+                );
+              });
+          }
+        );
+      } else if (service.files.image != null) {
+        console.log("Only image");
+        let storageImageRef = storage.ref(
+          service.details.serviceType + "/images/" + service.files.image.name
+        );
+        let uploadImageFile = storageImageRef.put(service.files.image);
+        uploadImageFile.on(
+          "state_changed",
+          (snapshot) => {},
+          (error) => {
+            console.log("Couldn't Upload service Due To Error : ", error);
+          },
+          async () => {
+            await uploadImageFile.snapshot.ref
+              .getDownloadURL()
+              .then(async (downloadURL) => {
+                service.details.image = downloadURL;
+                console.log("received image link", downloadURL);
+
+                await db
+                  .collection(service.details.serviceType)
+                  .doc(service.id)
+                  .update(service.details);
+                console.log("updated service");
+              });
+          }
+        );
+      } else if (service.files.brochure != null) {
+        console.log("Only brochure");
+        let storageBrochureRef = storage.ref(
+          service.details.serviceType + "/brochures/" + service.files.image.name
+        );
+        let uploadBrochureFile = storageBrochureRef.put(service.files.brochure);
+        uploadBrochureFile.on(
+          "state_changed",
+          (snapshot) => {},
+          (error) => {
+            console.log("Couldn't Upload service Due To Error : ", error);
+          },
+          async () => {
+            await uploadBrochureFile.snapshot.ref
+              .getDownloadURL()
+              .then(async (downloadURL) => {
+                service.details.brochure = downloadURL;
+                console.log("received brochure link", downloadURL);
+
+                await db
+                  .collection(service.details.serviceType)
+                  .doc(service.id)
+                  .update(service.details);
+                console.log("updated service");
+              });
+          }
+        );
+      } else {
+        console.log("none");
+        await db
+          .collection(service.details.serviceType)
+          .doc(service.id)
+          .update(service.details);
+        console.log("updated service");
+      }
     },
     async editConference({ state }, conference) {
       await db
@@ -114,6 +352,12 @@ export default new Vuex.Store({
       await db
         .collection("Conferences")
         .doc(id)
+        .delete();
+    },
+    async deleteService({ state }, service) {
+      await db
+        .collection(service.serviceType)
+        .doc(service.id)
         .delete();
     },
   },
@@ -132,6 +376,9 @@ export default new Vuex.Store({
     },
     getConferences: (store) => {
       return store.conferences;
+    },
+    getInternships: (store) => {
+      return store.internships;
     },
   },
 });
