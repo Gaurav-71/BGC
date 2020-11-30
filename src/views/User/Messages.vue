@@ -226,17 +226,17 @@ export default {
         }
         .facebook {
           .v-btn {
-            background: #4267B2;
+            background: #4267b2;
           }
         }
         .youtube {
           .v-btn {
-            background: #FC0000;
+            background: #fc0000;
           }
         }
         .linkedin {
           .v-btn {
-            background: #2867B2;
+            background: #2867b2;
           }
         }
       }

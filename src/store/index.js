@@ -14,6 +14,7 @@ export default new Vuex.Store({
     isLoggingIn: true,
     profile: null,
     messages: null,
+    announcements: null,
     conferences: null,
     internships: null,
   },
@@ -34,6 +35,9 @@ export default new Vuex.Store({
     },
     setConferences: (state, conferences) => {
       state.conferences = conferences;
+    },
+    setAnnouncements: (state, announcements) => {
+      state.announcements = announcements;
     },
     setInternships: (state, service) => {
       state.internships = service;
@@ -98,11 +102,25 @@ export default new Vuex.Store({
         });
       return resp;
     },
+    async downloadAnnouncements({ commit }) {
+      let resp = await db
+        .collection("Announcements")
+        .orderBy("timestamp", "desc")
+        .onSnapshot((snapshot) => {
+          let announcements = [];
+          snapshot.forEach((doc) => {
+            let data = { id: doc.id, data: doc.data(), edit: false };
+            announcements.push(data);
+          });
+          commit("setAnnouncements", announcements);
+        });
+      return resp;
+    },
     async downloadService({ commit }, serviceType) {
       console.log("in service");
       let resp = await db
         .collection(serviceType)
-        .orderBy("timestamp", "asc")
+        .orderBy("timestamp", "desc")
         .onSnapshot((snapshot) => {
           let services = [];
           snapshot.forEach((doc) => {
@@ -121,6 +139,9 @@ export default new Vuex.Store({
     },
     async uploadConference(context, conference) {
       await db.collection("Conferences").add(conference);
+    },
+    async uploadAnnouncement(context, announcement) {
+      await db.collection("Announcements").add(announcement);
     },
     async uploadService(context, post) {
       if (post.files.image != null && post.files.brochure != null) {
@@ -164,6 +185,22 @@ export default new Vuex.Store({
                           .collection(post.details.serviceType)
                           .add(post.details);
                         console.log("Published Post");
+                        let announcementInfo = {
+                          title:
+                            post.details.serviceType == "Internships"
+                              ? "New internship position is available"
+                              : post.details.serviceType == "Trainings"
+                              ? "New training program announced"
+                              : post.details.serviceType == "Workshops"
+                              ? "New workshop announced"
+                              : "Announcement",
+                          description: post.details.title,
+                          serviceType: post.details.serviceType,
+                          timestamp: post.details.timestamp,
+                        };
+                        await db
+                          .collection("Announcements")
+                          .add(announcementInfo);
                       });
                   }
                 );
@@ -191,6 +228,20 @@ export default new Vuex.Store({
                 post.details.timestamp = Date(Date.now());
                 await db.collection(post.details.serviceType).add(post.details);
                 console.log("Published Post");
+                let announcementInfo = {
+                  title:
+                    post.details.serviceType == "Internships"
+                      ? "New internship position is available"
+                      : post.details.serviceType == "Trainings"
+                      ? "New training program announced"
+                      : post.details.serviceType == "Workshops"
+                      ? "New workshop announced"
+                      : "Announcement",
+                  description: post.details.title,
+                  serviceType: post.details.serviceType,
+                  timestamp: post.details.timestamp,
+                };
+                await db.collection("Announcements").add(announcementInfo);
               });
           }
         );
@@ -215,6 +266,20 @@ export default new Vuex.Store({
                 post.details.timestamp = Date(Date.now());
                 await db.collection(post.details.serviceType).add(post.details);
                 console.log("Published Post");
+                let announcementInfo = {
+                  title:
+                    post.details.serviceType == "Internships"
+                      ? "New internship position is available"
+                      : post.details.serviceType == "Trainings"
+                      ? "New training program announced"
+                      : post.details.serviceType == "Workshops"
+                      ? "New workshop announced"
+                      : "Announcement",
+                  description: post.details.title,
+                  serviceType: post.details.serviceType,
+                  timestamp: post.details.timestamp,
+                };
+                await db.collection("Announcements").add(announcementInfo);
               });
           }
         );
@@ -224,6 +289,20 @@ export default new Vuex.Store({
         console.log(Date.now());
         await db.collection(post.details.serviceType).add(post.details);
         console.log("Published Post");
+        let announcementInfo = {
+          title:
+            post.details.serviceType == "Internships"
+              ? "New internship position is available"
+              : post.details.serviceType == "Trainings"
+              ? "New training program announced"
+              : post.details.serviceType == "Workshops"
+              ? "New workshop announced"
+              : "Announcement",
+          description: post.details.title,
+          serviceType: post.details.serviceType,
+          timestamp: post.details.timestamp,
+        };
+        await db.collection("Announcements").add(announcementInfo);
       }
     },
     async editService(context, service) {
@@ -342,11 +421,23 @@ export default new Vuex.Store({
         console.log("updated service");
       }
     },
+    async editAnnouncement({ state }, announcement) {
+      await db
+        .collection("Announcements")
+        .doc(announcement.id)
+        .update(announcement.data);
+    },
     async editConference({ state }, conference) {
       await db
         .collection("Conferences")
         .doc(conference.id)
         .update(conference.data);
+    },
+    async deleteAnnouncement({ state }, id) {
+      await db
+        .collection("Announcements")
+        .doc(id)
+        .delete();
     },
     async deleteConference({ state }, id) {
       await db
@@ -376,6 +467,9 @@ export default new Vuex.Store({
     },
     getConferences: (store) => {
       return store.conferences;
+    },
+    getAnnouncements: (store) => {
+      return store.announcements;
     },
     getInternships: (store) => {
       return store.internships;

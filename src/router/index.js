@@ -64,7 +64,7 @@ const routes = [
     component: UserTraining,
   },
   {
-    path: "/workshop",
+    path: "/workshops",
     name: "UserWorkshop",
     component: UserWorkshop,
   },

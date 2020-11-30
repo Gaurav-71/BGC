@@ -3,7 +3,7 @@
     <Heading :headingObj="headingObj" />
     <Guidelines :serviceType="post.serviceType" />
     <main>
-      <div class="left elevation-2 px-3 py-7">
+      <div class="announcement elevation-2 px-3 py-7">
         <v-text-field
           v-model="post.title"
           prepend-icon="mdi-format-title"
@@ -19,60 +19,7 @@
           clear-icon="mdi-close-circle"
           label="Post Description in HTML"
         ></v-textarea>
-        <v-text-field
-          v-model="post.link"
-          filled
-          raised
-          prepend-icon="mdi-link"
-          label="Registration Link"
-          required
-        ></v-text-field>
-        <v-menu
-          ref="menu"
-          v-model="menu"
-          :close-on-content-click="false"
-          transition="scale-transition"
-          offset-y
-          min-width="290px"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-text-field
-              v-model="post.date"
-              label="Last Date for Registration"
-              prepend-icon="mdi-calendar"
-              readonly
-              filled
-              v-bind="attrs"
-              v-on="on"
-            ></v-text-field>
-          </template>
-          <v-date-picker
-            ref="picker"
-            v-model="post.date"
-            min="1950-01-01"
-            @change="save"
-          ></v-date-picker>
-        </v-menu>
-        <div class="flex">
-          <v-file-input
-            @change="generateImagePreview"
-            v-model="files.image"
-            show-size
-            label="Upload Brochure Image"
-            filled
-            prepend-icon="mdi-file-image"
-          ></v-file-input>
 
-          <v-file-input
-            @change="generateBrochurePreview"
-            v-model="files.brochure"
-            class="margin"
-            show-size
-            label="Upload Brochure PDF"
-            filled
-            prepend-icon="mdi-file-document"
-          ></v-file-input>
-        </div>
         <div class="container text-center btn-flex">
           <v-btn @click="clearForm()" rounded raised class="publish red"
             ><v-icon>mdi-close</v-icon><span>Clear</span></v-btn
@@ -82,65 +29,6 @@
           >
         </div>
       </div>
-      <div class="right">
-        <h1 class="elevation-2">Post Preview</h1>
-        <v-card class="my-2" width="1024px">
-          <v-card-title
-            v-html="post.title"
-            class="pb-0 mb-0 post-title"
-            style="font-size: x-large"
-            >{{ post.title }}</v-card-title
-          >
-          <v-card-text>
-            <div
-              v-if="post.date != null"
-              class="subtitle-0 ma-0 pa-0 post-date"
-            >
-              Last date for registration : {{ post.date }}
-            </div>
-          </v-card-text>
-          <v-img
-            v-if="imagePreview != null"
-            height="auto"
-            class="custom-border"
-            :src="imagePreview"
-          ></v-img>
-          <v-card-text>
-            <div
-              class="description"
-              style="font-size: large"
-              v-html="post.description"
-            >
-              {{ post.description }}
-            </div>
-          </v-card-text>
-
-          <v-divider class="mx-4"></v-divider>
-
-          <v-card-actions
-            v-if="files.brochure != null || post.link !== null"
-            class="actions"
-          >
-            <v-btn
-              :href="brochurePreview"
-              target="_blank"
-              v-if="files.brochure"
-              depressed
-              class="brochure-btn"
-              ><v-icon>mdi-cloud-download</v-icon>
-              <span>Download Brochure</span>
-            </v-btn>
-            <v-btn
-              :href="post.link"
-              target="_blank"
-              v-if="post.link"
-              depressed
-              class="register-btn"
-              ><v-icon>mdi-account-check</v-icon> <span>Register Now</span>
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </div>
     </main>
     <Heading :headingObj="subHeadingObj" class="mt-9" />
     <div class="custom-form elevation-2 mt-3">
@@ -149,7 +37,7 @@
         class="pa-0 ma-0"
         v-model="valid"
         lazy-validation
-        v-for="(service, index) in $store.getters.getAnnouncements"
+        v-for="service in $store.getters.getAnnouncements"
         :key="service.id"
         :disabled="!service.edit"
       >
@@ -163,37 +51,6 @@
               required
               filled
             ></v-text-field>
-            <v-text-field
-              v-model="service.data.link"
-              class="px-3"
-              label="Registration Link"
-              prepend-icon="mdi-link"
-              required
-              filled
-            ></v-text-field>
-            <v-menu
-              v-model="menuPreview[index]"
-              :close-on-content-click="false"
-              transition="scale-transition"
-              offset-y
-              min-width="290px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  v-model="service.data.date"
-                  label="Last Date for Registration"
-                  prepend-icon="mdi-calendar"
-                  readonly
-                  filled
-                  v-on="on"
-                ></v-text-field>
-              </template>
-              <v-date-picker
-                v-model="service.data.date"
-                min="1950-01-01"
-                @input="menuPreview[index] = false"
-              ></v-date-picker>
-            </v-menu>
           </div>
           <div class="all-conferences flex px-3">
             <v-textarea
@@ -205,24 +62,6 @@
               clear-icon="mdi-close-circle"
               label="Post Description in HTML"
             ></v-textarea>
-          </div>
-          <div class="all-conferences flex px-3">
-            <v-file-input
-              v-model="editFiles.image"
-              show-size
-              label="Upload New Brochure Image"
-              filled
-              prepend-icon="mdi-file-image"
-              class="px-3"
-            ></v-file-input>
-            <v-file-input
-              v-model="editFiles.brochure"
-              class="px-3"
-              show-size
-              label="Upload New Brochure PDF"
-              filled
-              prepend-icon="mdi-file-document"
-            ></v-file-input>
           </div>
           <v-divider></v-divider>
           <div class="container text-center mt-3">
@@ -289,73 +128,26 @@ export default {
         serviceType: "Announcements",
         title: null,
         description: null,
-        link: null,
-        date: null,
-        image: null,
-        brochure: null,
         timestamp: null,
-      },
-      files: {
-        image: null,
-        brochure: null,
-      },
-      editFiles: {
-        image: null,
-        brochure: null,
       },
       toEdit: false,
       valid: true,
-      imagePreview: null,
-      brochurePreview: null,
-      menu: false,
-      menuPreview: [],
       unsubscribe: null,
     };
   },
   methods: {
-    save(date) {
-      this.$refs.menu.save(date);
-    },
-    generateImagePreview() {
-      if (this.files.image != null) {
-        this.imagePreview = URL.createObjectURL(this.files.image);
-      } else {
-        this.imagePreview = null;
-      }
-    },
-    generateBrochurePreview() {
-      if (this.files.brochure != null) {
-        this.brochurePreview = URL.createObjectURL(this.files.brochure);
-      } else {
-        this.brochurePreview = null;
-      }
-    },
     clearForm() {
       this.post = {
         serviceType: "Announcements",
         title: null,
         description: null,
-        link: null,
-        date: null,
-        image: null,
-        brochure: null,
         timestamp: null,
       };
-      this.files = {
-        image: null,
-        brochure: null,
-      };
-      this.imagePreview = null;
-      this.brochurePreview = null;
     },
     publish() {
-      let postDetails = {
-        files: this.files,
-        details: this.post,
-      };
-      console.log(postDetails);
+      this.post.timestamp = Date(Date.now());
       this.$store
-        .dispatch("uploadService", postDetails)
+        .dispatch("uploadAnnouncement", this.post)
         .then(() => {
           this.clearForm();
         })
@@ -364,19 +156,9 @@ export default {
         });
     },
     saveEdit(data) {
-      let editDetails = {
-        id: data.id,
-        files: this.editFiles,
-        details: data.data,
-      };
-      console.log("in methods", editDetails);
       this.$store
-        .dispatch("editService", editDetails)
+        .dispatch("editAnnouncement", data)
         .then(() => {
-          this.editFiles = {
-            image: null,
-            brochure: null,
-          };
           this.changeEdit(data);
         })
         .catch((err) => {
@@ -390,23 +172,17 @@ export default {
       this.changeEdit(service);
     },
     deleteService(id) {
-      let serviceDetails = { id: id, serviceType: "Announcements" };
       this.$store
-        .dispatch("deleteService", serviceDetails)
+        .dispatch("deleteAnnouncement", id)
         .then(() => {})
         .catch((err) => {
           console.log(err);
         });
     },
   },
-  watch: {
-    menu(val) {
-      val && setTimeout(() => (this.$refs.picker.activePicker = "YEAR"));
-    },
-  },
   mounted() {
     this.$store
-      .dispatch("downloadService", "Announcements")
+      .dispatch("downloadAnnouncements")
       .then((resp) => {
         this.unsubscribe = resp;
       })
@@ -419,4 +195,37 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../../scss/_services.scss";
+
+.announcement {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-self: center;
+  background: white;
+  .v-text-field {
+    width: 95%;
+  }
+  .publish {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: $secondary !important;
+    color: $accent;
+    .v-icon {
+      margin-right: 0.5rem;
+    }
+  }
+  .btn-flex {
+    width: 95%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .red {
+      background: rgba(255, 0, 0, 0.795) !important;
+      color: white;
+      margin-right: 1rem;
+    }
+  }
+}
 </style>

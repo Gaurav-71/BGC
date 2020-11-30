@@ -82,17 +82,20 @@
     v-else
     fixed
     :color="$store.getters.getNavColor"
+    class="royal-border"
     dark
     style="z-index: 1000"
   >
     <v-toolbar-title>
       <v-img
         alt="Vuetify Logo"
-        class="shrink my-3 mr-5"
+        class="shrink mb-2 mr-5"
         contain
         src="../../assets/Header/logo.png"
         transition="scale-transition"
-        width="140"
+        width="115"
+        @click="goHome()"
+        style="cursor: pointer"
       />
     </v-toolbar-title>
 
@@ -217,10 +220,11 @@
       raised
       rounded
       color="teal"
+      class="mb-1"
     >
       <span class="py-3">COVID-19 Testing</span>
     </v-btn>
-    <v-btn @click="logout" v-else class="ml-3" raised rounded color="teal">
+    <v-btn @click="logout" v-else class="ml-3 mb-1" raised rounded color="teal">
       <v-icon color="yellow">mdi-open-in-new</v-icon>
       <span class="ml-2">Sign Out</span>
     </v-btn>
@@ -287,6 +291,9 @@ export default {
         }
       }
     },
+    goHome() {
+      this.$router.push("/");
+    },
     logout() {
       this.$store
         .dispatch("logout")
@@ -313,6 +320,10 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../scss/main.scss";
+.royal-border {
+  box-sizing: border-box;
+  border-bottom: 3px solid $accent !important;
+}
 .my-flex {
   padding-top: 0.7rem;
   display: flex;
@@ -326,6 +337,7 @@ export default {
 .hover-color {
   transition: color 0.3s ease-in;
   box-shadow: none;
+  border-bottom: 3px solid $accent !important;
 }
 .hover-color:hover {
   color: $accent !important;

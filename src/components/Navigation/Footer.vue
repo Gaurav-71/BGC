@@ -1,6 +1,6 @@
 <template>
-  <div class="footer mt-3">
-    <footer class="footer ma-0 mt-1">
+  <div class="footer">
+    <footer class="footer ma-0">
       <div class="logo">
         <img src="../../assets/Header/logo.png" alt="logos" />
       </div>
@@ -89,6 +89,8 @@ footer {
   flex-direction: column;
   align-items: center;
   flex-wrap: wrap;
+  box-sizing: border-box;
+  border-top: 5px solid $accent !important;
   .logo {
     img {
       width: 225px;
@@ -138,7 +140,7 @@ footer {
     .line {
       width: 100%;
       height: 1px;
-      background: gray;
+      background: $accent;
       margin: 1rem 0;
     }
     a {
