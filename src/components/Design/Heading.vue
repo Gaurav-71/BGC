@@ -50,11 +50,17 @@ export default {
         padding: 0 0 0 0.5rem;
         margin: 0;
         color: $accent;
+        @include responsive($phone) {
+          font-size: x-large;
+        }
       }
       h4 {
         margin: 0;
         padding: 0 0 0.5rem 0.5rem;
         color: $primary;
+        @include responsive($phone) {
+          font-size: small;
+        }
       }
     }
   }

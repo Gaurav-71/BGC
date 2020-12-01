@@ -130,7 +130,11 @@ export default {
   flex-direction: column;
   align-items: center;
   @include responsive($tablet-portrait) {
+    margin-top: 3.5rem;
     min-height: auto;
+  }
+  @include responsive($phone) {
+    margin-top: 3.5rem;
   }
   .announcements-wrapper {
     width: 100%;
@@ -152,6 +156,20 @@ export default {
         width: 49%;
         display: grid;
         grid-template-columns: 25% 75%;
+        @include responsive($tablet-landscape) {
+          grid-template-columns: 33% 67%;
+        }
+        @include responsive($tablet-portrait) {
+          width: 100%;
+        }
+        @include responsive($phone) {
+          width: 100%;
+          min-height: 25rem;
+
+          grid-template-columns: none;
+          grid-template-rows: 30% 70%;
+          padding-bottom: 1rem;
+        }
         .left {
           width: 100%;
           height: 100%;
@@ -167,9 +185,17 @@ export default {
             align-items: center;
             background: white;
             border-radius: 50%;
+            @include responsive($phone) {
+              height: 95px;
+              width: 95px;
+            }
             .img-size {
-              max-width: 70px;
-              height: 70px;
+              max-width: 65px;
+              height: 65px;
+              @include responsive($phone) {
+                max-width: 50px;
+                height: 50px;
+              }
             }
           }
         }
@@ -191,6 +217,7 @@ export default {
               font-size: small;
             }
           }
+
           .v-divider {
             width: 100%;
             background: $secondary;

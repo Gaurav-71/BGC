@@ -15,5 +15,12 @@ export default {};
   display: flex;
   justify-content: center;
   align-items: center;
+  @include responsive($tablet-portrait) {
+    margin-top: 3.5rem;
+    min-height: auto;
+  }
+  @include responsive($phone) {
+    margin-top: 3.5rem;
+  }
 }
 </style>

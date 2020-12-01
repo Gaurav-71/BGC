@@ -1,6 +1,6 @@
 <template>
-  <div class="services-cards my-3 px-1">
-    <v-card to="/internships" class="elevation-7">
+  <div class="services-cards px-1">
+    <v-card to="/internships" class="elevation-7 my-4">
       <div class="overlay">
         <div class="service">
           <div class="service-name elevation-10">Internships</div>
@@ -74,11 +74,32 @@ export default {};
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @include responsive($tablet-landscape) {
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  @include responsive($tablet-portrait) {
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  @include responsive($phone) {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
   .v-card {
     transition: all 0.2s ease-in;
     width: 19rem;
     height: 25rem;
     border-radius: 0.8rem;
+    @include responsive($tablet-landscape) {
+      margin: 1rem 0;
+    }
+    @include responsive($tablet-portrait) {
+      margin: 1rem 0;
+    }
+    @include responsive($phone) {
+      margin: 1rem 0;
+    }
     .overlay {
       position: absolute;
       height: 25rem;

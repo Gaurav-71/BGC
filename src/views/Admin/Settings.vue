@@ -283,7 +283,13 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  @include responsive($tablet-portrait) {
+    margin-top: 3.5rem;
+    min-height: auto;
+  }
+  @include responsive($phone) {
+    margin-top: 3.5rem;
+  }
   .custom-form {
     padding: 1rem;
     background: $secondary;
