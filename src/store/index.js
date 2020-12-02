@@ -174,14 +174,15 @@ export default new Vuex.Store({
       await db.collection("Announcements").add(announcement);
     },
     async uploadResource(context, resource) {
+      let uploadPostDetails = await db.collection("Resources").add(resource);
       let announcementInfo = {
         title: "A new resource has been shared",
         description: resource.title,
         serviceType: resource.serviceType,
+        serviceId: uploadPostDetails.id,
         timestamp: resource.timestamp,
       };
       await db.collection("Announcements").add(announcementInfo);
-      await db.collection("Resources").add(resource);
     },
     async uploadService(context, post) {
       if (post.files.image != null && post.files.brochure != null) {
@@ -221,7 +222,7 @@ export default new Vuex.Store({
                         post.details.brochure = downloadURL;
                         console.log("received brochure link", downloadURL);
                         post.details.timestamp = Date(Date.now());
-                        await db
+                        let uploadPostDetails = await db
                           .collection(post.details.serviceType)
                           .add(post.details);
                         console.log("Published Post");
@@ -236,6 +237,7 @@ export default new Vuex.Store({
                               : "Announcement",
                           description: post.details.title,
                           serviceType: post.details.serviceType,
+                          serviceId: uploadPostDetails.id,
                           timestamp: post.details.timestamp,
                         };
                         await db
@@ -266,7 +268,9 @@ export default new Vuex.Store({
                 post.details.image = downloadURL;
                 console.log("received image link", downloadURL);
                 post.details.timestamp = Date(Date.now());
-                await db.collection(post.details.serviceType).add(post.details);
+                let uploadPostDetails = await db
+                  .collection(post.details.serviceType)
+                  .add(post.details);
                 console.log("Published Post");
                 let announcementInfo = {
                   title:
@@ -279,6 +283,7 @@ export default new Vuex.Store({
                       : "Announcement",
                   description: post.details.title,
                   serviceType: post.details.serviceType,
+                  serviceId: uploadPostDetails.id,
                   timestamp: post.details.timestamp,
                 };
                 await db.collection("Announcements").add(announcementInfo);
@@ -304,7 +309,9 @@ export default new Vuex.Store({
                 post.details.brochure = downloadURL;
                 console.log("received brochure link", downloadURL);
                 post.details.timestamp = Date(Date.now());
-                await db.collection(post.details.serviceType).add(post.details);
+                let uploadPostDetails = await db
+                  .collection(post.details.serviceType)
+                  .add(post.details);
                 console.log("Published Post");
                 let announcementInfo = {
                   title:
@@ -317,6 +324,7 @@ export default new Vuex.Store({
                       : "Announcement",
                   description: post.details.title,
                   serviceType: post.details.serviceType,
+                  serviceId: uploadPostDetails.id,
                   timestamp: post.details.timestamp,
                 };
                 await db.collection("Announcements").add(announcementInfo);
@@ -327,7 +335,9 @@ export default new Vuex.Store({
         console.log("none");
         post.details.timestamp = Date(Date.now());
         console.log(Date.now());
-        await db.collection(post.details.serviceType).add(post.details);
+        let uploadPostDetails = await db
+          .collection(post.details.serviceType)
+          .add(post.details);
         console.log("Published Post");
         let announcementInfo = {
           title:
@@ -340,6 +350,7 @@ export default new Vuex.Store({
               : "Announcement",
           description: post.details.title,
           serviceType: post.details.serviceType,
+          serviceId: uploadPostDetails.id,
           timestamp: post.details.timestamp,
         };
         await db.collection("Announcements").add(announcementInfo);
@@ -392,6 +403,14 @@ export default new Vuex.Store({
                           .doc(service.id)
                           .update(service.details);
                         console.log("updated service");
+                        let announcement = await db
+                          .collection("Announcements")
+                          .where("serviceId", "==", service.id)
+                          .get();
+                        await db
+                          .collection("Announcements")
+                          .doc(announcement.docs[0].id)
+                          .update({ description: service.details.title });
                       });
                   }
                 );
@@ -422,6 +441,14 @@ export default new Vuex.Store({
                   .doc(service.id)
                   .update(service.details);
                 console.log("updated service");
+                let announcement = await db
+                  .collection("Announcements")
+                  .where("serviceId", "==", service.id)
+                  .get();
+                await db
+                  .collection("Announcements")
+                  .doc(announcement.docs[0].id)
+                  .update({ description: service.details.title });
               });
           }
         );
@@ -443,12 +470,19 @@ export default new Vuex.Store({
               .then(async (downloadURL) => {
                 service.details.brochure = downloadURL;
                 console.log("received brochure link", downloadURL);
-
                 await db
                   .collection(service.details.serviceType)
                   .doc(service.id)
                   .update(service.details);
                 console.log("updated service");
+                let announcement = await db
+                  .collection("Announcements")
+                  .where("serviceId", "==", service.id)
+                  .get();
+                await db
+                  .collection("Announcements")
+                  .doc(announcement.docs[0].id)
+                  .update({ description: service.details.title });
               });
           }
         );
@@ -459,6 +493,14 @@ export default new Vuex.Store({
           .doc(service.id)
           .update(service.details);
         console.log("updated service");
+        let announcement = await db
+          .collection("Announcements")
+          .where("serviceId", "==", service.id)
+          .get();
+        await db
+          .collection("Announcements")
+          .doc(announcement.docs[0].id)
+          .update({ description: service.details.title });
       }
     },
     async editAnnouncement({ state }, announcement) {
@@ -472,6 +514,14 @@ export default new Vuex.Store({
         .collection("Resources")
         .doc(resource.id)
         .update(resource.data);
+      let announcement = await db
+        .collection("Announcements")
+        .where("serviceId", "==", resource.id)
+        .get();
+      await db
+        .collection("Announcements")
+        .doc(announcement.docs[0].id)
+        .update({ description: resource.data.title });
     },
     async editConference({ state }, conference) {
       await db
@@ -488,7 +538,7 @@ export default new Vuex.Store({
     async deleteResource({ state }, resource) {
       let announcement = await db
         .collection("Announcements")
-        .where("description", "==", resource.title)
+        .where("serviceId", "==", resource.id)
         .get();
       await db
         .collection("Announcements")
@@ -508,7 +558,7 @@ export default new Vuex.Store({
     async deleteService({ state }, service) {
       let announcement = await db
         .collection("Announcements")
-        .where("description", "==", service.data.title)
+        .where("serviceId", "==", service.id)
         .get();
       await db
         .collection("Announcements")
