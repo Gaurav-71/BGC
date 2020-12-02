@@ -65,6 +65,14 @@
               required
               filled
             ></v-text-field>
+            <v-text-field
+              v-model="service.data.serviceType"
+              class="px-3"
+              label="Service"
+              prepend-icon="mdi-briefcase-check"
+              required
+              filled
+            ></v-text-field>
           </div>
           <div class="all-conferences flex px-3">
             <v-textarea

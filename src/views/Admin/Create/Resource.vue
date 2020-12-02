@@ -90,7 +90,7 @@
             </v-btn>
             <v-btn
               v-if="!service.edit"
-              @click="deleteService(service.id)"
+              @click="deleteService(service)"
               class="error"
               raised
             >
@@ -185,9 +185,12 @@ export default {
     cancel(service) {
       this.changeEdit(service);
     },
-    deleteService(id) {
+    deleteService(service) {
       this.$store
-        .dispatch("deleteResource", id)
+        .dispatch("deleteResource", {
+          id: service.id,
+          title: service.data.title,
+        })
         .then(() => {})
         .catch((err) => {
           console.log(err);

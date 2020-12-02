@@ -485,10 +485,18 @@ export default new Vuex.Store({
         .doc(id)
         .delete();
     },
-    async deleteResource({ state }, id) {
+    async deleteResource({ state }, resource) {
+      let announcement = await db
+        .collection("Announcements")
+        .where("description", "==", resource.title)
+        .get();
+      await db
+        .collection("Announcements")
+        .doc(announcement.docs[0].id)
+        .delete();
       await db
         .collection("Resources")
-        .doc(id)
+        .doc(resource.id)
         .delete();
     },
     async deleteConference({ state }, id) {
@@ -498,6 +506,14 @@ export default new Vuex.Store({
         .delete();
     },
     async deleteService({ state }, service) {
+      let announcement = await db
+        .collection("Announcements")
+        .where("description", "==", service.data.title)
+        .get();
+      await db
+        .collection("Announcements")
+        .doc(announcement.docs[0].id)
+        .delete();
       await db
         .collection(service.serviceType)
         .doc(service.id)

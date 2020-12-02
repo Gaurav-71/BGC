@@ -264,7 +264,7 @@ export default {
             this.$router.push("/trainings");
             break;
           case 2:
-            this.$router.push("/workshop");
+            this.$router.push("/workshops");
             break;
 
           case 3:
