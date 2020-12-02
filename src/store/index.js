@@ -17,6 +17,9 @@ export default new Vuex.Store({
     announcements: null,
     conferences: null,
     internships: null,
+    trainings: null,
+    workshops: null,
+    resources: null,
   },
   mutations: {
     login: (state) => {
@@ -41,7 +44,15 @@ export default new Vuex.Store({
     },
     setInternships: (state, service) => {
       state.internships = service;
-      console.log("saved locally", state.internships);
+    },
+    setTrainings: (state, service) => {
+      state.trainings = service;
+    },
+    setWorkshops: (state, service) => {
+      state.workshops = service;
+    },
+    setResources: (state, service) => {
+      state.resources = service;
     },
   },
   actions: {
@@ -116,6 +127,20 @@ export default new Vuex.Store({
         });
       return resp;
     },
+    async downloadResources({ commit }) {
+      let resp = await db
+        .collection("Resources")
+        .orderBy("timestamp", "desc")
+        .onSnapshot((snapshot) => {
+          let resources = [];
+          snapshot.forEach((doc) => {
+            let data = { id: doc.id, data: doc.data(), edit: false };
+            resources.push(data);
+          });
+          commit("setResources", resources);
+        });
+      return resp;
+    },
     async downloadService({ commit }, serviceType) {
       console.log("in service");
       let resp = await db
@@ -128,8 +153,13 @@ export default new Vuex.Store({
             services.push(data);
           });
           if (serviceType == "Internships") {
-            console.log("downloaded");
             commit("setInternships", services);
+          } else if (serviceType == "Trainings") {
+            commit("setTrainings", services);
+          } else if (serviceType == "Workshops") {
+            commit("setWorkshops", services);
+          } else {
+            console.log("Not a service");
           }
         });
       return resp;
@@ -142,6 +172,16 @@ export default new Vuex.Store({
     },
     async uploadAnnouncement(context, announcement) {
       await db.collection("Announcements").add(announcement);
+    },
+    async uploadResource(context, resource) {
+      let announcementInfo = {
+        title: "A new resource has been shared",
+        description: resource.title,
+        serviceType: resource.serviceType,
+        timestamp: resource.timestamp,
+      };
+      await db.collection("Announcements").add(announcementInfo);
+      await db.collection("Resources").add(resource);
     },
     async uploadService(context, post) {
       if (post.files.image != null && post.files.brochure != null) {
@@ -427,6 +467,12 @@ export default new Vuex.Store({
         .doc(announcement.id)
         .update(announcement.data);
     },
+    async editResource({ state }, resource) {
+      await db
+        .collection("Resources")
+        .doc(resource.id)
+        .update(resource.data);
+    },
     async editConference({ state }, conference) {
       await db
         .collection("Conferences")
@@ -436,6 +482,12 @@ export default new Vuex.Store({
     async deleteAnnouncement({ state }, id) {
       await db
         .collection("Announcements")
+        .doc(id)
+        .delete();
+    },
+    async deleteResource({ state }, id) {
+      await db
+        .collection("Resources")
         .doc(id)
         .delete();
     },
@@ -473,6 +525,15 @@ export default new Vuex.Store({
     },
     getInternships: (store) => {
       return store.internships;
+    },
+    getTrainings: (store) => {
+      return store.trainings;
+    },
+    getWorkshops: (store) => {
+      return store.workshops;
+    },
+    getResources: (store) => {
+      return store.resources;
     },
   },
 });

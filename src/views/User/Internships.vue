@@ -1,5 +1,5 @@
 <template>
-  <div class="internships">
+  <div class="user-service">
     <Heading :headingObj="headingObj" />
     <div class="posts">
       <v-card
@@ -98,8 +98,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../scss/main.scss";
-.internships {
+@import "../../scss/_userServices.scss";
+.user-service {
   margin-top: 4rem;
   min-height: calc(100vh - 4rem);
   background: $background;
@@ -107,102 +107,13 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
   @include responsive($tablet-portrait) {
     margin-top: 3.5rem;
     min-height: auto;
   }
   @include responsive($phone) {
     margin-top: 3.5rem;
-  }
-  .posts {
-    width: 100%;
-    display: grid;
-    grid-template-columns: auto auto;
-    justify-content: space-around;
-    align-items: flex-start;
-    @include responsive($tablet-landscape) {
-      grid-template-columns: auto;
-      justify-content: center;
-    }
-    @include responsive($tablet-portrait) {
-      grid-template-columns: auto;
-      justify-content: center;
-    }
-    @include responsive($phone) {
-      grid-template-columns: auto;
-      justify-content: center;
-    }
-    .v-card {
-      border: 2px solid $secondary;
-      border-bottom-left-radius: inherit;
-      border-bottom-right-radius: inherit;
-      width: 640px;
-      @include responsive($phone) {
-        width: 320px;
-      }
-      @include responsive($small-phone) {
-        width: 260px;
-      }
-      .custom-border {
-        border-top: 2px solid $secondary;
-        border-bottom: 2px solid $secondary;
-      }
-      .post-title {
-        color: $secondary;
-        word-wrap: break-word;
-      }
-      .post-date {
-        color: $accent;
-      }
-      .v-img {
-        width: 640px;
-        @include responsive($phone) {
-          width: 320px;
-        }
-        @include responsive($small-phone) {
-          width: 260px;
-        }
-      }
-      .actions {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: $secondary;
-        padding: 1rem;
-        .register-btn,
-        .brochure-btn {
-          flex-basis: 50%;
-          width: 100%;
-          background: $accent;
-          color: $secondary;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          span {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            .vanish {
-              display: block;
-              @include responsive($phone) {
-                display: none;
-              }
-            }
-          }
-          .v-icon {
-            margin-right: 0.5rem;
-            @include responsive($phone) {
-              margin: 0;
-              display: none;
-            }
-          }
-        }
-        .brochure-btn {
-          background: white;
-        }
-      }
-    }
   }
 }
 </style>

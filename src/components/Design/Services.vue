@@ -15,7 +15,7 @@
       </div>
       <img class="white--text" src="../../assets/Services/internship.jpg" />
     </v-card>
-    <v-card to="/training" class="elevation-7">
+    <v-card to="/trainings" class="elevation-7">
       <div class="overlay">
         <div class="service">
           <div class="service-name elevation-10">Training</div>

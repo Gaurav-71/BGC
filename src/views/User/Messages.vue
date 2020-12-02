@@ -329,7 +329,7 @@ export default {
         justify-content: center;
         align-items: center;
         input {
-          background: rgba($primary, 0.2);
+          background: rgba(lighten($secondary, 15%), 0.4);
           border: 1px solid grey;
           padding: 12px 15px;
           width: 49%;
@@ -351,7 +351,7 @@ export default {
       .message {
         width: 100%;
         margin: 1rem 0;
-        background: rgba($primary, 0.2);
+        background: rgba(lighten($secondary, 15%), 0.4);
         border: 1px solid grey;
         height: 100vh;
         border-radius: 0.2rem;

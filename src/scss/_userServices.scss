@@ -1,0 +1,97 @@
+@import "../../scss/main.scss";
+.posts {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  justify-content: center;
+  align-items: flex-start;
+  @include responsive($tablet-landscape) {
+    grid-template-columns: auto;
+    justify-content: center;
+  }
+  @include responsive($tablet-portrait) {
+    grid-template-columns: auto;
+    justify-content: center;
+  }
+  @include responsive($phone) {
+    grid-template-columns: auto;
+    justify-content: center;
+  }
+  .v-card {
+    border: 2px solid $secondary;
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+    width: 660px;
+    &:nth-of-type(odd) {
+      margin-right: auto;
+    }
+    &:nth-of-type(even) {
+      margin-left: auto;
+    }
+    @include responsive($phone) {
+      width: 320px;
+    }
+    @include responsive($small-phone) {
+      width: 260px;
+    }
+    .custom-border {
+      border-top: 2px solid $secondary;
+      border-bottom: 2px solid $secondary;
+    }
+    .post-title {
+      color: $secondary;
+      word-wrap: break-word;
+    }
+    .post-date {
+      color: $accent;
+    }
+    .v-img {
+      width: 640px;
+      @include responsive($phone) {
+        width: 320px;
+      }
+      @include responsive($small-phone) {
+        width: 260px;
+      }
+    }
+    .actions {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: $secondary;
+      padding: 1rem;
+      .register-btn,
+      .brochure-btn {
+        flex-basis: 50%;
+        width: 100%;
+        background: $accent;
+        color: $secondary;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        span {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .vanish {
+            display: block;
+            @include responsive($phone) {
+              display: none;
+            }
+          }
+        }
+        .v-icon {
+          margin-right: 0.5rem;
+          @include responsive($phone) {
+            margin: 0;
+            display: none;
+          }
+        }
+      }
+      .brochure-btn {
+        background: white;
+      }
+    }
+  }
+}

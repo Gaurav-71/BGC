@@ -19,7 +19,13 @@
           clear-icon="mdi-close-circle"
           label="Post Description in HTML"
         ></v-textarea>
-
+        <v-text-field
+          v-model="post.link"
+          prepend-icon="mdi-link"
+          label="Link"
+          required
+          filled
+        ></v-text-field>
         <div class="container text-center btn-flex">
           <v-btn @click="clearForm()" rounded raised class="publish red"
             ><v-icon>mdi-close</v-icon><span>Clear</span></v-btn
@@ -48,6 +54,14 @@
               class="px-3"
               label="Post Title"
               prepend-icon="mdi-format-title"
+              required
+              filled
+            ></v-text-field>
+            <v-text-field
+              v-model="service.data.link"
+              class="px-3"
+              label="Link"
+              prepend-icon="mdi-link"
               required
               filled
             ></v-text-field>
@@ -127,6 +141,7 @@ export default {
       post: {
         serviceType: "Announcements",
         title: null,
+        link: null,
         description: null,
         timestamp: null,
       },
@@ -140,6 +155,7 @@ export default {
       this.post = {
         serviceType: "Announcements",
         title: null,
+        link: null,
         description: null,
         timestamp: null,
       };

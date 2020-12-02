@@ -59,7 +59,7 @@ const routes = [
     component: UserInternship,
   },
   {
-    path: "/training",
+    path: "/trainings",
     name: "UserTraining",
     component: UserTraining,
   },

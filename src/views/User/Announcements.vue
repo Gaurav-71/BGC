@@ -81,6 +81,16 @@
               class="mt-auto ml-auto px-10"
               >View</v-btn
             >
+            <v-btn
+              v-else-if="
+                announcement.data.serviceType == 'Announcements' &&
+                announcement.data.link != null
+              "
+              :href="announcement.data.link"
+              target="_blank"
+              class="mt-auto ml-auto px-10"
+              >View</v-btn
+            >
           </div>
         </v-card>
       </div>

@@ -1,6 +1,27 @@
 <template>
   <div class="resources">
     <Heading :headingObj="headingObj" />
+    <v-card v-for="resource in $store.getters.getResources" :key="resource.id">
+      <div class="my-header">
+        <v-card-title
+          v-html="resource.data.title"
+          class="ma-0 pa-0 title-color"
+        >
+          {{ resource.data.title }}
+        </v-card-title>
+        <div class="time mt-1">Posted on {{ resource.data.timestamp }}</div>
+      </div>
+      <v-divider class="my-3"></v-divider>
+      <p>{{ resource.data.description }}</p>
+      <v-btn
+        :href="resource.data.link"
+        target="_blank"
+        depressed
+        block
+        class="px-6"
+        >Read More</v-btn
+      >
+    </v-card>
   </div>
 </template>
 
@@ -14,10 +35,20 @@ export default {
     return {
       headingObj: {
         h1: "Resources",
-        h4: "",
+        h4: "All informative resources to help you enrich your knowledge",
         src: "resources.svg",
       },
     };
+  },
+  mounted() {
+    this.$store
+      .dispatch("downloadResources")
+      .then((resp) => {
+        this.unsubscribe = resp;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
 };
 </script>
@@ -38,6 +69,41 @@ export default {
   }
   @include responsive($phone) {
     margin-top: 3.5rem;
+  }
+  .v-card {
+    width: 100%;
+    margin: 0.5rem 0;
+    padding: 1rem;
+
+    .my-header {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      .title-color {
+        color: $secondary !important;
+        font-size: x-large;
+        @include responsive($phone) {
+          font-size: large;
+          line-height: 1.4rem;
+        }
+      }
+      .time {
+        color: grey;
+        @include responsive($phone) {
+          font-size: small;
+        }
+      }
+    }
+    p {
+      @include responsive($phone) {
+        font-size: small;
+      }
+    }
+    .v-btn {
+      background: $secondary !important;
+      color: $accent;
+    }
   }
 }
 </style>
