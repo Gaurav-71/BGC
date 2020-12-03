@@ -107,7 +107,7 @@
       <v-btn to="/" class="hover-color" :color="$store.getters.getNavColor" dark
         >Home</v-btn
       >
-      <v-menu dark>
+      <v-menu open-on-hover bottom offset-y dark>
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             class="hover-color"
@@ -118,18 +118,19 @@
             Services
           </v-btn>
         </template>
-        <v-list>
-          <v-list-item
-            v-for="(item, index) in items"
-            :key="index"
-            @click="route(index, 1)"
-          >
+        <v-list
+          v-for="(item, index) in userMenu"
+          :key="index"
+          class="hover-color"
+          :color="$store.getters.getNavColor"
+        >
+          <v-list-item @click="route(index, 1)">
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
 
-      <v-menu dark>
+      <v-menu open-on-hover offset-y dark>
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             class="hover-color"
@@ -140,14 +141,13 @@
             Conferences
           </v-btn>
         </template>
-        <v-list>
-          <v-list-item
-            v-for="conference in $store.getters.getConferences"
-            :key="conference.id"
-            :href="conference.data.link"
-            target="_blank"
-            color="red"
-          >
+        <v-list
+          v-for="conference in $store.getters.getConferences"
+          :key="conference.id"
+          :color="$store.getters.getNavColor"
+          class="hover-color"
+        >
+          <v-list-item :href="conference.data.link" target="_blank" color="red">
             <v-list-item-title>{{ conference.data.name }}</v-list-item-title>
           </v-list-item>
         </v-list>
@@ -178,7 +178,7 @@
         </div></v-btn
       >
 
-      <v-menu dark offset-y>
+      <v-menu open-on-hover dark offset-y>
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             class="hover-color"
@@ -192,12 +192,13 @@
             </div>
           </v-btn>
         </template>
-        <v-list>
-          <v-list-item
-            v-for="(item, index) in items"
-            :key="index"
-            @click="route(index, 2)"
-          >
+        <v-list
+          v-for="(item, index) in items"
+          :key="index"
+          class="hover-color"
+          :color="$store.getters.getNavColor"
+        >
+          <v-list-item @click="route(index, 2)">
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>
         </v-list>
@@ -220,7 +221,7 @@
       raised
       rounded
       color="teal"
-      class="mb-1"
+      class="mb-1 corona-btn"
     >
       <span class="py-3">COVID-19 Testing</span>
     </v-btn>
@@ -229,10 +230,11 @@
       <span class="ml-2">Sign Out</span>
     </v-btn>
     <v-icon
-      v-if="!$store.getters.getLogStatus"
+      v-if="$store.getters.getLogStatus"
       dark
+      size="35"
       @click="sideNav = !sideNav"
-      class="ml-2 hidden-md-and-up"
+      class="ml-2 mb-1 hidden-md-and-up"
       >mdi-menu</v-icon
     >
   </v-app-bar>
@@ -243,6 +245,13 @@ export default {
   data() {
     return {
       sideNav: false,
+      userMenu: [
+        { title: "About" },
+        { title: "Internships" },
+        { title: "Trainings" },
+        { title: "Workshops" },
+        { title: "Resources" },
+      ],
       items: [
         { title: "Internship" },
         { title: "Training" },
@@ -258,16 +267,18 @@ export default {
       if (loggedIn == 1) {
         switch (index) {
           case 0:
-            this.$router.push("/internships");
+            this.router.push("/services/about");
             break;
           case 1:
-            this.$router.push("/trainings");
+            this.$router.push("/internships");
             break;
           case 2:
+            this.$router.push("/trainings");
+            break;
+          case 3:
             this.$router.push("/workshops");
             break;
-
-          case 3:
+          case 4:
             this.$router.push("/resources");
             break;
         }
@@ -323,6 +334,7 @@ export default {
 .royal-border {
   box-sizing: border-box;
   border-bottom: 3px solid $accent !important;
+  z-index: 100;
 }
 .my-flex {
   padding-top: 0.7rem;
@@ -345,5 +357,13 @@ export default {
 }
 .black-bg {
   background-image: black;
+}
+.corona-btn {
+  @include responsive($phone) {
+    font-size: x-small !important;
+  }
+  @include responsive($small-phone) {
+    font-size: 0.5rem !important;
+  }
 }
 </style>

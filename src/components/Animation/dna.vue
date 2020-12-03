@@ -145,7 +145,7 @@ export default {};
 <style lang="scss" scoped>
 @import "../../scss/main.scss";
 .dna {
-  z-index: 2;
+  z-index: 1;
   .bar {
     display: flex;
     flex-direction: column;
@@ -290,6 +290,10 @@ export default {};
         height: 6.5px;
         width: 6.5px;
       }
+      @include responsive($small-phone) {
+        height: 6.5px;
+        width: 4.5px;
+      }
     }
     div:nth-of-type(2) {
       height: 150px;
@@ -299,8 +303,12 @@ export default {};
       margin: 0.3em 0 0.3em 0;
 
       @include responsive($phone) {
-        height: 90px;
-        width: 6px;
+        height: 80px;
+        width: 6.5px;
+      }
+      @include responsive($small-phone) {
+        height: 70px;
+        width: 4.5px;
       }
     }
   }

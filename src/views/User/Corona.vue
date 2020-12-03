@@ -86,7 +86,7 @@ export default {};
     }
     .sec-1 {
       height: 55vh;
-      background: $background;
+
       @include responsive($tablet-portrait) {
         height: 70vh;
       }

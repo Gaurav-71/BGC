@@ -60,6 +60,14 @@ export default {
       font-family: "Anton", sans-serif !important;
       letter-spacing: 1px;
       z-index: 2;
+      @include responsive($phone) {
+        margin-top: 1.25rem;
+        font-size: 2.5rem;
+      }
+      @include responsive($small-phone) {
+        margin-top: 1.25rem;
+        font-size: 2rem;
+      }
     }
     .dna-subtitle {
       padding: 0;
@@ -72,6 +80,9 @@ export default {
       font-family: "Rouge Script", cursive !important;
       z-index: 2;
       display: inline-block;
+      @include responsive($phone) {
+        font-size: xx-large;
+      }
     }
   }
 }

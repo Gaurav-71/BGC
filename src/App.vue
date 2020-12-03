@@ -29,7 +29,13 @@ export default {
 };
 </script>
 
-
+<style lang="scss" scoped>
+@import "./scss/main.scss";
+#app {
+  background: $background;
+  background-image: $gradient;
+}
+</style>
 
 
 

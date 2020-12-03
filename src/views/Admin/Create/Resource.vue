@@ -113,6 +113,10 @@
           </div>
         </v-card>
       </v-form>
+      <EmptyMessage
+        v-if="$store.getters.getServiceStatus"
+        :serviceType="post.serviceType"
+      />
     </div>
   </div>
 </template>
@@ -120,10 +124,12 @@
 <script>
 import Heading from "../../../components/Design/Heading";
 import Guidelines from "../../../components/Design/Guidelines";
+import EmptyMessage from "../../../components/Design/Empty";
 export default {
   components: {
     Heading,
     Guidelines,
+    EmptyMessage,
   },
   data() {
     return {

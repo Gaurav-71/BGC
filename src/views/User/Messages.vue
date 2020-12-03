@@ -3,7 +3,7 @@
     <Heading :headingObj="headingObj" />
     <main>
       <div class="left">
-        <div class="top elevation-3">
+        <div v-if="$store.getters.getFooterStatus" class="top elevation-3">
           <div class="facebook">
             <v-btn
               :href="$store.getters.getProfile.data.facebook"
@@ -49,7 +49,7 @@
           tabindex="0"
           class="custom-iframe elevation-3"
         ></iframe>
-        <div class="bottom">
+        <div v-if="$store.getters.getFooterStatus" class="bottom">
           <div class="action">
             <v-btn
               :href="'tel:' + $store.getters.getProfile.data.phNo"
@@ -168,7 +168,7 @@ export default {
 .contact-us {
   margin-top: 4rem;
   min-height: calc(100vh - 4rem);
-  background: $background;
+
   padding: 1.5rem 2rem;
   display: flex;
   flex-direction: column;
@@ -179,6 +179,7 @@ export default {
   }
   @include responsive($phone) {
     margin-top: 3.5rem;
+    padding: 1rem;
   }
   main {
     width: 100%;

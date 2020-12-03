@@ -278,7 +278,7 @@ export default {
 .settings {
   margin-top: 4rem;
   min-height: calc(100vh - 4rem);
-  background: $background;
+
   padding: 1.5rem 2rem;
   display: flex;
   flex-direction: column;

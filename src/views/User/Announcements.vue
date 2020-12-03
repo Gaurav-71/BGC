@@ -94,7 +94,7 @@
           </div>
         </v-card>
         <EmptyMessage
-          v-if="$store.getters.getAnnouncements.length == 0"
+          v-if="$store.getters.getServiceStatus"
           serviceType="announcements"
         />
       </div>
@@ -120,6 +120,7 @@ export default {
           "Find all updates related to BGC internships, trainings, and workshops here",
         src: "announcements.svg",
       },
+      unsubscribe: null,
     };
   },
   mounted() {
@@ -127,6 +128,7 @@ export default {
       .dispatch("downloadAnnouncements")
       .then((resp) => {
         this.unsubscribe = resp;
+        this.loadedItems = true;
       })
       .catch((err) => {
         console.log(err);
@@ -140,7 +142,7 @@ export default {
 .announcements {
   margin-top: 4rem;
   min-height: calc(100vh - 4rem);
-  background: $background;
+
   padding: 1.5rem 2rem;
   display: flex;
   flex-direction: column;
@@ -151,6 +153,7 @@ export default {
   }
   @include responsive($phone) {
     margin-top: 3.5rem;
+    padding: 1.5rem;
   }
   .announcements-wrapper {
     width: 100%;

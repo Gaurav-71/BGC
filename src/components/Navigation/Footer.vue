@@ -5,7 +5,7 @@
         <img src="../../assets/Header/logo.png" alt="logos" />
       </div>
       <div class="line"></div>
-      <div class="contact-container ma-1">
+      <div v-if="$store.getters.getFooterStatus" class="contact-container ma-1">
         <ul style="list-style-type: none">
           <li>
             <a :href="'tel:' + $store.getters.getProfile.data.phNo">

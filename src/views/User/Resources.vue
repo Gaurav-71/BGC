@@ -24,7 +24,7 @@
       >
     </v-card>
     <EmptyMessage
-      v-if="$store.getters.getResources.length == 0"
+      v-if="$store.getters.getServiceStatus"
       serviceType="resources"
     />
   </div>
@@ -45,6 +45,7 @@ export default {
         h4: "All informative resources to help you enrich your knowledge",
         src: "resources.svg",
       },
+      unsubscribe: null,
     };
   },
   mounted() {
@@ -65,7 +66,7 @@ export default {
 .resources {
   margin-top: 4rem;
   min-height: calc(100vh - 4rem);
-  background: $background;
+
   padding: 1.5rem 2rem;
   display: flex;
   flex-direction: column;
@@ -76,6 +77,7 @@ export default {
   }
   @include responsive($phone) {
     margin-top: 3.5rem;
+    padding: 1rem;
   }
   .v-card {
     width: 100%;

@@ -13,6 +13,9 @@ export default new Vuex.Store({
     navColor: "#093630",
     isLoggedIn: localStorage.getItem("isLoggedIn"),
     isLoggingIn: true,
+    loadedFooter: false,
+    loadedService: false,
+    isServiceEmpty: true,
     profile: null,
     messages: null,
     announcements: null,
@@ -31,8 +34,15 @@ export default new Vuex.Store({
       localStorage.setItem("isLoggedIn", false);
       state.isLoggedIn = localStorage.getItem("isLoggedIn");
     },
+    setFooterStatus: (state, status) => {
+      state.loadedFooter = status;
+    },
+    setServiceStatus: (state, status) => {
+      state.loadedService = status;
+    },
     setProfile: (state, profile) => {
       state.profile = profile;
+      state.loadedFooter = true;
     },
     setMessages: (state, messages) => {
       state.messages = messages;
@@ -42,18 +52,48 @@ export default new Vuex.Store({
     },
     setAnnouncements: (state, announcements) => {
       state.announcements = announcements;
+      state.loadedService = true;
+      if (announcements.length != 0) {
+        state.isServiceEmpty = false;
+      } else {
+        state.isServiceEmpty = true;
+      }
     },
     setInternships: (state, service) => {
       state.internships = service;
+      state.loadedService = true;
+      if (service.length != 0) {
+        state.isServiceEmpty = false;
+      } else {
+        state.isServiceEmpty = true;
+      }
     },
     setTrainings: (state, service) => {
       state.trainings = service;
+      state.loadedService = true;
+      if (service.length != 0) {
+        state.isServiceEmpty = false;
+      } else {
+        state.isServiceEmpty = true;
+      }
     },
     setWorkshops: (state, service) => {
       state.workshops = service;
+      state.loadedService = true;
+      if (service.length != 0) {
+        state.isServiceEmpty = false;
+      } else {
+        state.isServiceEmpty = true;
+      }
     },
     setResources: (state, service) => {
       state.resources = service;
+      state.loadedService = true;
+      if (service.length != 0) {
+        state.isServiceEmpty = false;
+      } else {
+        state.isServiceEmpty = true;
+      }
     },
   },
   actions: {
@@ -76,6 +116,7 @@ export default new Vuex.Store({
       context.commit("logout");
     },
     async downloadProfile({ commit }) {
+      commit("setFooterStatus", false);
       let resp = await db.collection("Profile").onSnapshot((snapshot) => {
         let profile = [];
         snapshot.forEach((doc) => {
@@ -115,6 +156,7 @@ export default new Vuex.Store({
       return resp;
     },
     async downloadAnnouncements({ commit }) {
+      commit("setServiceStatus", false);
       let resp = await db
         .collection("Announcements")
         .orderBy("timestamp", "desc")
@@ -129,6 +171,7 @@ export default new Vuex.Store({
       return resp;
     },
     async downloadResources({ commit }) {
+      commit("setServiceStatus", false);
       let resp = await db
         .collection("Resources")
         .orderBy("timestamp", "desc")
@@ -144,6 +187,7 @@ export default new Vuex.Store({
     },
     async downloadService({ commit }, serviceType) {
       console.log("in service");
+      commit("setServiceStatus", false);
       let resp = await db
         .collection(serviceType)
         .orderBy("timestamp", "desc")
@@ -583,6 +627,15 @@ export default new Vuex.Store({
     },
     getLogStatus: (store) => {
       return store.isLoggedIn;
+    },
+    getFooterStatus: (store) => {
+      return store.loadedFooter;
+    },
+    getServiceStatus: (store) => {
+      return store.isServiceEmpty;
+    },
+    getServiceLoadStatus: (store) => {
+      return store.loadedService;
     },
     getProfile: (store) => {
       return store.profile;

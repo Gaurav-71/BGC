@@ -51,7 +51,7 @@ export default {
         margin: 0;
         color: $accent;
         @include responsive($phone) {
-          font-size: x-large;
+          font-size: 1.6rem;
         }
       }
       h4 {

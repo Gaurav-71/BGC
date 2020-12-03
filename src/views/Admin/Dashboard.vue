@@ -11,7 +11,7 @@ export default {};
 .dashboard {
   margin-top: 4rem;
   min-height: calc(100vh - 4rem);
-  background: $background;
+
   display: flex;
   justify-content: center;
   align-items: center;

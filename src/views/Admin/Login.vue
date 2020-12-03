@@ -71,7 +71,6 @@ export default {
 <style lang="scss" scoped>
 @import "../../scss/main.scss";
 .my-bgrnd {
-  background: $background;
   min-height: 100vh;
 }
 </style>
