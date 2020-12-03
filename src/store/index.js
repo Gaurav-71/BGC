@@ -4,6 +4,7 @@ import Vuex from "vuex";
 import { auth } from "../main.js";
 import { db } from "../main.js";
 import { storage } from "../main.js";
+import { storageRef } from "../main.js";
 
 Vue.use(Vuex);
 
@@ -185,10 +186,13 @@ export default new Vuex.Store({
       await db.collection("Announcements").add(announcementInfo);
     },
     async uploadService(context, post) {
+      var uploadFileName = Date.now();
+      post.details.timestamp = Date(Date.now());
+      post.details.fileName = uploadFileName;
       if (post.files.image != null && post.files.brochure != null) {
         console.log("Both present");
         let storageImageRef = storage.ref(
-          post.details.serviceType + "/images/" + Date.now()
+          post.details.serviceType + "/images/" + uploadFileName
         );
         let uploadImageFile = storageImageRef.put(post.files.image);
         uploadImageFile.on(
@@ -204,7 +208,7 @@ export default new Vuex.Store({
                 post.details.image = downloadURL;
                 console.log("received img link", downloadURL);
                 let storageBrochureRef = storage.ref(
-                  post.details.serviceType + "/brochures/" + Date.now()
+                  post.details.serviceType + "/brochures/" + uploadFileName
                 );
                 let uploadBrochureFile = storageBrochureRef.put(
                   post.files.brochure
@@ -221,7 +225,7 @@ export default new Vuex.Store({
                       .then(async (downloadURL) => {
                         post.details.brochure = downloadURL;
                         console.log("received brochure link", downloadURL);
-                        post.details.timestamp = Date(Date.now());
+
                         let uploadPostDetails = await db
                           .collection(post.details.serviceType)
                           .add(post.details);
@@ -252,7 +256,7 @@ export default new Vuex.Store({
       } else if (post.files.image != null) {
         console.log("Only image");
         let storageImageRef = storage.ref(
-          post.details.serviceType + "/images/" + Date.now()
+          post.details.serviceType + "/images/" + uploadFileName
         );
         let uploadImageFile = storageImageRef.put(post.files.image);
         uploadImageFile.on(
@@ -262,38 +266,35 @@ export default new Vuex.Store({
             console.log("Couldn't Upload Post Due To Error : ", error);
           },
           async () => {
-            await uploadImageFile.snapshot.ref
-              .getDownloadURL()
-              .then(async (downloadURL) => {
-                post.details.image = downloadURL;
-                console.log("received image link", downloadURL);
-                post.details.timestamp = Date(Date.now());
-                let uploadPostDetails = await db
-                  .collection(post.details.serviceType)
-                  .add(post.details);
-                console.log("Published Post");
-                let announcementInfo = {
-                  title:
-                    post.details.serviceType == "Internships"
-                      ? "New internship position is available"
-                      : post.details.serviceType == "Trainings"
-                      ? "New training program announced"
-                      : post.details.serviceType == "Workshops"
-                      ? "New workshop announced"
-                      : "Announcement",
-                  description: post.details.title,
-                  serviceType: post.details.serviceType,
-                  serviceId: uploadPostDetails.id,
-                  timestamp: post.details.timestamp,
-                };
-                await db.collection("Announcements").add(announcementInfo);
-              });
+            let downloadURL = await uploadImageFile.snapshot.ref.getDownloadURL();
+            post.details.image = downloadURL;
+            console.log("received image link", downloadURL);
+
+            let uploadPostDetails = await db
+              .collection(post.details.serviceType)
+              .add(post.details);
+            console.log("Published Post");
+            let announcementInfo = {
+              title:
+                post.details.serviceType == "Internships"
+                  ? "New internship position is available"
+                  : post.details.serviceType == "Trainings"
+                  ? "New training program announced"
+                  : post.details.serviceType == "Workshops"
+                  ? "New workshop announced"
+                  : "Announcement",
+              description: post.details.title,
+              serviceType: post.details.serviceType,
+              serviceId: uploadPostDetails.id,
+              timestamp: post.details.timestamp,
+            };
+            await db.collection("Announcements").add(announcementInfo);
           }
         );
       } else if (post.files.brochure != null) {
         console.log("Only brochure");
         let storageBrochureRef = storage.ref(
-          post.details.serviceType + "/brochures/" + Date.now()
+          post.details.serviceType + "/brochures/" + uploadFileName
         );
         let uploadBrochureFile = storageBrochureRef.put(post.files.brochure);
         uploadBrochureFile.on(
@@ -303,38 +304,32 @@ export default new Vuex.Store({
             console.log("Couldn't Upload Post Due To Error : ", error);
           },
           async () => {
-            await uploadBrochureFile.snapshot.ref
-              .getDownloadURL()
-              .then(async (downloadURL) => {
-                post.details.brochure = downloadURL;
-                console.log("received brochure link", downloadURL);
-                post.details.timestamp = Date(Date.now());
-                let uploadPostDetails = await db
-                  .collection(post.details.serviceType)
-                  .add(post.details);
-                console.log("Published Post");
-                let announcementInfo = {
-                  title:
-                    post.details.serviceType == "Internships"
-                      ? "New internship position is available"
-                      : post.details.serviceType == "Trainings"
-                      ? "New training program announced"
-                      : post.details.serviceType == "Workshops"
-                      ? "New workshop announced"
-                      : "Announcement",
-                  description: post.details.title,
-                  serviceType: post.details.serviceType,
-                  serviceId: uploadPostDetails.id,
-                  timestamp: post.details.timestamp,
-                };
-                await db.collection("Announcements").add(announcementInfo);
-              });
+            let downloadURL = await uploadBrochureFile.snapshot.ref.getDownloadURL();
+            post.details.brochure = downloadURL;
+            console.log("received brochure link", downloadURL);
+            let uploadPostDetails = await db
+              .collection(post.details.serviceType)
+              .add(post.details);
+            console.log("Published Post");
+            let announcementInfo = {
+              title:
+                post.details.serviceType == "Internships"
+                  ? "New internship position is available"
+                  : post.details.serviceType == "Trainings"
+                  ? "New training program announced"
+                  : post.details.serviceType == "Workshops"
+                  ? "New workshop announced"
+                  : "Announcement",
+              description: post.details.title,
+              serviceType: post.details.serviceType,
+              serviceId: uploadPostDetails.id,
+              timestamp: post.details.timestamp,
+            };
+            await db.collection("Announcements").add(announcementInfo);
           }
         );
       } else {
         console.log("none");
-        post.details.timestamp = Date(Date.now());
-        console.log(Date.now());
         let uploadPostDetails = await db
           .collection(post.details.serviceType)
           .add(post.details);
@@ -360,7 +355,7 @@ export default new Vuex.Store({
       if (service.files.image != null && service.files.brochure != null) {
         console.log("Both present");
         let storageImageRef = storage.ref(
-          service.details.serviceType + "/images/" + service.files.image.name
+          service.details.serviceType + "/images/" + service.details.fileName
         );
         let uploadImageFile = storageImageRef.put(service.files.image);
         uploadImageFile.on(
@@ -378,7 +373,7 @@ export default new Vuex.Store({
                 let storageBrochureRef = storage.ref(
                   service.details.serviceType +
                     "/brochures/" +
-                    service.files.brochure.name
+                    service.details.fileName
                 );
                 let uploadBrochureFile = storageBrochureRef.put(
                   service.files.brochure
@@ -420,7 +415,7 @@ export default new Vuex.Store({
       } else if (service.files.image != null) {
         console.log("Only image");
         let storageImageRef = storage.ref(
-          service.details.serviceType + "/images/" + service.files.image.name
+          service.details.serviceType + "/images/" + service.details.fileName
         );
         let uploadImageFile = storageImageRef.put(service.files.image);
         uploadImageFile.on(
@@ -455,7 +450,7 @@ export default new Vuex.Store({
       } else if (service.files.brochure != null) {
         console.log("Only brochure");
         let storageBrochureRef = storage.ref(
-          service.details.serviceType + "/brochures/" + service.files.image.name
+          service.details.serviceType + "/brochures/" + service.details.fileName
         );
         let uploadBrochureFile = storageBrochureRef.put(service.files.brochure);
         uploadBrochureFile.on(
@@ -568,6 +563,18 @@ export default new Vuex.Store({
         .collection(service.serviceType)
         .doc(service.id)
         .delete();
+      if (service.data.image != null) {
+        let deleteImgRef = storageRef.child(
+          service.serviceType + "/images/" + service.data.fileName
+        );
+        await deleteImgRef.delete();
+      }
+      if (service.data.brochure != null) {
+        let deleteBrochureRef = storageRef.child(
+          service.serviceType + "/brochures/" + service.data.fileName
+        );
+        await deleteBrochureRef.delete();
+      }
     },
   },
   getters: {

@@ -24,6 +24,7 @@ firebase.analytics();
 export const auth = firebase.auth();
 export const db = firebase.firestore();
 export const storage = firebase.storage();
+export const storageRef = storage.ref();
 
 Vue.config.productionTip = false;
 

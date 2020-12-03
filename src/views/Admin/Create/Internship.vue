@@ -292,6 +292,7 @@ export default {
         date: null,
         image: null,
         brochure: null,
+        fileName: null,
         timestamp: null,
       },
       files: {
@@ -338,6 +339,7 @@ export default {
         date: null,
         image: null,
         brochure: null,
+        fileName: null,
         timestamp: null,
       };
       this.files = {

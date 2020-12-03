@@ -292,6 +292,7 @@ export default {
         link: null,
         date: null,
         image: null,
+        fileName: null,
         brochure: null,
         timestamp: null,
       },
@@ -338,6 +339,7 @@ export default {
         link: null,
         date: null,
         image: null,
+        fileName: null,
         brochure: null,
         timestamp: null,
       };
