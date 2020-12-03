@@ -93,6 +93,10 @@
             >
           </div>
         </v-card>
+        <EmptyMessage
+          v-if="$store.getters.getAnnouncements.length == 0"
+          serviceType="announcements"
+        />
       </div>
     </div>
   </div>
@@ -101,10 +105,12 @@
 <script>
 import Heading from "../../components/Design/Heading";
 import Services from "../../components/Design/Services.vue";
+import EmptyMessage from "../../components/Design/Empty";
 export default {
   components: {
     Heading,
     Services,
+    EmptyMessage,
   },
   data() {
     return {

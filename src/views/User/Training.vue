@@ -64,19 +64,25 @@
         </v-card-actions>
       </v-card>
     </div>
+    <EmptyMessage
+      v-if="$store.getters.getTrainings.length == 0"
+      serviceType="trainings"
+    />
   </div>
 </template>
 
 <script>
 import Heading from "../../components/Design/Heading";
+import EmptyMessage from "../../components/Design/Empty";
 export default {
   components: {
     Heading,
+    EmptyMessage,
   },
   data() {
     return {
       headingObj: {
-        h1: "Training",
+        h1: "Trainings",
         h4:
           "We provide the best training in the field of Genomics, Transcriptomics, Metagenomics & Bioinformatics ",
         src: "training.svg",

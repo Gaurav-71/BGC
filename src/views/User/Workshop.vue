@@ -64,14 +64,20 @@
         </v-card-actions>
       </v-card>
     </div>
+    <EmptyMessage
+      v-if="$store.getters.getWorkshops.length == 0"
+      serviceType="workshops"
+    />
   </div>
 </template>
 
 <script>
 import Heading from "../../components/Design/Heading";
+import EmptyMessage from "../../components/Design/Empty";
 export default {
   components: {
     Heading,
+    EmptyMessage,
   },
   data() {
     return {

@@ -14,6 +14,7 @@
       <v-divider class="my-3"></v-divider>
       <p>{{ resource.data.description }}</p>
       <v-btn
+        v-if="resource.data.link != null"
         :href="resource.data.link"
         target="_blank"
         depressed
@@ -22,14 +23,20 @@
         >Read More</v-btn
       >
     </v-card>
+    <EmptyMessage
+      v-if="$store.getters.getResources.length == 0"
+      serviceType="resources"
+    />
   </div>
 </template>
 
 <script>
 import Heading from "../../components/Design/Heading";
+import EmptyMessage from "../../components/Design/Empty";
 export default {
   components: {
     Heading,
+    EmptyMessage,
   },
   data() {
     return {
