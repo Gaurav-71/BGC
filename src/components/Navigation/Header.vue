@@ -267,7 +267,7 @@ export default {
       if (loggedIn == 1) {
         switch (index) {
           case 0:
-            this.router.push("/services/about");
+            this.$router.push("/services/about");
             break;
           case 1:
             this.$router.push("/internships");

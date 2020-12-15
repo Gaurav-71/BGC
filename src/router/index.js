@@ -5,6 +5,7 @@ import VueRouter from "vue-router";
 import Landing from "../views/User/Landing.vue";
 import Corona from "../views/User/Corona.vue";
 import Messages from "../views/User/Messages.vue";
+import Services from "../views/User/Services.vue";
 import UserAnnouncement from "../views/User/Announcements.vue";
 import UserTraining from "../views/User/Training.vue";
 import UserResource from "../views/User/Resources.vue";
@@ -47,6 +48,11 @@ const routes = [
     path: "/admin/login",
     name: "Login",
     component: Login,
+  },
+  {
+    path: "/services/about",
+    name: "Service",
+    component: Services,
   },
   {
     path: "/announcements",

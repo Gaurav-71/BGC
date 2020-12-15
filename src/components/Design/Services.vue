@@ -6,8 +6,8 @@
           <div class="service-name elevation-10">Internships</div>
           <div class="service-description elevation-10">
             <div class="text">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sit
-              molestias laborum numquam, autem quidem accusantium sequi
+              Come join us at BGC, where many individual imaginations gather
+              together to pave the way to innovation
             </div>
             <v-btn class="my-2 mb-3">View Internships</v-btn>
           </div>
@@ -21,8 +21,8 @@
           <div class="service-name elevation-10">Training</div>
           <div class="service-description elevation-10">
             <div class="text">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sit
-              molestias laborum numquam, autem quidem accusantium sequi
+              In collaboration with various premier institutes we conduct both
+              onsite & online training programmes in various fields.
             </div>
             <v-btn class="my-2 mb-3">View Trainings</v-btn>
           </div>
@@ -36,8 +36,8 @@
           <div class="service-name elevation-10">Workshops</div>
           <div class="service-description elevation-10">
             <div class="text">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sit
-              molestias laborum numquam, autem quidem accusantium sequi
+              We conduct workshops designed to provide a strong platform for
+              understanding the techniques in different fields.
             </div>
             <v-btn class="my-2 mb-3">View Workshops</v-btn>
           </div>
@@ -51,8 +51,8 @@
           <div class="service-name elevation-10">Resources</div>
           <div class="service-description elevation-10">
             <div class="text">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sit
-              molestias laborum numquam, autem quidem accusantium sequi
+              Informative resources such as research papers, study material etc.
+              to help you enrich your knowledge
             </div>
             <v-btn class="my-2 mb-3">View Resources</v-btn>
           </div>
@@ -88,11 +88,12 @@ export default {};
   }
   .v-card {
     transition: all 0.2s ease-in;
-    width: 19rem;
+    width: 20rem;
     height: 25rem;
     border-radius: 0.8rem;
     @include responsive($tablet-landscape) {
       margin: 1rem 0;
+      width: 18rem;
     }
     @include responsive($tablet-portrait) {
       margin: 1rem 0;
