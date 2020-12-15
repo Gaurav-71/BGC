@@ -2,8 +2,6 @@
   <div class="announcements">
     <Heading :headingObj="headingObj" />
     <div class="announcements-wrapper">
-      <Services />
-      <v-divider class="full-width"></v-divider>
       <div class="announcement-cards">
         <v-card
           v-for="announcement in $store.getters.getAnnouncements"
@@ -128,7 +126,6 @@ export default {
       .dispatch("downloadAnnouncements")
       .then((resp) => {
         this.unsubscribe = resp;
-        this.loadedItems = true;
       })
       .catch((err) => {
         console.log(err);

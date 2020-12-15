@@ -95,6 +95,10 @@ export default new Vuex.Store({
         state.isServiceEmpty = true;
       }
     },
+    setYear: (state) => {
+      state.date = new Date();
+      state.year = date.getFullYear();
+    },
   },
   actions: {
     async login({ commit }, payload) {
@@ -660,6 +664,10 @@ export default new Vuex.Store({
     },
     getResources: (store) => {
       return store.resources;
+    },
+    getYear: (store) => {
+      let date = new Date();
+      return date.getFullYear();
     },
   },
 });

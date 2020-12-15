@@ -1,79 +1,118 @@
 <template>
-  <div class="services-cards px-1">
-    <v-card to="/internships" class="elevation-7 my-4">
+  <div class="main-services">
+    <v-card class="elevation-7">
       <div class="overlay">
         <div class="service">
-          <div class="service-name elevation-10">Internships</div>
+          <div class="service-name elevation-10">DNA/RNA sequencing</div>
           <div class="service-description elevation-10">
             <div class="text">
-              Come join us at BGC, where many individual imaginations gather
-              together to pave the way to innovation
+              <ul v-for="(service, x) in services" :key="x">
+                <li>{{ service.title }}</li>
+              </ul>
             </div>
-            <v-btn class="my-2 mb-3">View Internships</v-btn>
+            <v-btn to="/services/DNA-RNA-Sequencing" class="my-2 mb-7"
+              >View</v-btn
+            >
           </div>
         </div>
       </div>
-      <img class="white--text" src="../../assets/Services/internship.jpg" />
+      <img class="white--text" src="../../assets/Services/dna.jpg" />
     </v-card>
-    <v-card to="/trainings" class="elevation-7">
+    <v-card class="elevation-7">
       <div class="overlay">
         <div class="service">
-          <div class="service-name elevation-10">Trainings</div>
+          <div class="service-name elevation-10">Bioinformatics Analysis</div>
           <div class="service-description elevation-10">
             <div class="text">
-              In collaboration with various premier institutes we conduct both
-              onsite & online training programmes in various fields.
+              <ul>
+                <li>
+                  Genome Analysis
+                  <ul>
+                    <li>Metagenome, Phylogeny analysis</li>
+                    <li>
+                      Resequencing, De novo, Exome analysis and annotation
+                    </li>
+
+                    <li>Amplicon analysis (16S rRNA/ITS)</li>
+
+                    <li>Marker (SSR, SNP, transposon) analysis</li>
+                  </ul>
+                </li>
+                <li>
+                  Transcriptome Analysis
+                  <ul>
+                    <li>De novo Transcriptome analysis</li>
+                    <li>Reference based Transcriptome analysis</li>
+                    <li>Metatranscriptome analysis</li>
+                  </ul>
+                </li>
+              </ul>
             </div>
-            <v-btn class="my-2 mb-3">View Trainings</v-btn>
+            <v-btn to="/services/Bioinformatics-analyisis" class="my-2 mb-7"
+              >View</v-btn
+            >
           </div>
         </div>
       </div>
-      <img class="white--text" src="../../assets/Services/training.jpg" />
-    </v-card>
-    <v-card to="/workshops" class="elevation-7">
-      <div class="overlay">
-        <div class="service">
-          <div class="service-name elevation-10">Workshops</div>
-          <div class="service-description elevation-10">
-            <div class="text">
-              We conduct workshops designed to provide a strong platform for
-              understanding the techniques in different fields.
-            </div>
-            <v-btn class="my-2 mb-3">View Workshops</v-btn>
-          </div>
-        </div>
-      </div>
-      <img class="white--text" src="../../assets/Services/workshop.jpg" />
-    </v-card>
-    <v-card to="/resources" class="elevation-7">
-      <div class="overlay">
-        <div class="service">
-          <div class="service-name elevation-10">Resources</div>
-          <div class="service-description elevation-10">
-            <div class="text">
-              Informative resources such as research papers, study material etc.
-              to help you enrich your knowledge
-            </div>
-            <v-btn class="my-2 mb-3">View Resources</v-btn>
-          </div>
-        </div>
-      </div>
-      <img class="white--text" src="../../assets/Services/resources.jpg" />
+      <img class="white--text" src="../../assets/Services/bio.jpg" />
     </v-card>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      services: [
+        {
+          title: "Genome resequencing",
+        },
+        {
+          title: "De novo resequencing",
+        },
+        {
+          title: "Cross Species Comparative DNA sequencing",
+        },
+        {
+          title: "Transcriptomes (RNA, small RNA)",
+        },
+        {
+          title: "COVID-19 Testing following ICMR guidelines",
+        },
+        {
+          title: "Meta-genomes & Meta-Transcriptomes",
+        },
+        {
+          title: "HLA Typing",
+        },
+        {
+          title: "Beta Thalassemia",
+        },
+        {
+          title: "Sickle Cell Anaemia",
+        },
+        {
+          title: "Genotyping (SNP, SSR, Genes)",
+        },
+        {
+          title: "Amplicon Sequencing (R- Gene Panel, 16S rRNA/ITS, etc.)",
+        },
+        {
+          title: "Sanger Sequencing",
+        },
+      ],
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
 @import "../../scss/main.scss";
-.services-cards {
+.main-services {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: stretch;
   @include responsive($tablet-landscape) {
     flex-wrap: wrap;
     justify-content: space-around;
@@ -88,25 +127,30 @@ export default {};
   }
   .v-card {
     transition: all 0.2s ease-in;
-    width: 20rem;
-    height: 25rem;
+    width: 46.5vw;
+    height: auto;
     border-radius: 0.8rem;
     @include responsive($tablet-landscape) {
       margin: 1rem 0;
-      width: 18rem;
+      width: 28rem;
+      min-height: 25rem;
     }
     @include responsive($tablet-portrait) {
       margin: 1rem 0;
+      width: 20rem;
+      min-height: 25rem;
     }
     @include responsive($phone) {
       margin: 1rem 0;
+      width: 20rem;
+      min-height: 25rem;
     }
     .overlay {
       position: absolute;
-      height: 25rem;
+      height: 100%;
       width: 100%;
       z-index: 10;
-      background: rgba($color: $secondary, $alpha: 0.3);
+      background: rgba($color: $secondary, $alpha: 0.4);
       border-radius: inherit;
       transition: all 0.5s ease-in;
       .service {
@@ -135,17 +179,22 @@ export default {};
           height: 0;
           width: 0;
           padding: 0;
+
           display: flex;
-          justify-content: center;
+          justify-content: flex-start;
           align-items: center;
+          text-align: left;
           flex-direction: column;
           overflow: hidden;
           .text {
+            width: 100%;
             font-weight: normal;
             text-align: left;
             opacity: 0;
             transition: opacity 0.4s ease-in;
             transition-delay: 0.1s;
+            text-transform: none;
+
             //padding: 1rem;
           }
           .v-btn {
@@ -177,8 +226,8 @@ export default {};
     }
   }
   .v-card:hover {
-    transform: scale(1.06);
-    cursor: pointer;
+    transform: scale(1.04);
+
     .overlay {
       .service {
         .service-description {
@@ -186,10 +235,14 @@ export default {};
           height: max-content;
           width: 100%;
           margin-top: 1rem;
-          padding: 1rem;
+          padding: 0 1rem;
           .text {
             opacity: 1;
-            padding: 1rem;
+            padding: 0.5rem 1rem;
+            @include responsive($phone) {
+              font-size: small;
+              padding: 1rem;
+            }
           }
           .v-btn {
             opacity: 1;
