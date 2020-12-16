@@ -160,6 +160,9 @@ export default {
       }
     },
   },
+  created() {
+    this.$store.commit("setNavColor", 1);
+  },
 };
 </script>
 

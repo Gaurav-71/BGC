@@ -32,6 +32,9 @@ export default {
     width: 5%;
     height: 3px;
     background: $accent;
+    @include responsive($phone) {
+      width: 27.5%;
+    }
   }
 }
 </style>

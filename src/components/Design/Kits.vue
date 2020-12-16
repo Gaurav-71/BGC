@@ -61,6 +61,18 @@ export default {};
     display: flex;
     justify-content: space-between;
     align-items: center;
+    @include responsive($tablet-landscape) {
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+    @include responsive($tablet-portrait) {
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+    @include responsive($phone) {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
     .kit {
       width: 220px;
       height: 220px;
@@ -71,6 +83,15 @@ export default {};
       background: white;
       text-align: center;
       border-radius: 0.8rem;
+      @include responsive($tablet-landscape) {
+        margin: 1rem 0;
+      }
+      @include responsive($tablet-portrait) {
+        margin: 1rem 0;
+      }
+      @include responsive($phone) {
+        margin: 1rem 0;
+      }
       .img-container {
         width: 100%;
         display: flex;

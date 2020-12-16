@@ -99,6 +99,13 @@ export default new Vuex.Store({
       state.date = new Date();
       state.year = date.getFullYear();
     },
+    setNavColor: (state, color) => {
+      if (color == 1) {
+        state.navColor = "#093630";
+      } else {
+        state.navColor = "rgba(0, 0, 0, 0.2)";
+      }
+    },
   },
   actions: {
     async login({ commit }, payload) {

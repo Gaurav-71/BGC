@@ -1,5 +1,5 @@
 <template>
-  <div class="dna">
+  <div class="dna-anim">
     <section class="bar">
       <div></div>
       <div></div>
@@ -144,8 +144,8 @@ export default {};
 
 <style lang="scss" scoped>
 @import "../../scss/main.scss";
-.dna {
-  z-index: 1;
+.dna-anim {
+  z-index: 100;
   .bar {
     display: flex;
     flex-direction: column;
@@ -154,12 +154,17 @@ export default {};
     float: left;
     animation: rotateX 5s linear infinite;
     margin: 0 0.2rem;
+    z-index: 101;
     @keyframes rotateX {
       0% {
+        z-index: 101;
+        -webkit-transform: rotateX(360deg);
         transform: rotateX(0);
         filter: hue-rotate(0deg);
       }
       100% {
+        z-index: 101;
+        -webkit-transform: rotateX(360deg);
         transform: rotateX(360deg);
         filter: hue-rotate(360deg);
       }
@@ -278,38 +283,17 @@ export default {};
     }
     div:nth-of-type(1),
     div:nth-of-type(3) {
-      height: 20px;
-      width: 20px;
+      height: 6px;
+      width: 6px;
       background: #ff5722;
       border-radius: 50%;
-      @include responsive($tablet-portrait) {
-        height: 18px;
-        width: 18px;
-      }
-      @include responsive($phone) {
-        height: 6.5px;
-        width: 6.5px;
-      }
-      @include responsive($small-phone) {
-        height: 6.5px;
-        width: 4.5px;
-      }
     }
     div:nth-of-type(2) {
-      height: 150px;
-      width: 10px;
+      height: 55px;
+      width: 2px;
       background: #ff5722;
       border-radius: 50px;
       margin: 0.3em 0 0.3em 0;
-
-      @include responsive($phone) {
-        height: 80px;
-        width: 6.5px;
-      }
-      @include responsive($small-phone) {
-        height: 70px;
-        width: 4.5px;
-      }
     }
   }
 }

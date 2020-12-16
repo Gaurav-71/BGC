@@ -121,6 +121,9 @@ export default {
       unsubscribe: null,
     };
   },
+  created() {
+    this.$store.commit("setNavColor", 1);
+  },
   mounted() {
     this.$store
       .dispatch("downloadAnnouncements")

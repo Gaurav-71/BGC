@@ -121,10 +121,9 @@
         <v-list
           v-for="(item, index) in userMenu"
           :key="index"
-          class="hover-color"
-          :color="$store.getters.getNavColor"
+          class="hover-color item-container"
         >
-          <v-list-item @click="route(index, 1)">
+          <v-list-item class="item-title" @click="route(index, 1)">
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>
         </v-list>
@@ -144,10 +143,13 @@
         <v-list
           v-for="conference in $store.getters.getConferences"
           :key="conference.id"
-          :color="$store.getters.getNavColor"
-          class="hover-color"
+          class="hover-color item-container"
         >
-          <v-list-item :href="conference.data.link" target="_blank" color="red">
+          <v-list-item
+            :href="conference.data.link"
+            target="_blank"
+            class="item-title"
+          >
             <v-list-item-title>{{ conference.data.name }}</v-list-item-title>
           </v-list-item>
         </v-list>
@@ -264,6 +266,7 @@ export default {
   },
   methods: {
     route(index, loggedIn) {
+      this.$store.commit("setNavColor", 1);
       if (loggedIn == 1) {
         switch (index) {
           case 0:
@@ -335,6 +338,8 @@ export default {
   box-sizing: border-box;
   border-bottom: 3px solid $accent !important;
   z-index: 100;
+  backdrop-filter: blur(50px);
+  transition: background 0.2s ease-in;
 }
 .my-flex {
   padding-top: 0.7rem;
@@ -350,10 +355,13 @@ export default {
   transition: color 0.3s ease-in;
   box-shadow: none;
   border-bottom: 3px solid $accent !important;
+  transition: background 0.2s ease-in-out;
+  // backdrop-filter: blur(20px);
 }
 .hover-color:hover {
   color: $accent !important;
   cursor: pointer !important;
+  backdrop-filter: blur(30px);
 }
 .black-bg {
   background-image: black;
@@ -364,6 +372,15 @@ export default {
   }
   @include responsive($small-phone) {
     font-size: 0.5rem !important;
+  }
+}
+
+.item-container {
+  background: rgba($secondary, 1);
+  backdrop-filter: blur(60px);
+  .item-title {
+    background: rgba($secondary, 1);
+    backdrop-filter: blur(60px);
   }
 }
 </style>

@@ -1,10 +1,7 @@
 <template>
   <div class="landing-page">
-    <div class="hero-section">
-      <div class="overlay"></div>
+    <div id="heroDna" class="hero-section">
       <DNA />
-      <div class="dna-title">Bengaluru Genomics Center</div>
-      <span class="dna-subtitle">- Decode your Heredity -</span>
     </div>
     <section class="about-section white-bg">
       <Title text="About Us" />
@@ -29,10 +26,10 @@
       <Title text="COVID-19 Testing" />
       <p>We are approved for COVID-19 testing by ICMR, Government of India.</p>
       <div class="covid-description">
-        <div v-if="$store.getters.getFooterStatus" class="card">
+        <div v-if="$store.getters.getFooterStatus" class="card call-card">
           <img src="../../assets/Landing/covid.png" alt="" />
           <v-btn rounded raised>
-            <v-icon>mdi-phone</v-icon>
+            <v-icon class="phone">mdi-phone</v-icon>
             <a
               :href="'tel:' + $store.getters.getProfile.data.phNo"
               style="text-decoration: none"
@@ -237,7 +234,7 @@
 </template>
 
 <script>
-import DNA from "../../components/Animation/dna";
+import DNA from "../../components/Design/dna";
 import Title from "../../components/Design/Title";
 import MainServices from "../../components/Design/MainServices";
 import Services from "../../components/Design/Services";
@@ -251,6 +248,33 @@ export default {
     Kits,
   },
   mounted() {
+    this.$store.commit("setNavColor", 2);
+    function isElementInViewport(el) {
+      var rect = el.getBoundingClientRect();
+
+      return (
+        rect.bottom > 150 &&
+        rect.right > 0 &&
+        rect.left <
+          (window.innerWidth ||
+            document.documentElement.clientWidth) /* or $(window).width() */ &&
+        rect.top <
+          (window.innerHeight ||
+            document.documentElement.clientHeight) /* or $(window).height() */
+      );
+    }
+    let heroSection = document.getElementById("heroDna");
+    window.addEventListener(
+      "scroll",
+      (event) => {
+        if (isElementInViewport(heroSection)) {
+          this.$store.commit("setNavColor", 2);
+        } else {
+          this.$store.commit("setNavColor", 1);
+        }
+      },
+      false
+    );
     this.$store
       .dispatch("downloadAnnouncements")
       .then((resp) => {
@@ -277,59 +301,9 @@ export default {
   flex-direction: column;
   align-items: center;
   .hero-section {
-    height: 100vh;
-    width: 100%;
-    background: black;
-    background-image: url("../../assets/Landing/hero.jpg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    .overlay {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      background: rgba(black, 0.7);
-      z-index: 1;
-    }
-    .dna-title {
-      margin: 0;
-      padding: 0;
-      margin-top: 0.5rem;
-      text-align: center;
-      font-size: 4rem;
-      color: white;
-      font-family: "Anton", sans-serif !important;
-      letter-spacing: 1px;
-      z-index: 2;
-      @include responsive($phone) {
-        margin-top: 1.25rem;
-        font-size: 2.5rem;
-      }
-      @include responsive($small-phone) {
-        margin-top: 1.25rem;
-        font-size: 2rem;
-      }
-    }
-    .dna-subtitle {
-      padding: 0;
-      margin: 0;
-      text-align: center;
-      color: $accent;
-      font-size: 3rem;
-      letter-spacing: 1.5px;
-      font-weight: bold;
-      font-family: "Rouge Script", cursive !important;
-      z-index: 2;
-      display: inline-block;
-      @include responsive($phone) {
-        font-size: xx-large;
-      }
-    }
+    margin: 0;
+    padding: 0;
+    background: $primary;
   }
   section {
     width: 100%;
@@ -354,7 +328,8 @@ export default {
   p {
     width: 100%;
     text-align: center;
-    margin: 1rem;
+    margin: 1rem 0;
+    padding: 0 1rem;
     font-size: large;
   }
   .white-bg {
@@ -378,28 +353,52 @@ export default {
       display: flex;
       justify-content: space-around;
       align-items: center;
+      @include responsive($phone) {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
       .card {
         margin-top: 2rem;
         display: flex;
         flex-direction: column;
         justify-content: space-around;
         align-items: center;
+        @include responsive($phone) {
+          margin: 1rem 2rem;
+        }
         img {
           width: 120px;
           height: 120px;
           margin-bottom: 1rem;
+          @include responsive($tablet-portrait) {
+            width: 70px;
+            height: 70px;
+          }
+          @include responsive($phone) {
+            width: 160px;
+            height: 160px;
+          }
         }
         p {
           padding: 0;
           margin: 0;
+          @include responsive($tablet-portrait) {
+            font-size: small;
+          }
         }
 
         .v-btn {
           //margin-top: 1rem;
           background: $secondary !important;
           color: $accent !important;
+          .v-icon {
+            display: none;
+          }
           a {
             color: $accent !important;
+            @include responsive($tablet-portrait) {
+              font-size: small !important;
+            }
           }
         }
       }

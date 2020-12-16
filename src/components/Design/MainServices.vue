@@ -65,20 +65,16 @@ export default {
     return {
       services: [
         {
-          title: "Genome resequencing",
+          title: "Genome, De novo resequencing",
         },
-        {
-          title: "De novo resequencing",
-        },
+
         {
           title: "Cross Species Comparative DNA sequencing",
         },
         {
           title: "Transcriptomes (RNA, small RNA)",
         },
-        {
-          title: "COVID-19 Testing following ICMR guidelines",
-        },
+
         {
           title: "Meta-genomes & Meta-Transcriptomes",
         },
@@ -95,10 +91,7 @@ export default {
           title: "Genotyping (SNP, SSR, Genes)",
         },
         {
-          title: "Amplicon Sequencing (R- Gene Panel, 16S rRNA/ITS, etc.)",
-        },
-        {
-          title: "Sanger Sequencing",
+          title: "Amplicon, Sanger Sequencing ",
         },
       ],
     };
