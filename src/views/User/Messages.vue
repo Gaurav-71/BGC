@@ -1,6 +1,6 @@
 <template>
   <div class="contact-us">
-    <Heading :headingObj="headingObj" />
+    <Heading class="message-header" :headingObj="headingObj" />
     <main>
       <div class="left">
         <div v-if="$store.getters.getFooterStatus" class="top elevation-3">
@@ -93,7 +93,6 @@
         </div>
         <transition
           name="custom-classes-transition"
-          enter-active-class="animated bounceInRight"
           leave-active-class="animated bounceOutRight"
           appear
         >
@@ -114,6 +113,7 @@
 
 <script>
 import Heading from "../../components/Design/Heading";
+import gsap from "gsap";
 export default {
   components: {
     Heading,
@@ -137,9 +137,9 @@ export default {
   methods: {
     fullSend() {
       if (
-        this.detail.name != "" ||
-        this.detail.email != "" ||
-        this.detail.message != ""
+        this.detail.name.trim() != "" &&
+        this.detail.email.trim() != "" &&
+        this.detail.message.trim() != ""
       ) {
         this.sendAway = true;
         this.detail.timestamp = Date(Date.now());
@@ -162,6 +162,14 @@ export default {
   },
   created() {
     this.$store.commit("setNavColor", 1);
+  },
+  mounted() {
+    const left = gsap.timeline();
+    const header = gsap.timeline();
+    header.from(".message-header", 1, { opacity: 0, y: -65 });
+    left
+      .from(".left", 1, { opacity: 0, x: -100 })
+      .from(".right", 1, { opacity: 0, x: 100 }, "-=1");
   },
 };
 </script>

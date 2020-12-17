@@ -1,9 +1,9 @@
 <template>
   <div class="dna-rna">
-    <Heading class="page-header" :headingObj="subHeading1" />
+    <Heading class="dna-div" :headingObj="subHeading1" />
     <v-expansion-panels>
       <v-expansion-panel
-        class="my-2"
+        class="my-2 dna-info"
         style="background: #266255"
         v-for="(service, i) in services"
         :key="i"

@@ -12,6 +12,7 @@
 <script>
 import * as THREE from "three";
 import DNA from "../../components/Animation/dna";
+import gsap from "gsap";
 // import { OrbitControls } from 'https://cdn.jsdelivr.net/gh/mrdoob/three.js@r109/examples/jsm/controls/OrbitControls.js';
 const TWEEN = require("@tweenjs/tween.js");
 
@@ -19,21 +20,17 @@ export default {
   components: { DNA },
   mounted() {
     const container = document.getElementById("dna");
-
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
     container.appendChild(renderer.domElement);
-
     renderer.setClearColor("#000", 1);
-
     const camera = new THREE.PerspectiveCamera(
       60,
       window.innerWidth / window.innerHeight,
       0.01,
       1000
     );
-
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x0d1528);
 
@@ -429,6 +426,12 @@ export default {
 
       renderer.render(scene, camera);
     }
+
+    const titles = gsap.timeline();
+    titles.add();
+    titles
+      .from(".dna-title", 1, { opacity: 0, y: -100 })
+      .from(".dna-subtitle", 1, { opacity: 0, y: 100 }, "-=1");
   },
 };
 </script>
@@ -474,6 +477,7 @@ export default {
       justify-content: center;
       align-items: center;
       padding: 2rem;
+      animation: custom-blur 1s ease-in 1;
       @include responsive($phone) {
         padding: 1rem;
       }
@@ -512,6 +516,29 @@ export default {
         }
       }
     }
+  }
+}
+
+@keyframes custom-blur {
+  0% {
+    -webkit-backdrop-filter: blur(0);
+    backdrop-filter: blur(0);
+  }
+  25% {
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+  }
+  50% {
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+  75% {
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+  }
+  100% {
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
   }
 }
 </style>

@@ -53,10 +53,10 @@
         <img class="white--text" src="../../assets/Services/bio.jpg" />
       </v-card>
     </div>
-    <Services class="mt-3" />
-    <v-divider style="width: 100%" class="my-8"></v-divider>
-    <Heading class="page-header" :headingObj="subHeading3" />
-    <Kits />
+    <Services class="mt-3 mini-services" />
+    <v-divider style="width: 100%" class="my-8 lol"></v-divider>
+    <Heading class="kits-header" :headingObj="subHeading3" />
+    <Kits class="kits-component" />
     <v-divider style="width: 100%" class="my-8"></v-divider>
     <DnaRna />
     <v-divider style="width: 100%" class="my-8"></v-divider>
@@ -70,6 +70,9 @@ import Services from "../../components/Design/Services";
 import DnaRna from "../../components/Design/DnaRna";
 import Bioinformatics from "../../components/Design/Bioinformatics";
 import Kits from "../../components/Design/Kits";
+import gsap, { Power2, Bounce } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 export default {
   components: {
     Heading,
@@ -131,6 +134,58 @@ export default {
       unsubscribe: null,
     };
   },
+  mounted() {
+    const header = gsap.timeline();
+    const tech = gsap.timeline({
+      scrollTrigger: ".kits-header",
+    });
+    const dna = gsap.timeline({
+      scrollTrigger: ".dna-div",
+    });
+    const bio = gsap.timeline({
+      scrollTrigger: ".bio-header",
+    });
+    header.add();
+    tech.add();
+    dna.add();
+    bio.add();
+    header
+      .from(".page-header", 1, {
+        y: -100,
+        opacity: 0,
+      })
+      .from(
+        ".main-services",
+        1,
+        {
+          y: -30,
+          opacity: 0,
+        },
+        "-=0.7"
+      )
+      .from(".mini-services", { opacity: 0, x: -400 }, "-=0.6");
+    tech
+      .from(".kits-header", { opacity: 0, x: 100, delay: 0.3 })
+      .from(".tech", { opacity: 0, x: -100 })
+      .from(".kit", {
+        x: -100,
+        stagger: 0.3,
+        opacity: 0,
+        ease: Power2.easeOut,
+      });
+    dna.from(".dna-div", { opacity: 0, x: 100 }).from(".dna-info", {
+      y: -50,
+      stagger: 0.3,
+      opacity: 0,
+      ease: Power2.easeOut,
+    });
+    bio.from(".bio-header", { opacity: 0, x: 100 }).from(".bio-panel", {
+      y: -50,
+      stagger: 0.3,
+      opacity: 0,
+      ease: Power2.easeOut,
+    });
+  },
 };
 </script>
 
@@ -171,7 +226,7 @@ export default {
     .v-card {
       transition: all 0.2s ease-in;
       width: 46.5vw;
-      height: auto;
+      min-height: 40vh;
       border-radius: 0.8rem;
       @include responsive($tablet-landscape) {
         margin: 1rem 0;

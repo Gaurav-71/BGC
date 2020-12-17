@@ -1,8 +1,8 @@
 <template>
   <div class="bio">
-    <Heading class="page-header" :headingObj="subHeading2" />
+    <Heading class="bio-header" :headingObj="subHeading2" />
     <v-expansion-panels multiple accordion :value="expanded">
-      <v-expansion-panel class="my-2" style="background: #266255">
+      <v-expansion-panel class="my-2 bio-panel" style="background: #266255">
         <v-expansion-panel-header
           style="
             color: rgb(230, 190, 138);
@@ -27,13 +27,13 @@
               :key="i"
             >
               <v-expansion-panel-header
+                class="bio-panel-header expansion-header font-weight-bold"
                 style="
                   color: rgb(230, 190, 138);
                   display: flex;
                   justify-content: space-around;
                   font-size: medium;
                 "
-                class="expansion-header font-weight-bold"
               >
                 <span>{{ service.title }}</span>
                 <template v-slot:actions>
@@ -63,7 +63,7 @@
           </v-expansion-panels>
         </v-expansion-panel-content>
       </v-expansion-panel>
-      <v-expansion-panel class="my-2" style="background: #266255">
+      <v-expansion-panel class="my-2 bio-panel" style="background: #266255">
         <v-expansion-panel-header
           style="
             color: rgb(230, 190, 138);

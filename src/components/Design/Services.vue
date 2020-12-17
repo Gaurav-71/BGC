@@ -1,6 +1,6 @@
 <template>
   <div class="services-cards px-1">
-    <v-card to="/internships" class="elevation-7 my-4">
+    <v-card to="/internships" class="elevation-7 my-4 sc">
       <div class="overlay">
         <div class="service">
           <div class="service-name elevation-10">Internships</div>
@@ -15,7 +15,7 @@
       </div>
       <img class="white--text" src="../../assets/Services/internship.jpg" />
     </v-card>
-    <v-card to="/trainings" class="elevation-7">
+    <v-card to="/trainings" class="elevation-7 sc">
       <div class="overlay">
         <div class="service">
           <div class="service-name elevation-10">Trainings</div>
@@ -30,7 +30,7 @@
       </div>
       <img class="white--text" src="../../assets/Services/training.jpg" />
     </v-card>
-    <v-card to="/workshops" class="elevation-7">
+    <v-card to="/workshops" class="elevation-7 sc">
       <div class="overlay">
         <div class="service">
           <div class="service-name elevation-10">Workshops</div>
@@ -45,7 +45,7 @@
       </div>
       <img class="white--text" src="../../assets/Services/workshop.jpg" />
     </v-card>
-    <v-card to="/resources" class="elevation-7">
+    <v-card to="/resources" class="elevation-7 sc">
       <div class="overlay">
         <div class="service">
           <div class="service-name elevation-10">Resources</div>
@@ -63,9 +63,7 @@
   </div>
 </template>
 
-<script>
-export default {};
-</script>
+
 
 <style lang="scss" scoped>
 @import "../../scss/main.scss";

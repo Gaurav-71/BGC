@@ -1,6 +1,6 @@
 <template>
   <div class="main-services">
-    <v-card class="elevation-7">
+    <v-card class="elevation-7 left-card">
       <div class="overlay">
         <div class="service">
           <div class="service-name elevation-10">DNA/RNA sequencing</div>
@@ -18,7 +18,7 @@
       </div>
       <img class="white--text" src="../../assets/Services/dna.jpg" />
     </v-card>
-    <v-card class="elevation-7">
+    <v-card class="elevation-7 right-card">
       <div class="overlay">
         <div class="service">
           <div class="service-name elevation-10">Bioinformatics Analysis</div>

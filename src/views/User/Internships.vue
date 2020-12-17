@@ -123,7 +123,6 @@ export default {
     };
   },
   mounted() {
-    console.log("in mounted");
     const header = gsap.timeline();
     const tl = gsap.timeline({ defaults: { duration: 0.85, stagger: 0.3 } }); // create an instance and assign it to variable tl
     tl.add();
@@ -150,7 +149,6 @@ export default {
         ".view-btn",
         {
           duration: 0.4,
-
           stagger: 0,
           opacity: 0,
         },

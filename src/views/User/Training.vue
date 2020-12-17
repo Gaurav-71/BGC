@@ -1,26 +1,30 @@
 <template>
   <div class="user-service">
-    <Heading :headingObj="headingObj" />
+    <Heading class="page-header" :headingObj="headingObj" />
     <div class="service-landing">
       <div class="left">
-        <img src="../../assets/Services/trainings.svg" alt="internship" />
+        <img
+          class="service-landing-img"
+          src="../../assets/Services/trainings.svg"
+          alt="internship"
+        />
       </div>
       <div class="right">
         <div class="title">Learn and get inspired</div>
         <div class="subtitle-1">
           Gain knowledge about countless concepts from industry experts.
         </div>
-        <v-divider></v-divider>
-        <p class="my-7">
+        <v-divider class="anim1"></v-divider>
+        <p class="my-7 anim1">
           In collaboration with various premier institutes we have conducted
           both onsite & online training programmes in the field of Genomics,
           Transcriptomics, Metagenomics & Bioinformatics and trained over 1000
           participants from India & abroad.
         </p>
-        <p>
+        <p class="anim1">
           We have partnered with the following organisations mentioned below,
         </p>
-        <div class="partners-container">
+        <div class="partners-container anim1">
           <div class="partners">
             <div class="partner">
               <img src="../../assets/Training/training-1.png" alt="" />
@@ -52,7 +56,7 @@
             </div>
           </div>
         </div>
-        <v-btn class="mt-10 py-5" href="#services" rounded
+        <v-btn class="mt-10 py-5 view-btn" href="#services" rounded
           >View Workshops</v-btn
         >
       </div>
@@ -131,6 +135,7 @@
 <script>
 import Heading from "../../components/Design/Heading";
 import EmptyMessage from "../../components/Design/Empty";
+import gsap, { Power2, Bounce } from "gsap";
 export default {
   components: {
     Heading,
@@ -149,6 +154,38 @@ export default {
   },
 
   mounted() {
+    const header = gsap.timeline();
+    const tl = gsap.timeline({ defaults: { duration: 0.85, stagger: 0.3 } }); // create an instance and assign it to variable tl
+    tl.add();
+    header.add();
+    header.from(".page-header", {
+      duration: 1,
+      x: 100,
+      opacity: 0,
+      delay: 0.6,
+    }); // add tween to timeline
+    tl.from(".service-landing-img", {
+      x: -100,
+      opacity: 0,
+      delay: 0.6,
+    })
+      .from(".title", { y: -50, opacity: 0 }, "-=.9")
+      .from(".subtitle-1", { stagger: 0, opacity: 0 }, "-=0.5")
+      .from(
+        ".anim1",
+        { y: -50, stagger: 0.3, opacity: 0, ease: Power2.easeOut },
+        "-=.9"
+      )
+      .from(
+        ".view-btn",
+        {
+          duration: 0.4,
+
+          stagger: 0,
+          opacity: 0,
+        },
+        "-=.9"
+      );
     this.$store
       .dispatch("downloadService", "Trainings")
       .then((resp) => {

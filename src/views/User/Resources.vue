@@ -1,6 +1,6 @@
 <template>
   <div class="resources">
-    <Heading :headingObj="headingObj" />
+    <Heading class="resource-header" :headingObj="headingObj" />
     <v-card v-for="resource in $store.getters.getResources" :key="resource.id">
       <div class="my-header">
         <v-card-title
@@ -33,6 +33,7 @@
 <script>
 import Heading from "../../components/Design/Heading";
 import EmptyMessage from "../../components/Design/Empty";
+import gsap from "gsap";
 export default {
   components: {
     Heading,
@@ -49,6 +50,9 @@ export default {
     };
   },
   mounted() {
+    const header = gsap.timeline();
+    header.add();
+    header.from(".resource-header", { opacity: 0, x: 100 });
     this.$store
       .dispatch("downloadResources")
       .then((resp) => {

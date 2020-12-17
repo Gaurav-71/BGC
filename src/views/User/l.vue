@@ -75,13 +75,13 @@
         trainings and much more
       </p>
       <div
-        v-if="$store.getters.getServiceLoadStatus"
+        v-show="$store.getters.getServiceLoadStatus"
         class="announcement-cards"
       >
         <v-card
           v-for="announcement in $store.getters.getAnnouncements.slice(0, 4)"
           :key="announcement.id"
-          class="announcement-card my-3"
+          class="announcement-card kk my-3"
           elevation="2"
           outlined
           shaped
@@ -178,7 +178,7 @@
       </div>
     </section>
     <section class="partner-section">
-      <Title class="partners-title" text="Partners" />
+      <Title text="Partners" />
       <p>
         We have collaborated with various premier institutes and have conducted
         both onsite & online training programmes in various fields.
@@ -219,42 +219,19 @@
       <Title text="Team" />
     </section>
     <section class="technology-section">
-      <Title class="tech-title" text="Technology" />
+      <Title text="Technology" />
       <Kits class="mt-7" />
     </section>
     <section class="gallery-section white-bg">
-      <Title class="gallery-title" text="Gallery" />
-      <v-carousel
-        cycle
-        height="500"
-        class="mt-4 elevation-3"
-        hide-delimiters
-        show-arrows-on-hover
-      >
-        <v-carousel-item v-for="(item, i) in items" :key="i">
-          <v-img
-            v-show="item.loaded"
-            @load="onImageLoad(i)"
-            :src="item.src"
-            height="100%"
-            eager
-          />
-          <div v-show="!item.loaded" class="loading-image">
-            <Loading />
-            <div class="text">Fetching Photo</div>
-          </div></v-carousel-item
-        >
-      </v-carousel>
+      <Title text="Gallery" />
     </section>
     <section class="contact-section">
-      <Title class="contacts-title" text="Get in touch with us" />
+      <Title text="Get in touch with us" />
       <p>
         Feel free to contact us anytime with your queries, we are always at your
         service !
       </p>
-      <div class="container ct-btn">
-        <v-btn to="/contact-us">Contact Us</v-btn>
-      </div>
+      <div class="container"><v-btn to="/contact-us">Contact Us</v-btn></div>
     </section>
   </div>
 </template>
@@ -265,10 +242,8 @@ import Title from "../../components/Design/Title";
 import MainServices from "../../components/Design/MainServices";
 import Services from "../../components/Design/Services";
 import Kits from "../../components/Design/Kits";
-import Loading from "../../components/Animation/Loader";
 import gsap, { Power2, Bounce } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-
 export default {
   components: {
     DNA,
@@ -276,139 +251,6 @@ export default {
     MainServices,
     Services,
     Kits,
-    Loading,
-  },
-  data() {
-    return {
-      items: [
-        {
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg9.JPG?alt=media&token=1538260f-ed92-4fb2-8cf6-1f3913e539db",
-          loaded: false,
-        },
-        {
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg1.jpg?alt=media&token=ea075e93-c7b8-4cba-849f-54525020ad2c",
-          loaded: false,
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg7.jpg?alt=media&token=0492b7a6-b160-45d2-bd0b-1c2eca2b84d1",
-        },
-
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg4.jpg?alt=media&token=538847d6-14ec-426c-a444-fc47934483b7",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg5.jpg?alt=media&token=dced277e-cade-41bb-a3c5-e62f739f2e47",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg6.jpg?alt=media&token=1904de9f-6385-4548-afa0-4574367f7fff",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg8.jpg?alt=media&token=be2cc5bc-b444-4b2d-ae3e-1591673eac8a",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg10.jpg?alt=media&token=50dc5604-6990-44b7-9751-38d2017591a7",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg11.jpg?alt=media&token=69e1e5f3-dd20-4486-85a2-c47e131f56bb",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg12.jpg?alt=media&token=ed48cbc0-d832-4af5-8fbe-d320f58a2aed",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg13.jpg?alt=media&token=8ac4f212-c185-427a-a681-c47dd22a99cb",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg2.jpg?alt=media&token=b40d5918-4b10-415a-a6aa-539096d616c8",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg3.jpg?alt=media&token=07db26bf-93bc-48bd-97c7-f60d7e4c0008",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg14.jpg?alt=media&token=5871ed95-9084-45b5-adc8-eb81520de641",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg15.jpg?alt=media&token=28c0e32b-70c7-4c67-8454-0e989c880e00",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg16.jpg?alt=media&token=5c6a54a3-a556-44b3-a051-f6afbc26fb41",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg18.jpg?alt=media&token=0eda57e2-0bfe-42eb-b6e2-d4660c5aa1c8",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg19.jpg?alt=media&token=bc915f4f-8724-478d-888c-cbff751c0e9a",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg20.png?alt=media&token=fed138f8-4269-4379-813b-91c5d1e06d0b",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg22.png?alt=media&token=775f218c-741d-4bde-94ad-5037ea91c3f2",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg23.png?alt=media&token=66cfbe85-c04c-4908-9269-54a5bf44e217",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg24.png?alt=media&token=3c55dad3-c1f1-49ff-b183-d58ee14434e7",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg24.png?alt=media&token=3c55dad3-c1f1-49ff-b183-d58ee14434e7",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg26.png?alt=media&token=6090444f-d265-467b-8cb5-7240f2cf4d0c",
-        },
-      ],
-    };
-  },
-  methods: {
-    onImageLoad(index) {
-      this.items[index].loaded = true;
-    },
   },
   mounted() {
     this.$store.commit("setNavColor", 2);
@@ -438,14 +280,11 @@ export default {
       false
     );
 
-    //------------------ gsap animations ------------------------
-
     const about = gsap.timeline({ scrollTrigger: ".about-section" });
     about.add();
     about
       .from(".about-title", 0.8, { opacity: 0, y: -20 })
       .from(".about-section p", 0.8, { opacity: 0, y: 40 }, "-=0.8");
-
     const covid = gsap.timeline({ scrollTrigger: ".covid" });
     covid.add();
     covid
@@ -462,75 +301,38 @@ export default {
         },
         "-=0.8"
       );
-
     const services = gsap.timeline({ scrollTrigger: ".services-section" });
     services.add();
     services
-      .from(".services-title", 0.8, { opacity: 0, y: -20 })
-      .from(".main-services .left-card", 1, { opacity: 0, y: -40 }, "-=0.8")
-      .from(".main-services .right-card", 1, { opacity: 0, y: -40 }, "-=0.8")
-      .from(
-        ".services-cards .sc",
-        0.8,
-        {
-          y: -20,
-          opacity: 0,
-        },
-        "-=0.6"
-      );
-
+      .from(".services-title", 0.8, { opacity: 0, y: -50 })
+      .from(".main-services .left-card", 0.8, { opacity: 0, y: -50 })
+      .from(".main-services .right-card", 0.8, { opacity: 0, y: -50 }, "-=0.5");
+    const miniServices = gsap.timeline({ scrollTrigger: ".services-cards" });
+    miniServices.add();
+    miniServices.from(".services-cards .sc", 0.8, {
+      y: 50,
+      stagger: 0.2,
+      opacity: 0,
+      ease: Power2.easeOut,
+    });
     const testimonial = gsap.timeline({
       scrollTrigger: ".testimonial-section",
     });
     testimonial.add();
     testimonial.from(".testimonial-title", 0.8, { opacity: 0, y: -20 });
-
     const announcement = gsap.timeline({
       scrollTrigger: ".announcements-section",
     });
     announcement.add();
     announcement
       .from(".announcements-title", 0.8, { opacity: 0, y: -20 })
-      .from(".announcements-section p", 0.8, { opacity: 0, y: 20 });
-
-    const partners = gsap.timeline({ scrollTrigger: ".partner-section" });
-    partners.add();
-    partners
-      .from(".partners-title", 0.8, { opacity: 0, y: -20 })
-      .from(".partner-section p", 0.8, { opacity: 0, y: 20 })
-      .from(".partners-container", { opacity: 0 });
-
-    const tech = gsap.timeline({
-      scrollTrigger: ".technology-section",
-    });
-    tech.add();
-    tech
-      .from(".tech-title", 0.8, { opacity: 0, y: -20 })
-      .from(".tech", 0.8, { opacity: 0, x: 100 })
-      .from(
-        ".kit",
-        {
-          x: -50,
-          stagger: 0.3,
-          opacity: 0,
-          ease: Power2.easeOut,
-        },
-        "-=0.8"
-      );
-
-    const gallery = gsap.timeline({ scrollTrigger: ".gallery-section" });
-    gallery.add();
-    gallery.from(".gallery-title", 0.8, { opacity: 0, y: -20 });
-
-    const contacts = gsap.timeline({ scrollTrigger: ".contact-section" });
-    contacts.add();
-    contacts
-      .from(".contacts-title", 0.8, { opacity: 0, y: -20 })
-      .from(".contact-section p", 0.8, { opacity: 0, y: 20 })
-      .from(".ct-btn", 0.8, { opacity: 0, x: 50 });
-
-    //-----------------------------------------------------------
-
+      .from(".announcements-section p", 0.8, { opacity: 0, y: 20 })
+      .from(".announcements-section .announcement-cards .announcement-card", {
+        y: -50,
+        stagger: 0.3,
+        opacity: 0,
+        ease: Power2.easeOut,
+      });
     this.$store
       .dispatch("downloadAnnouncements")
       .then((resp) => {
@@ -808,22 +610,6 @@ export default {
   .technology-section {
     padding: 2rem;
   }
-  .gallery-section {
-    .loading-image {
-      background: rgba($secondary, 0.4);
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      .text {
-        margin-top: 1rem;
-        color: $primary;
-      }
-    }
-  }
-
   .contact-section {
     .container {
       width: 100%;

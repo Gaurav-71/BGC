@@ -1,6 +1,6 @@
 <template>
   <div class="announcements">
-    <Heading :headingObj="headingObj" />
+    <Heading class="announcement-header" :headingObj="headingObj" />
     <div class="announcements-wrapper">
       <div class="announcement-cards">
         <v-card
@@ -104,6 +104,7 @@
 import Heading from "../../components/Design/Heading";
 import Services from "../../components/Design/Services.vue";
 import EmptyMessage from "../../components/Design/Empty";
+import gsap, { Power2, Bounce } from "gsap";
 export default {
   components: {
     Heading,
@@ -124,7 +125,23 @@ export default {
   created() {
     this.$store.commit("setNavColor", 1);
   },
+  watch: {
+    loadedAnnouncements: function (empty, filled) {
+      console.log(empty, filled);
+    },
+  },
   mounted() {
+    const header = gsap.timeline();
+    header.add();
+    header.from(".announcement-header", { opacity: 0, x: 100 });
+    const cards = gsap.timeline();
+    cards.add();
+    cards.from(".announcement-card", {
+      y: -50,
+      stagger: 0.3,
+      opacity: 0,
+      ease: Power2.easeOut,
+    });
     this.$store
       .dispatch("downloadAnnouncements")
       .then((resp) => {

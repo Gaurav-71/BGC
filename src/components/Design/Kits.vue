@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import gsap, { Power2, Bounce } from "gsap";
 export default {};
 </script>
 
