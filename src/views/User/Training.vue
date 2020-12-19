@@ -61,8 +61,8 @@
         >
       </div>
     </div>
-    <v-divider style="width: 100%" class="mb-10"></v-divider>
-    <div class="posts" id="services">
+
+    <div class="posts mt-5" id="services">
       <v-card
         v-for="post in $store.getters.getTrainings"
         :key="post.id"
@@ -128,6 +128,7 @@
     <EmptyMessage
       v-if="$store.getters.getServiceStatus"
       serviceType="trainings"
+      class="posts"
     />
   </div>
 </template>
@@ -180,12 +181,14 @@ export default {
         ".view-btn",
         {
           duration: 0.4,
-
           stagger: 0,
           opacity: 0,
         },
         "-=.9"
-      );
+      )
+
+      .from(".posts", { stagger: 0, opacity: 0, y: 50 }, "-=.6");
+
     this.$store
       .dispatch("downloadService", "Trainings")
       .then((resp) => {
@@ -208,6 +211,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-x: hidden;
   @include responsive($tablet-portrait) {
     margin-top: 3.5rem;
     min-height: auto;
@@ -231,6 +235,9 @@ export default {
       min-height: auto;
       height: auto;
       display: flex;
+      flex-direction: column;
+      align-items: center;
+      // /overflow-x: hidden;
     }
     @include responsive($phone) {
       height: auto;
@@ -242,6 +249,9 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
+      @include responsive($tablet-portrait) {
+        width: 100%;
+      }
       img {
         width: 95%;
         margin-bottom: 1.5rem;
@@ -253,6 +263,7 @@ export default {
     .right {
       padding: 0.5rem 3rem;
       @include responsive($tablet-portrait) {
+        width: 100%;
         padding: 0.5rem;
       }
       @include responsive($phone) {
@@ -286,6 +297,7 @@ export default {
       .partners-container {
         margin-top: 1rem;
         width: 100%;
+        overflow-x: hidden;
         .partners {
           display: flex;
           justify-content: center;
@@ -312,21 +324,6 @@ export default {
             h3 {
               margin: 1.5rem 0 0.7rem 0;
               color: darken($primary, 15%);
-            }
-            .country {
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              img {
-                width: 30px;
-                height: 18px;
-                border-radius: 0;
-              }
-              span {
-                margin: 0 0.5rem;
-                color: black;
-                font-size: small;
-              }
             }
           }
         }

@@ -15,7 +15,7 @@
               <span>Facebook</span></v-btn
             >
           </div>
-          <v-divider vertical></v-divider>
+          <v-divider vertical class="bottom-div"></v-divider>
           <div class="youtube">
             <v-btn
               :href="$store.getters.getProfile.data.youtube"
@@ -27,7 +27,7 @@
               ><span>Youtube</span></v-btn
             >
           </div>
-          <v-divider vertical></v-divider>
+          <v-divider vertical class="bottom-div"></v-divider>
           <div class="linkedin">
             <v-btn
               :href="$store.getters.getProfile.data.linkedin"
@@ -41,7 +41,7 @@
           </div>
         </div>
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15544.654875176404!2d77.5831244!3d13.0888085!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x3081aded11771655!2sBengaluru%20Genomics%20Center%20Pvt.%20Ltd.!5e0!3m2!1sen!2sin!4v1605421509919!5m2!1sen!2sin"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3885.7551436669446!2d77.57085271482347!3d13.114692190762163!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae189a9942f245%3A0x3d16041cc6856987!2sBengaluru%20Genomics%20Center%20(BGC)!5e0!3m2!1sen!2sin!4v1608369093353!5m2!1sen!2sin"
           frameborder="0"
           style="border: 0"
           allowfullscreen=""
@@ -60,7 +60,7 @@
               ><span>{{ $store.getters.getProfile.data.phNo }}</span></v-btn
             >
           </div>
-          <v-divider vertical></v-divider>
+          <v-divider vertical class="bottom-div"></v-divider>
           <div class="action">
             <v-btn
               :href="'mailto:' + $store.getters.getProfile.data.email"
@@ -108,12 +108,41 @@
         <div v-if="!sendAway" @click="fullSend" class="btn">Send Message</div>
       </div>
     </main>
+    <v-divider style="width: 100%" class="my-10"></v-divider>
+    <Heading class="addr-header" :headingObj="addrObj" />
+    <div class="address-wrapper">
+      <v-card class="text-left" max-width="420" hover dark>
+        <v-card-text>
+          <p class="ma-0 pa-2">
+            Plot No: 40/2, Opp: Duo Marvel Layout, Ramanashree California
+            Gardens, Ananathapura Main Road, Yelahanka, Bangalore - 560064
+          </p>
+        </v-card-text>
+      </v-card>
+
+      <v-card class="text-left" max-width="420" hover dark>
+        <v-card-text>
+          <p class="ma-0 pa-2">
+            No. 409, AGB Layout, Hesargatta main road, Opp. Sapthagiri Medical
+            College & Hospital, next to Union Bank of India, Bangalore - 560090
+          </p>
+        </v-card-text> </v-card
+      ><v-card class="text-left" max-width="420" hover dark>
+        <v-card-text>
+          <p class="ma-0 pa-2">
+            74/2, Jarakabande Kaval, Post Attur via Yelahanka, Bengaluru -
+            560064, India
+          </p>
+        </v-card-text>
+      </v-card>
+    </div>
   </div>
 </template>
 
 <script>
 import Heading from "../../components/Design/Heading";
-import gsap from "gsap";
+import gsap, { Power2, Bounce } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 export default {
   components: {
     Heading,
@@ -124,6 +153,11 @@ export default {
         h1: "Contact Us",
         h4: "Have any queries ? Feel free to contact us",
         src: "contact-us.svg",
+      },
+      addrObj: {
+        h1: "Branches",
+        h4: "Addresses of all our branches",
+        src: "location.svg",
       },
       detail: {
         name: "",
@@ -170,6 +204,22 @@ export default {
     left
       .from(".left", 1, { opacity: 0, x: -100 })
       .from(".right", 1, { opacity: 0, x: 100 }, "-=1");
+
+    const addr = gsap.timeline({
+      scrollTrigger: ".addr-header",
+    });
+    addr.add();
+    addr.from(".addr-header", 1, { opacity: 0, x: 100 }).from(
+      ".address-wrapper .v-card",
+      1,
+      {
+        x: -100,
+        stagger: 0.5,
+        opacity: 0,
+        ease: Power2.easeOut,
+      },
+      "-=0.4"
+    );
   },
 };
 </script>
@@ -179,7 +229,6 @@ export default {
 .contact-us {
   margin-top: 4rem;
   min-height: calc(100vh - 4rem);
-
   padding: 1.5rem 2rem;
   display: flex;
   flex-direction: column;
@@ -196,9 +245,12 @@ export default {
     width: 100%;
     display: flex;
     align-items: center;
-    justify-self: center;
+    justify-content: center;
     @include responsive($phone) {
-      flex-wrap: wrap;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
     }
     .left {
       width: 50%;
@@ -207,9 +259,11 @@ export default {
       flex-direction: column;
       align-items: center;
       justify-self: center;
+      overflow: hidden;
       @include responsive($phone) {
         width: 100%;
-        max-height: 20vh;
+        max-height: 40vh;
+        margin-bottom: 2rem;
       }
       .top {
         width: 100%;
@@ -260,6 +314,9 @@ export default {
         width: 100%;
         display: grid;
         grid-template-columns: auto 1px auto;
+        @include responsive($phone) {
+          grid-template-columns: 50% 50%;
+        }
         .action {
           overflow-x: hidden;
           .v-btn {
@@ -301,6 +358,11 @@ export default {
             }
           }
         }
+        .bottom-div {
+          @include responsive($phone) {
+            display: none;
+          }
+        }
       }
       .custom-iframe {
         width: 100%;
@@ -320,12 +382,15 @@ export default {
       }
       @include responsive($phone) {
         width: 100%;
-        max-height: 47.5vh;
-        padding: 5rem 0 0 0;
+        //max-height: max-content;
+        min-height: 47.5vh;
+        padding: 0;
+        //margin-top: 10rem;
+        //padding: 5rem 0 0 0;
       }
       @include responsive($small-phone) {
-        padding-top: 8rem;
-        max-height: 80vh;
+        padding: 0rem;
+        max-height: 70vh;
       }
 
       h1 {
@@ -394,6 +459,33 @@ export default {
       }
       .btn:active {
         transform: scale(0.98);
+      }
+    }
+  }
+  .address-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    margin-top: 0.5rem;
+    @include responsive($phone) {
+      flex-wrap: wrap;
+    }
+    .v-card {
+      background: $secondary;
+      @include responsive($tablet-landscape) {
+        max-width: 300px !important;
+      }
+      @include responsive($tablet-portrait) {
+        max-width: 215px !important;
+      }
+      @include responsive($phone) {
+        margin: 0.5rem 0;
+      }
+      .v-card-text {
+        p {
+          color: $accent !important;
+        }
       }
     }
   }

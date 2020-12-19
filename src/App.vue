@@ -34,6 +34,7 @@ export default {
 #app {
   background: $background;
   background-image: $gradient;
+  overflow-x: hidden;
 }
 </style>
 

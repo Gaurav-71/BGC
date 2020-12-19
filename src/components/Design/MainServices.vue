@@ -28,6 +28,8 @@
                 <li>
                   Genome Analysis
                   <ul>
+                    <li>Whole Genome Resequencing analysis and annotation</li>
+                    <li>Whole Genome de novo analysis and annotation</li>
                     <li>Metagenome, Phylogeny analysis</li>
                     <li>
                       Resequencing, De novo, Exome analysis and annotation
@@ -65,7 +67,7 @@ export default {
     return {
       services: [
         {
-          title: "Genome, De novo resequencing",
+          title: "Whole Genome Sequencing (de novo and resequencing)",
         },
 
         {
@@ -232,6 +234,11 @@ export default {
           .text {
             opacity: 1;
             padding: 0.5rem 1rem;
+            @include responsive($tablet-portrait) {
+              font-size: small;
+              padding: 1rem;
+              padding-bottom: 0.5rem;
+            }
             @include responsive($phone) {
               font-size: small;
               padding: 1rem;

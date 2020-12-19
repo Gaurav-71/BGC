@@ -69,9 +69,35 @@
 </template>
 
 <script>
+import gsap, { Power2, Bounce } from "gsap";
 export default {
   created() {
     this.$store.commit("setNavColor", 1);
+  },
+  mounted() {
+    const covid = gsap.timeline();
+    covid.add();
+    covid
+      .from(".lh", 0.8, {
+        y: -50,
+        stagger: 0.5,
+        opacity: 0,
+        ease: Power2.easeOut,
+      })
+      .from(".right", 0.8, { opacity: 0, x: -100 }, "-=1.6")
+      .from(".overlay-container", 0.8, { opacity: 0 }, "-=1.6")
+      .from(".heading", 0.8, { opacity: 0, x: 100 })
+      .from(
+        ".feature",
+        0.8,
+        {
+          x: -100,
+          stagger: 0.3,
+          opacity: 0,
+          ease: Power2.easeOut,
+        },
+        "-=1.6"
+      );
   },
 };
 </script>
@@ -160,7 +186,7 @@ export default {
         justify-content: center;
         .overlay {
           position: absolute;
-          z-index: 10;
+
           top: 49vh;
           //margin-top: 52.5vh;
           width: 90vw;
@@ -221,7 +247,10 @@ export default {
         height: 55vh;
       }
       @include responsive($phone) {
-        height: 145vh;
+        min-height: 150vh;
+      }
+      @include responsive($small-phone) {
+        min-height: 210vh;
       }
     }
   }

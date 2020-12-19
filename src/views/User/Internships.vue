@@ -32,7 +32,6 @@
         >
       </div>
     </div>
-    <v-divider class="mb-10" style="width: 100%"></v-divider>
     <div class="posts" id="services">
       <v-card
         v-for="post in $store.getters.getInternships"
@@ -99,6 +98,7 @@
     <EmptyMessage
       v-if="$store.getters.getServiceStatus"
       serviceType="Internships"
+      class="posts"
     />
   </div>
 </template>
@@ -153,7 +153,8 @@ export default {
           opacity: 0,
         },
         "-=.9"
-      );
+      )
+      .from(".posts", { stagger: 0, opacity: 0, y: 50 }, "-=.6");
     this.$store
       .dispatch("downloadService", "Internships")
       .then((resp) => {
