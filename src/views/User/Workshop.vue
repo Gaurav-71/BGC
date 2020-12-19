@@ -10,7 +10,7 @@
         />
       </div>
       <div class="right">
-        <div class="title">Learn and get inspired</div>
+        <div class="title">Sharpen your skills</div>
         <div class="subtitle-1">
           Gain knowledge about countless concepts from industry experts.
         </div>

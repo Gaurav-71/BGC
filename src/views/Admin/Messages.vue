@@ -47,7 +47,7 @@ export default {
     return {
       headingObj: {
         h1: "Contact Us",
-        h4: "Have any queries ? Feel free to contact us",
+        h4: "All queries from users who have visited the website",
         src: "contact-us.svg",
       },
       unsubscribe: "",

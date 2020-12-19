@@ -197,7 +197,6 @@ export default new Vuex.Store({
       return resp;
     },
     async downloadService({ commit }, serviceType) {
-      console.log("in service");
       commit("setServiceStatus", false);
       let resp = await db
         .collection(serviceType)
@@ -245,7 +244,6 @@ export default new Vuex.Store({
       post.details.timestamp = Date(Date.now());
       post.details.fileName = uploadFileName;
       if (post.files.image != null && post.files.brochure != null) {
-        console.log("Both present");
         let storageImageRef = storage.ref(
           post.details.serviceType + "/images/" + uploadFileName
         );
@@ -261,7 +259,7 @@ export default new Vuex.Store({
               .getDownloadURL()
               .then(async (downloadURL) => {
                 post.details.image = downloadURL;
-                console.log("received img link", downloadURL);
+
                 let storageBrochureRef = storage.ref(
                   post.details.serviceType + "/brochures/" + uploadFileName
                 );
@@ -279,12 +277,11 @@ export default new Vuex.Store({
                       .getDownloadURL()
                       .then(async (downloadURL) => {
                         post.details.brochure = downloadURL;
-                        console.log("received brochure link", downloadURL);
 
                         let uploadPostDetails = await db
                           .collection(post.details.serviceType)
                           .add(post.details);
-                        console.log("Published Post");
+
                         let announcementInfo = {
                           title:
                             post.details.serviceType == "Internships"
@@ -309,7 +306,6 @@ export default new Vuex.Store({
           }
         );
       } else if (post.files.image != null) {
-        console.log("Only image");
         let storageImageRef = storage.ref(
           post.details.serviceType + "/images/" + uploadFileName
         );
@@ -323,12 +319,11 @@ export default new Vuex.Store({
           async () => {
             let downloadURL = await uploadImageFile.snapshot.ref.getDownloadURL();
             post.details.image = downloadURL;
-            console.log("received image link", downloadURL);
 
             let uploadPostDetails = await db
               .collection(post.details.serviceType)
               .add(post.details);
-            console.log("Published Post");
+
             let announcementInfo = {
               title:
                 post.details.serviceType == "Internships"
@@ -347,7 +342,6 @@ export default new Vuex.Store({
           }
         );
       } else if (post.files.brochure != null) {
-        console.log("Only brochure");
         let storageBrochureRef = storage.ref(
           post.details.serviceType + "/brochures/" + uploadFileName
         );
@@ -361,11 +355,11 @@ export default new Vuex.Store({
           async () => {
             let downloadURL = await uploadBrochureFile.snapshot.ref.getDownloadURL();
             post.details.brochure = downloadURL;
-            console.log("received brochure link", downloadURL);
+
             let uploadPostDetails = await db
               .collection(post.details.serviceType)
               .add(post.details);
-            console.log("Published Post");
+
             let announcementInfo = {
               title:
                 post.details.serviceType == "Internships"
@@ -384,11 +378,10 @@ export default new Vuex.Store({
           }
         );
       } else {
-        console.log("none");
         let uploadPostDetails = await db
           .collection(post.details.serviceType)
           .add(post.details);
-        console.log("Published Post");
+
         let announcementInfo = {
           title:
             post.details.serviceType == "Internships"
@@ -408,7 +401,6 @@ export default new Vuex.Store({
     },
     async editService(context, service) {
       if (service.files.image != null && service.files.brochure != null) {
-        console.log("Both present");
         let storageImageRef = storage.ref(
           service.details.serviceType + "/images/" + service.details.fileName
         );
@@ -424,7 +416,7 @@ export default new Vuex.Store({
               .getDownloadURL()
               .then(async (downloadURL) => {
                 service.details.image = downloadURL;
-                console.log("received img link", downloadURL);
+
                 let storageBrochureRef = storage.ref(
                   service.details.serviceType +
                     "/brochures/" +
@@ -447,12 +439,12 @@ export default new Vuex.Store({
                       .getDownloadURL()
                       .then(async (downloadURL) => {
                         service.details.brochure = downloadURL;
-                        console.log("received brochure link", downloadURL);
+
                         await db
                           .collection(service.details.serviceType)
                           .doc(service.id)
                           .update(service.details);
-                        console.log("updated service");
+
                         let announcement = await db
                           .collection("Announcements")
                           .where("serviceId", "==", service.id)
@@ -468,7 +460,6 @@ export default new Vuex.Store({
           }
         );
       } else if (service.files.image != null) {
-        console.log("Only image");
         let storageImageRef = storage.ref(
           service.details.serviceType + "/images/" + service.details.fileName
         );
@@ -484,13 +475,12 @@ export default new Vuex.Store({
               .getDownloadURL()
               .then(async (downloadURL) => {
                 service.details.image = downloadURL;
-                console.log("received image link", downloadURL);
 
                 await db
                   .collection(service.details.serviceType)
                   .doc(service.id)
                   .update(service.details);
-                console.log("updated service");
+
                 let announcement = await db
                   .collection("Announcements")
                   .where("serviceId", "==", service.id)
@@ -503,7 +493,6 @@ export default new Vuex.Store({
           }
         );
       } else if (service.files.brochure != null) {
-        console.log("Only brochure");
         let storageBrochureRef = storage.ref(
           service.details.serviceType + "/brochures/" + service.details.fileName
         );
@@ -519,12 +508,12 @@ export default new Vuex.Store({
               .getDownloadURL()
               .then(async (downloadURL) => {
                 service.details.brochure = downloadURL;
-                console.log("received brochure link", downloadURL);
+
                 await db
                   .collection(service.details.serviceType)
                   .doc(service.id)
                   .update(service.details);
-                console.log("updated service");
+
                 let announcement = await db
                   .collection("Announcements")
                   .where("serviceId", "==", service.id)
@@ -537,12 +526,11 @@ export default new Vuex.Store({
           }
         );
       } else {
-        console.log("none");
         await db
           .collection(service.details.serviceType)
           .doc(service.id)
           .update(service.details);
-        console.log("updated service");
+
         let announcement = await db
           .collection("Announcements")
           .where("serviceId", "==", service.id)

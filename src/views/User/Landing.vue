@@ -207,7 +207,7 @@
           serviceType="announcements"
         />
       </div>
-      <div class="mt-6 mx-0 py-3 myp">
+      <div v-if="!$store.getters.getServiceStatus" class="mt-6 mx-0 py-3 myp">
         <v-btn to="/announcements" depressed class="pa-0 pl-2 pr-1 ma-0"
           >Click Here,</v-btn
         >to view all announcements
@@ -227,7 +227,7 @@
           <h4>CEO</h4>
         </div>
         <div class="organizer">
-          <img src="../../assets/Team/org-6.jpg" alt />
+          <img src="../../assets/Team/org-7.jpg" alt />
           <h3>Prof. Malali Gowda</h3>
           <h4>Director</h4>
         </div>
@@ -270,8 +270,6 @@
               also helped me greatly.
             </p>
           </v-card-text>
-
-          <v-divider class="mx-4"></v-divider>
         </v-card>
         <v-card class="mx-auto elevation-6 t-card sri" max-width="525">
           <v-img
@@ -306,8 +304,6 @@
               under a one roof.
             </p>
           </v-card-text>
-
-          <v-divider class="mx-4"></v-divider>
         </v-card>
         <v-card class="mx-auto elevation-4 t-card tan" max-width="375">
           <v-img
@@ -338,8 +334,6 @@
               organized.
             </p>
           </v-card-text>
-
-          <v-divider class="mx-4"></v-divider>
         </v-card>
       </div>
     </section>
@@ -388,6 +382,7 @@ import Services from "../../components/Design/Services";
 import Kits from "../../components/Design/Kits";
 import Loading from "../../components/Animation/Loader";
 import gsap, { Power2, Bounce } from "gsap";
+import EmptyMessage from "../../components/Design/Empty";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default {
@@ -398,6 +393,7 @@ export default {
     Services,
     Kits,
     Loading,
+    EmptyMessage,
   },
   data() {
     return {
@@ -681,14 +677,6 @@ export default {
 
     //-----------------------------------------------------------
 
-    this.$store
-      .dispatch("downloadAnnouncements")
-      .then((resp) => {
-        this.unsubscribe = resp;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
     this.$store
       .dispatch("downloadAnnouncements")
       .then((resp) => {
