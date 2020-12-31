@@ -35,14 +35,15 @@
       <div class="developer">
         <div class="line"></div>
         <a href="http://linkedin.com/in/gaurav-v-941368194">
-          <!--<span>
-            Copyright
+          <span>
+            <!--<  Copyright
             <i
               class="fa fa-copyright"
               aria-hidden="true"
               style="margin: 0 5px; color: white"
             ></i>
-            {{ $store.getters.getYear }} <span class="mx-1">|</span>---> Made with
+            {{ $store.getters.getYear }} <span class="mx-1">|</span>--->
+            Made with
             <i
               class="fa fa-heart"
               aria-hidden="true"

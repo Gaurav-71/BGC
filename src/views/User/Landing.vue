@@ -29,7 +29,7 @@
         <div v-if="$store.getters.getFooterStatus" class="card call-card">
           <img src="../../assets/Landing/covid.png" alt="" />
           <v-btn rounded raised>
-            <v-icon class="phone">mdi-phone</v-icon>
+            <i class="fa fa-phone size" aria-hidden="true"></i>
             <a
               :href="'tel:' + $store.getters.getProfile.data.phNo"
               style="text-decoration: none"
@@ -44,11 +44,11 @@
         </div>
         <div class="card">
           <img src="../../assets/Covid-19/house.svg" alt="" />
-          <p>Home Testing Available</p>
+          <p>Home Sample Collection Available</p>
         </div>
         <div class="card">
           <img src="../../assets/Covid-19/accuracy.svg" alt="" />
-          <p>100% Accurate results</p>
+          <p>Accurate results</p>
         </div>
         <div class="card">
           <img src="../../assets/Covid-19/24-hours.svg" alt="" />
@@ -1086,6 +1086,17 @@ export default {
         color: $accent;
       }
     }
+  }
+}
+
+.size {
+  font-size: 20px;
+  margin: 0;
+  @include responsive($phone) {
+    font-size: 20px;
+  }
+  @include responsive($small-phone) {
+    font-size: 15px;
   }
 }
 
