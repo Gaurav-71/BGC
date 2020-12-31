@@ -47,7 +47,7 @@
 export default {
   data() {
     return {
-      email: "bgc-genomics@gmail.com",
+      email: "bgc.genomics@gmail.com",
       password: "",
     };
   },

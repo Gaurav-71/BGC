@@ -360,7 +360,6 @@ export default {
         files: this.files,
         details: this.post,
       };
-      console.log(postDetails);
       this.$store
         .dispatch("uploadService", postDetails)
         .then(() => {
@@ -376,7 +375,6 @@ export default {
         files: this.editFiles,
         details: data.data,
       };
-      console.log("in methods", editDetails);
       this.$store
         .dispatch("editService", editDetails)
         .then(() => {
