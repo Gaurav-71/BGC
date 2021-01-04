@@ -344,7 +344,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/img/workshop.edbe89b4.svg"
   },
   {
-    "revision": "311f527cfca5a4555338c8db92822471",
+    "revision": "7f05ccdc69909c12de6c09e70680bb15",
     "url": "/index.html"
   },
   {
