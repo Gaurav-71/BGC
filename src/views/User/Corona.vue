@@ -10,13 +10,32 @@
               Coronavirus disease (COVID-19) is an infectious disease, feeling
               any symptoms ? Get tested immediately by booking a test with us.
             </p>
-            <div class="lh">
-              <v-btn color="rgb(230, 190, 138)" rounded raised>
+            <div class="lh show-in-mob">
+              <v-btn
+                color="rgb(230, 190, 138)"
+                rounded
+                raised
+                class="show-in-mob"
+              >
                 <v-icon>mdi-phone</v-icon>
                 <a
                   :href="'tel:' + $store.getters.getProfile.data.phNo"
                   style="text-decoration: none; color: #1c8d76"
                   class="ml-2"
+                  >Book a test</a
+                >
+              </v-btn>
+            </div>
+            <div class="lh dshow-in-mob">
+              <v-btn
+                color="rgb(230, 190, 138)"
+                rounded
+                raised
+                class="dshow-in-mob"
+                @click="route()"
+              >
+                <v-icon>mdi-phone</v-icon>
+                <a style="text-decoration: none; color: #1c8d76" class="ml-2"
                   >Book a test</a
                 >
               </v-btn>
@@ -33,7 +52,7 @@
         <div class="overlay-container">
           <div class="overlay elevation-5">
             <div class="heading">
-              We are approved for COVID-19 testing by ICMR, Government of India.
+              BGC is approved for COVID-19 testing by ICMR, Government of India.
             </div>
             <div class="features">
               <div class="feature">
@@ -45,7 +64,7 @@
               </div>
               <div class="feature">
                 <img src="../../assets/Covid-19/experts.svg" alt="experts" />
-                <p>100 % Accurate results by authorised physicians</p>
+                <p>Accurate results by authorised physicians</p>
               </div>
               <div class="feature">
                 <img src="../../assets/Covid-19/house.svg" alt="house" />
@@ -73,6 +92,11 @@ import gsap, { Power2, Bounce } from "gsap";
 export default {
   created() {
     this.$store.commit("setNavColor", 1);
+  },
+  methods: {
+    route() {
+      this.$router.push("/contact-us");
+    },
   },
   mounted() {
     const covid = gsap.timeline();
@@ -156,6 +180,15 @@ export default {
             width: 100%;
             @include responsive($tablet-portrait) {
               padding: 0.5rem 1rem;
+              margin: 0;
+              display: flex;
+              justify-content: center;
+            }
+            @include responsive($phone) {
+              padding: 0.5rem 1rem;
+              margin: 0;
+              display: flex;
+              justify-content: center;
             }
           }
           .display-1 {

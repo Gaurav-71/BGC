@@ -5,7 +5,9 @@
       <v-card class="elevation-7">
         <div class="overlay">
           <div class="service">
-            <div class="service-name elevation-10">DNA/RNA sequencing</div>
+            <div class="service-name elevation-10">
+              NGS Service : DNA/RNA sequencing
+            </div>
             <div class="service-description elevation-10">
               <div class="text">
                 <ul v-for="(service, x) in services" :key="x">
@@ -20,7 +22,9 @@
       <v-card class="elevation-7">
         <div class="overlay">
           <div class="service">
-            <div class="service-name elevation-10">Bioinformatics Analysis</div>
+            <div class="service-name elevation-10">
+              NGS Service : Bioinformatics Analysis
+            </div>
             <div class="service-description elevation-10">
               <div class="text">
                 <ul>
@@ -271,6 +275,15 @@ export default {
             text-transform: uppercase;
             font-weight: bold;
           }
+          .service-name {
+            font-size: medium;
+            @include responsive($tablet-portrait) {
+              font-size: small;
+            }
+            @include responsive($phone) {
+              font-size: small;
+            }
+          }
           .service-description {
             transition: opacity 0.2s linear;
             opacity: 0;
@@ -292,7 +305,12 @@ export default {
               transition: opacity 0.4s ease-in;
               transition-delay: 0.1s;
               text-transform: none;
-
+              @include responsive($tablet-portrait) {
+                font-size: small;
+              }
+              @include responsive($phone) {
+                font-size: small;
+              }
               //padding: 1rem;
             }
             .v-btn {

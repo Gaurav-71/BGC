@@ -1,3 +1,17 @@
 @import "./fonts";
 @import "./variables";
 @import "./mediaQuery";
+
+.show-in-mob {
+  display: none;
+  @include responsive($phone) {
+    display: block;
+  }
+}
+
+.dshow-in-mob {
+  display: block;
+  @include responsive($phone) {
+    display: none;
+  }
+}

@@ -62,7 +62,7 @@
       </div>
     </div>
 
-    <div class="posts mt-5" id="services">
+    <div class="posts posts-anim mt-5" id="services">
       <v-card
         v-for="post in $store.getters.getTrainings"
         :key="post.id"
@@ -127,8 +127,8 @@
     </div>
     <EmptyMessage
       v-if="$store.getters.getServiceStatus"
-      serviceType="trainings"
-      class="posts"
+      serviceType="Trainings"
+      class="posts-anim"
     />
   </div>
 </template>
@@ -187,7 +187,7 @@ export default {
         "-=.9"
       )
 
-      .from(".posts", { stagger: 0, opacity: 0, y: 50 }, "-=.6");
+      .from(".posts-anim", { stagger: 0, opacity: 0, y: 50 }, "-=.6");
 
     this.$store
       .dispatch("downloadService", "Trainings")

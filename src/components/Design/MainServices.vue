@@ -3,7 +3,9 @@
     <v-card class="elevation-7 left-card">
       <div class="overlay">
         <div class="service">
-          <div class="service-name elevation-10">DNA/RNA sequencing</div>
+          <div class="service-name elevation-10">
+            NGS Service : DNA/RNA sequencing
+          </div>
           <div class="service-description elevation-10">
             <div class="text">
               <ul v-for="(service, x) in services" :key="x">
@@ -21,9 +23,11 @@
     <v-card class="elevation-7 right-card">
       <div class="overlay">
         <div class="service">
-          <div class="service-name elevation-10">Bioinformatics Analysis</div>
+          <div class="service-name elevation-10">
+            NGS Service : Bioinformatics Analysis
+          </div>
           <div class="service-description elevation-10">
-            <div class="text">
+            <div class="text text-small">
               <ul>
                 <li>
                   Genome Analysis
@@ -67,7 +71,7 @@ export default {
     return {
       services: [
         {
-          title: "Whole Genome Sequencing (de novo and resequencing)",
+          title: "Whole Genomes (de novo and resequencing)",
         },
 
         {
@@ -168,6 +172,15 @@ export default {
           text-transform: uppercase;
           font-weight: bold;
         }
+        .service-name {
+          font-size: medium;
+          @include responsive($tablet-portrait) {
+            font-size: small;
+          }
+          @include responsive($phone) {
+            font-size: small;
+          }
+        }
         .service-description {
           transition: opacity 0.2s linear;
           opacity: 0;
@@ -189,8 +202,21 @@ export default {
             transition: opacity 0.4s ease-in;
             transition-delay: 0.1s;
             text-transform: none;
-
-            //padding: 1rem;
+          }
+          .text-small {
+            ul {
+              li {
+                @include responsive($tablet-landscape) {
+                  font-size: 0.84rem;
+                }
+                @include responsive($tablet-portrait) {
+                  font-size: 0.68rem;
+                }
+                @include responsive($phone) {
+                  font-size: 0.68rem;
+                }
+              }
+            }
           }
           .v-btn {
             width: 100%;

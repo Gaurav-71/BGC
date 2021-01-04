@@ -24,11 +24,11 @@
     </section>
     <section class="covid">
       <Title class="covid-title" text="COVID-19 Testing" />
-      <p>We are approved for COVID-19 testing by ICMR, Government of India.</p>
+      <p>BGC is approved for COVID-19 testing by ICMR, Government of India.</p>
       <div class="covid-description">
         <div v-if="$store.getters.getFooterStatus" class="card call-card">
           <img src="../../assets/Landing/covid.png" alt="" />
-          <v-btn rounded raised>
+          <v-btn rounded raised class="show-in-mob">
             <i class="fa fa-phone size" aria-hidden="true"></i>
             <a
               :href="'tel:' + $store.getters.getProfile.data.phNo"
@@ -36,6 +36,16 @@
               class="ml-2"
               >Book a test</a
             >
+          </v-btn>
+          <v-btn
+            to="/contact-us"
+            rounded
+            raised
+            class="dshow-in-mob"
+            style="padding-top: 0.5rem"
+          >
+            <i class="fa fa-phone size" aria-hidden="true"></i>
+            <a style="text-decoration: none" class="ml-2">Book a test</a>
           </v-btn>
         </div>
         <div class="card">
@@ -222,13 +232,18 @@
       <Title class="team-title" text="Leadership & Team" />
       <div class="team-container">
         <div class="organizer">
-          <img src="../../assets/Team/org-22.jpg" alt />
-          <h3>Dr. Pruthvi Chakravarthi</h3>
-          <h4>CEO</h4>
-        </div>
-        <div class="organizer">
           <img src="../../assets/Team/org-7.jpg" alt />
           <h3>Prof. Malali Gowda</h3>
+          <h4>Founder & Director</h4>
+        </div>
+        <div class="organizer">
+          <img src="../../assets/Team/org-22.jpg" alt />
+          <h3>Dr. Pruthvi Chakravarthi</h3>
+          <h4>CEO & Director</h4>
+        </div>
+        <div class="organizer">
+          <img src="../../assets/Team/org-1.jpeg" alt />
+          <h3>Dr. Usha G S</h3>
           <h4>Director</h4>
         </div>
       </div>
@@ -308,10 +323,10 @@
         <v-card class="mx-auto elevation-4 t-card tan" max-width="375">
           <v-img
             height="250"
-            src="../../assets/Testimonials/tanya.jpeg"
+            src="../../assets/Testimonials/sriraksha.jpg"
           ></v-img>
 
-          <v-card-title class="mb-0 pb-0">Tanya Lizbeth Joseph</v-card-title>
+          <v-card-title class="mb-0 pb-0">Sriraksha Padaki</v-card-title>
 
           <v-card-text>
             <v-row align="center" class="mx-0 px-0">
@@ -328,10 +343,16 @@
             </v-row>
             <v-divider style="width: 100%; margin: 0.8rem 0"></v-divider>
             <p style="text-align: left" class="ma-0 pa-0">
-              I attended 3 hands-on trainings with BGC, i must say it was one of
-              the best. I got lots of practice and knowledge about NGS ,
-              bioinformatics, sequencing, etc. The whole team was very helpful &
-              organized.
+              Workshop, training in BGC is completely effective and worth your
+              time and money as they give us a complete hands-on experience. It
+              was very interactive.
+            </p>
+            <p style="text-align: left" class="ma-0 pa-0 show-in-mob">
+              I felt like i was one of the major trainee/intern. The staff teach
+              us so well and after completing the session, you will get better
+              views on the subject as they put lot of involvement to make us
+              understand the subject For me, even though I attended online
+              workshop, it was an active and a very reasonable one.
             </p>
           </v-card-text>
         </v-card>
@@ -340,25 +361,18 @@
     <section class="gallery-section white-bg">
       <Title class="gallery-title" text="Gallery" />
       <v-carousel
-        cycle
         height="500"
         class="mt-4 elevation-3 car"
         hide-delimiters
         show-arrows-on-hover
       >
-        <v-carousel-item v-for="(item, i) in items" :key="i">
+        <v-carousel-item v-for="i in 23" :key="i">
           <v-img
-            v-show="item.loaded"
-            @load="onImageLoad(i)"
-            :src="item.src"
+            :src="require(`../../assets/Carousel/img${i + 1}.jpg`)"
             height="100%"
-            eager
+            :key="i"
           />
-          <div v-show="!item.loaded" class="loading-image">
-            <Loading />
-            <div class="text">Fetching Photo</div>
-          </div></v-carousel-item
-        >
+        </v-carousel-item>
       </v-carousel>
     </section>
     <section class="contact-section">
@@ -396,137 +410,9 @@ export default {
     EmptyMessage,
   },
   data() {
-    return {
-      items: [
-        {
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg9.JPG?alt=media&token=1538260f-ed92-4fb2-8cf6-1f3913e539db",
-          loaded: false,
-        },
-        {
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg1.jpg?alt=media&token=ea075e93-c7b8-4cba-849f-54525020ad2c",
-          loaded: false,
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg7.jpg?alt=media&token=0492b7a6-b160-45d2-bd0b-1c2eca2b84d1",
-        },
+    return {};
+  },
 
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg4.jpg?alt=media&token=538847d6-14ec-426c-a444-fc47934483b7",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg5.jpg?alt=media&token=dced277e-cade-41bb-a3c5-e62f739f2e47",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg6.jpg?alt=media&token=1904de9f-6385-4548-afa0-4574367f7fff",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg8.jpg?alt=media&token=be2cc5bc-b444-4b2d-ae3e-1591673eac8a",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg10.jpg?alt=media&token=50dc5604-6990-44b7-9751-38d2017591a7",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg11.jpg?alt=media&token=69e1e5f3-dd20-4486-85a2-c47e131f56bb",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg12.jpg?alt=media&token=ed48cbc0-d832-4af5-8fbe-d320f58a2aed",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg13.jpg?alt=media&token=8ac4f212-c185-427a-a681-c47dd22a99cb",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg2.jpg?alt=media&token=b40d5918-4b10-415a-a6aa-539096d616c8",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg3.jpg?alt=media&token=07db26bf-93bc-48bd-97c7-f60d7e4c0008",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg14.jpg?alt=media&token=5871ed95-9084-45b5-adc8-eb81520de641",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg15.jpg?alt=media&token=28c0e32b-70c7-4c67-8454-0e989c880e00",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg16.jpg?alt=media&token=5c6a54a3-a556-44b3-a051-f6afbc26fb41",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg18.jpg?alt=media&token=0eda57e2-0bfe-42eb-b6e2-d4660c5aa1c8",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg19.jpg?alt=media&token=bc915f4f-8724-478d-888c-cbff751c0e9a",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg20.png?alt=media&token=fed138f8-4269-4379-813b-91c5d1e06d0b",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg22.png?alt=media&token=775f218c-741d-4bde-94ad-5037ea91c3f2",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg23.png?alt=media&token=66cfbe85-c04c-4908-9269-54a5bf44e217",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg24.png?alt=media&token=3c55dad3-c1f1-49ff-b183-d58ee14434e7",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg24.png?alt=media&token=3c55dad3-c1f1-49ff-b183-d58ee14434e7",
-        },
-        {
-          loaded: false,
-          src:
-            "https://firebasestorage.googleapis.com/v0/b/bengaluru-genomics-center.appspot.com/o/Carousel%2Fimg26.png?alt=media&token=6090444f-d265-467b-8cb5-7240f2cf4d0c",
-        },
-      ],
-    };
-  },
-  methods: {
-    onImageLoad(index) {
-      this.items[index].loaded = true;
-    },
-  },
   mounted() {
     this.$store.commit("setNavColor", 2);
     function isElementInViewport(el) {

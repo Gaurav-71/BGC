@@ -11,7 +11,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     navColor: "#093630",
-    isLoggedIn: localStorage.getItem("isLoggedIn"),
+    isLoggedIn: "false",
     isLoggingIn: true,
     loadedFooter: false,
     loadedService: false,

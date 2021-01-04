@@ -15,6 +15,7 @@ import UserTraining from "../views/User/Training.vue";
 import UserResource from "../views/User/Resources.vue";
 import UserWorkshop from "../views/User/Workshop.vue";
 import UserInternship from "../views/User/Internships.vue";
+import Team from "../views/User/Team.vue";
 
 //admin
 import Login from "../views/Admin/Login.vue";
@@ -55,6 +56,14 @@ const routes = [
     component: Messages,
     meta: {
       title: "BGC | Contact Us",
+    },
+  },
+  {
+    path: "/team",
+    name: "Team",
+    component: Team,
+    meta: {
+      title: "BGC | Team",
     },
   },
   {

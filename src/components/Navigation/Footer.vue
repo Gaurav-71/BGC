@@ -11,7 +11,7 @@
             <a :href="'tel:' + $store.getters.getProfile.data.phNo">
               <i class="fa fa-phone size" aria-hidden="true"></i>
             </a>
-            <a href="mailto: bgc.genomics@gmail.com">
+            <a :href="'mailto:' + $store.getters.getProfile.data.email">
               <i class="fa fa-envelope size" aria-hidden="true"></i>
             </a>
             <a :href="$store.getters.getProfile.data.facebook" target="_blank">
