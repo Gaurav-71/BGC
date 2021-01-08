@@ -101,11 +101,6 @@ export default {
           desc:
             " Amplicon-based targeted resequencing is a commonly adopted solution for next-generation sequencing applications focused on specific genomic regions characterized by high specificity and deep coverage.",
         },
-        {
-          title: "Sanger Sequencing",
-          desc:
-            "Sanger Sequencing, also known as Chain Termination Method was developed in 1977 by Frederick Sanger and his colleagues to determine the sequence of nucleotide bases in a piece of DNA with 99.99% base accuracy. It is considered a “gold standard” for validating DNA sequences including those already sequenced through Next Generation Sequencing (NGS).",
-        },
       ],
     };
   },

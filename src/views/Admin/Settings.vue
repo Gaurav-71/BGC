@@ -64,6 +64,13 @@
             label="Google Maps Link"
             required
           ></v-text-field>
+          <v-text-field
+            v-model="profile.cases"
+            :rules="caseRules"
+            class="px-6"
+            label="No. of covid cases tested"
+            required
+          ></v-text-field>
         </v-card>
       </v-form>
       <div class="custom-btn" v-if="!toEdit">
@@ -180,6 +187,7 @@ export default {
       mapRules: [(v) => !!v || "Google Maps Link is required"],
       nameRules: [(v) => !!v || "Conference name is required"],
       websiteRules: [(v) => !!v || "Website Link is required"],
+      caseRules: [(v) => !!v || "No. of cases is required"],
       toEdit: false,
       toEditConferences: false,
       unsubscribe: null,

@@ -96,6 +96,7 @@ export default {
       .title-color {
         color: $secondary !important;
         font-size: x-large;
+        word-break: normal;
         @include responsive($phone) {
           font-size: large;
           line-height: 1.4rem;

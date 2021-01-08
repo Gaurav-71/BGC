@@ -52,10 +52,10 @@
           <img src="../../assets/Covid-19/affordable.svg" alt="" />
           <p>Affordable</p>
         </div>
-        <div class="card">
+        <!-- <div class="card">
           <img src="../../assets/Covid-19/house.svg" alt="" />
           <p>Home Sample Collection Available</p>
-        </div>
+        </div> -->
         <div class="card">
           <img src="../../assets/Covid-19/accuracy.svg" alt="" />
           <p>Accurate results</p>
@@ -66,8 +66,11 @@
         </div>
       </div>
       <p class="mt-10 mx-0 py-3 myp">
-        We provide RT-PCR testing for COVID-19 and have tested over 90,000
-        samples.
+        We provide RT-PCR testing for COVID-19
+        <span v-if="$store.getters.getFooterStatus"
+          >and have tested over
+          {{ this.$store.getters.getProfile.data.cases }} samples.</span
+        >
       </p>
     </section>
     <section class="services-section white-bg">
@@ -246,6 +249,11 @@
           <h3>Dr. Usha G S</h3>
           <h4>Director</h4>
         </div>
+        <div class="organizer">
+          <img src="../../assets/Team/org-6.jpg" alt />
+          <h3>Dr. Rajani Kantha</h3>
+          <h4>Director</h4>
+        </div>
       </div>
       <div class="my-5 mx-0 py-3 myp viewmore">
         <v-btn to="/team" depressed class="pa-0 pl-2 pr-1 ma-0"
@@ -361,12 +369,13 @@
     <section class="gallery-section white-bg">
       <Title class="gallery-title" text="Gallery" />
       <v-carousel
+        cycle
         height="500"
         class="mt-4 elevation-3 car"
         hide-delimiters
         show-arrows-on-hover
       >
-        <v-carousel-item v-for="i in 23" :key="i">
+        <v-carousel-item v-for="i in 35" :key="i">
           <v-img
             :src="require(`../../assets/Carousel/img${i + 1}.jpg`)"
             height="100%"
@@ -375,7 +384,33 @@
         </v-carousel-item>
       </v-carousel>
     </section>
-    <section class="contact-section">
+    <section class="lab-section">
+      <Title class="lab-title" text="Labs" />
+      <p class="labp">
+        We have two lab branches where we conduct all our research and tests.
+      </p>
+      <div class="address-wrapper">
+        <v-card class="text-left mx-4 labc" max-width="420" hover dark>
+          <v-card-text>
+            <h2 class="text-center">Main Lab</h2>
+            <p class="ma-0 pa-2 text-left">
+              Plot No: 40/2, Opp: Duo Marvel Layout, Ramanashree California
+              Gardens, Ananathapura Main Road, Yelahanka, Bangalore - 560064
+            </p>
+          </v-card-text> </v-card
+        ><v-card class="text-left mx-4 labc" max-width="420" hover dark>
+          <v-card-text>
+            <h2 class="text-center">Molecular Diagnostics Lab</h2>
+            <p class="ma-0 pa-2 text-left">
+              No. 409, AGB Layout, Hesargatta main road, Opp. Sapthagiri Medical
+              College & Hospital, next to Union Bank of India, Bangalore -
+              560090
+            </p>
+          </v-card-text>
+        </v-card>
+      </div>
+    </section>
+    <section class="contact-section white-bg">
       <Title class="contacts-title" text="Get in touch with us" />
       <p>
         Feel free to contact us anytime with your queries, we are always at your
@@ -553,6 +588,22 @@ export default {
     const gallery = gsap.timeline({ scrollTrigger: ".gallery-section" });
     gallery.add();
     gallery.from(".gallery-title", 0.8, { opacity: 0, y: -20 });
+
+    const lab = gsap.timeline({ scrollTrigger: ".lab-section" });
+    lab.add();
+    lab
+      .from(".lab-title", 0.8, { opacity: 0, y: -20 })
+      .from(".labp", 0.8, { opacity: 0, x: 50 })
+      .from(
+        ".labc",
+        {
+          x: -50,
+          stagger: 0.3,
+          opacity: 0,
+          ease: Power2.easeOut,
+        },
+        "-=0.8"
+      );
 
     const contacts = gsap.timeline({ scrollTrigger: ".contact-section" });
     contacts.add();
@@ -958,6 +1009,38 @@ export default {
           height: 250px;
           border-radius: 0.8rem;
           box-shadow: 5px 8px 10px rgba(0, 0, 0, 0.25);
+        }
+      }
+    }
+  }
+  .lab-section {
+    .address-wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      margin-top: 0.5rem;
+      @include responsive($phone) {
+        flex-wrap: wrap;
+      }
+      .v-card {
+        background: $secondary;
+        h2 {
+          color: $accent !important;
+        }
+        @include responsive($tablet-landscape) {
+          max-width: 300px !important;
+        }
+        @include responsive($tablet-portrait) {
+          max-width: 215px !important;
+        }
+        @include responsive($phone) {
+          margin: 0.5rem 0;
+        }
+        .v-card-text {
+          p {
+            color: $accent !important;
+          }
         }
       }
     }

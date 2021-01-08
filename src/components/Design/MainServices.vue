@@ -96,9 +96,6 @@ export default {
         {
           title: "Genotyping (SNP, SSR, Genes)",
         },
-        {
-          title: "Amplicon, Sanger Sequencing ",
-        },
       ],
     };
   },

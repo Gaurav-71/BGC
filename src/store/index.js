@@ -561,6 +561,12 @@ export default new Vuex.Store({
         .doc(announcement.docs[0].id)
         .update({ description: resource.data.title });
     },
+    async editProfile({ state }, profile) {
+      await db
+        .collection("Profile")
+        .doc("LRNGxXE8kN70tMLgD4Eq")
+        .update(profile);
+    },
     async editConference({ state }, conference) {
       await db
         .collection("Conferences")

@@ -66,10 +66,10 @@
                 <img src="../../assets/Covid-19/experts.svg" alt="experts" />
                 <p>Accurate results by authorised physicians</p>
               </div>
-              <div class="feature">
+              <!--  <div class="feature">
                 <img src="../../assets/Covid-19/house.svg" alt="house" />
                 <p>Sample collection from home or hospital is available</p>
-              </div>
+              </div> -->
               <div class="feature">
                 <img
                   src="../../assets/Covid-19/24-hours.svg"

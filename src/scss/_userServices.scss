@@ -40,7 +40,7 @@
     }
     .post-title {
       color: $secondary;
-      word-wrap: break-word;
+      word-break: normal;
     }
     .post-date {
       color: $accent;

@@ -17,11 +17,16 @@
         <h3>Dr. Usha G S</h3>
         <h4>Director</h4>
       </div>
+      <div class="organizer anim1">
+        <img src="../../assets/Team/org-6.jpg" alt />
+        <h3>Dr. Rajani Kantha</h3>
+        <h4>Director</h4>
+      </div>
     </div>
     <Heading class="page-header2 mt-6" :headingObj="headingObj2" />
     <div class="team-container">
       <a
-        href="https:www.linkedin.com/in/gaurav-v-8071"
+        href="https://www.linkedin.com/in/gaurav-v-8071"
         target="_blank"
         style="text-decoration: none"
         class="organizer anim2"

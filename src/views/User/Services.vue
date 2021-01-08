@@ -126,9 +126,6 @@ export default {
         {
           title: "Amplicon Sequencing (R- Gene Panel, 16S rRNA/ITS, etc.)",
         },
-        {
-          title: "Sanger Sequencing",
-        },
       ],
       subHeading3: {
         h1: "Technology",
