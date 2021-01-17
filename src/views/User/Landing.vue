@@ -375,7 +375,7 @@
         hide-delimiters
         show-arrows-on-hover
       >
-        <v-carousel-item v-for="i in 35" :key="i">
+        <v-carousel-item v-for="i in 31" :key="i">
           <v-img
             :src="require(`../../assets/Carousel/img${i + 1}.jpg`)"
             height="100%"
@@ -392,19 +392,18 @@
       <div class="address-wrapper">
         <v-card class="text-left mx-4 labc" max-width="420" hover dark>
           <v-card-text>
-            <h2 class="text-center">Main Lab</h2>
-            <p class="ma-0 pa-2 text-left">
+            <h2 class="text-center">Molecular Diagnostics Lab 1</h2>
+            <p class="ma-0 pa-2">
               Plot No: 40/2, Opp: Duo Marvel Layout, Ramanashree California
               Gardens, Ananathapura Main Road, Yelahanka, Bangalore - 560064
             </p>
           </v-card-text> </v-card
         ><v-card class="text-left mx-4 labc" max-width="420" hover dark>
           <v-card-text>
-            <h2 class="text-center">Molecular Diagnostics Lab</h2>
-            <p class="ma-0 pa-2 text-left">
+            <h2 class="text-center">Molecular Diagnostics Lab 2</h2>
+            <p class="ma-0 pa-2">
               No. 409, AGB Layout, Hesargatta main road, Opp. Sapthagiri Medical
-              College & Hospital, next to Union Bank of India, Bangalore -
-              560090
+              College & Hospital,next to Union Bank of India, Bangalore - 560090
             </p>
           </v-card-text>
         </v-card>

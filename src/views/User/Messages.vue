@@ -111,27 +111,22 @@
     <v-divider style="width: 100%" class="my-10"></v-divider>
     <Heading class="addr-header" :headingObj="addrObj" />
     <div class="address-wrapper">
-      <v-card class="text-left" max-width="420" hover dark>
+      <v-card max-width="420" class="mr-5" hover dark>
         <v-card-text>
-          <p class="ma-0 pa-2">
+          <h2 class="text-center">Molecular Diagnostics Lab 1</h2>
+          <p class="text-center ma-0 pa-2">
             Plot No: 40/2, Opp: Duo Marvel Layout, Ramanashree California
             Gardens, Ananathapura Main Road, Yelahanka, Bangalore - 560064
           </p>
         </v-card-text>
       </v-card>
 
-      <v-card class="text-left" max-width="420" hover dark>
+      <v-card max-width="420" hover dark>
         <v-card-text>
-          <p class="ma-0 pa-2">
+          <h2 class="text-center">Molecular Diagnostics Lab 2</h2>
+          <p class="text-center ma-0 pa-2">
             No. 409, AGB Layout, Hesargatta main road, Opp. Sapthagiri Medical
             College & Hospital, next to Union Bank of India, Bangalore - 560090
-          </p>
-        </v-card-text> </v-card
-      ><v-card class="text-left" max-width="420" hover dark>
-        <v-card-text>
-          <p class="ma-0 pa-2">
-            74/2, Jarakabande Kaval, Post Attur via Yelahanka, Bengaluru -
-            560064, India
           </p>
         </v-card-text>
       </v-card>
@@ -465,7 +460,7 @@ export default {
   .address-wrapper {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: stretch;
     margin-top: 0.5rem;
     @include responsive($phone) {
@@ -482,10 +477,8 @@ export default {
       @include responsive($phone) {
         margin: 0.5rem 0;
       }
-      .v-card-text {
-        p {
-          color: $accent !important;
-        }
+      h2 {
+        color: $accent !important;
       }
     }
   }
