@@ -1,6 +1,7 @@
 <template>
   <div class="dashboard">
     <Heading :headingObj="headingObj" />
+
     <div class="opt-container">
       <v-card class="mx-auto elevation-4 t-card" to="/admin/settings">
         <v-img
@@ -53,9 +54,27 @@
         <v-card-title class="mx-0 pb-0 ctitle">Messages</v-card-title>
         <v-card-text class="px-0 pb-0 mx-0 mb-0">
           <p style="text-align: left" class="ma-0 pa-4 pt-0">
-            View all queries from users who have visited the website
+            View all queries and messages from your users who have visited the
+            website and solve their queries
           </p></v-card-text
         >
+      </v-card>
+      <v-card class="mx-auto elevation-4 t-card" to="/admin/covid-reports">
+        <v-img
+          height="250"
+          class="ma-10"
+          src="../../assets/Admin/covid.svg"
+          contain
+        ></v-img>
+        <v-card-title class="mx-0 pb-0 ctitle"
+          >Hospital Covid Reports</v-card-title
+        >
+        <v-card-text class="px-0 pb-0 mx-0 mb-0">
+          <p style="text-align: left" class="ma-0 pa-4 pt-0">
+            Easily add a new hospital to your database or publish a covid report
+            to your associated hospital
+          </p>
+        </v-card-text>
       </v-card>
     </div>
   </div>
@@ -140,7 +159,7 @@ export default {
     }
 
     .v-card {
-      width: 24rem;
+      width: 20rem;
       margin: 0 !important;
       padding: 0 !important;
       background-image: radial-gradient(

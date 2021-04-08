@@ -207,7 +207,10 @@
 
       <v-spacer></v-spacer>
       <v-toolbar-items
-        v-if="$store.getters.getLogStatus == 'false'"
+        v-if="
+          $store.getters.getLogStatus == 'false' ||
+          $store.state.authUser == 'hospital'
+        "
         class="hidden-md-and-down d-md-block"
       >
         <v-btn
@@ -281,15 +284,14 @@
       </v-toolbar-items>
       <v-toolbar-items v-else class="hidden-md-and-down d-md-block">
         <v-btn
-          to="/admin/messages"
+          to="/admin/settings"
           class="hover-color"
           :color="$store.getters.getNavColor"
           ><div class="my-flex">
-            <i class="fa fa-envelope size" aria-hidden="true"></i>
-            <p>Messages</p>
-          </div></v-btn
-        >
-
+            <i class="fa fa-gear size" aria-hidden="true"></i>
+            <p>Settings</p>
+          </div>
+        </v-btn>
         <v-menu open-on-hover dark offset-y>
           <template v-slot:activator="{ on, attrs }">
             <v-btn
@@ -315,14 +317,22 @@
             </v-list-item>
           </v-list>
         </v-menu>
-
         <v-btn
-          to="/admin/settings"
+          to="/admin/messages"
           class="hover-color"
           :color="$store.getters.getNavColor"
           ><div class="my-flex">
-            <i class="fa fa-gear size" aria-hidden="true"></i>
-            <p>Settings</p>
+            <i class="fa fa-envelope size" aria-hidden="true"></i>
+            <p>Messages</p>
+          </div></v-btn
+        >
+        <v-btn
+          to="/admin/covid-reports"
+          class="hover-color"
+          :color="$store.getters.getNavColor"
+          ><div class="my-flex">
+            <i class="fa fa-file size" aria-hidden="true"></i>
+            <p>Covid</p>
           </div>
         </v-btn>
       </v-toolbar-items>
@@ -430,6 +440,8 @@ export default {
     goHome() {
       if (this.$store.getters.getLogStatus == "false") {
         this.$router.push("/");
+      } else {
+        this.$router.push("/admin/");
       }
     },
     logout() {

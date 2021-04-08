@@ -18,10 +18,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr
-            v-for="message in $store.getters.getMessages"
-            :key="message.email"
-          >
+          <tr v-for="(message, i) in $store.getters.getMessages" :key="i">
             <td>{{ message.name }}</td>
             <td>
               {{ message.email }}

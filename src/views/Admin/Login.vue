@@ -48,12 +48,12 @@ export default {
   data() {
     return {
       email: "bgc.genomics@gmail.com",
-      password: "",
+      password: "123456",
     };
   },
   methods: {
     login() {
-      let data = { email: this.email, password: this.password };
+      let data = { email: this.email, password: this.password, user: "admin" };
       this.$store
         .dispatch("login", data)
         .then(() => {

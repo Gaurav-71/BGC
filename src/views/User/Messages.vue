@@ -172,6 +172,7 @@ export default {
       ) {
         this.sendAway = true;
         this.detail.timestamp = Date(Date.now());
+
         this.$store
           .dispatch("uploadMessage", this.detail)
           .then(() => {

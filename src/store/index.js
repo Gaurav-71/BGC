@@ -13,9 +13,10 @@ export default new Vuex.Store({
     navColor: "#093630",
     isLoggedIn: "false",
     isLoggingIn: true,
+    isServiceEmpty: true,
     loadedFooter: false,
     loadedService: false,
-    isServiceEmpty: true,
+    authUser: "",
     profile: null,
     messages: null,
     announcements: null,
@@ -24,9 +25,13 @@ export default new Vuex.Store({
     trainings: null,
     workshops: null,
     resources: null,
+    hospitals: null,
+    hospitalsData: null,
+    reports: null,
   },
   mutations: {
-    login: (state) => {
+    login: (state, user) => {
+      state.authUser = user;
       localStorage.setItem("isLoggedIn", true);
       state.isLoggedIn = localStorage.getItem("isLoggedIn");
     },
@@ -106,6 +111,34 @@ export default new Vuex.Store({
         state.navColor = "rgba(0, 0, 0, 0.2)";
       }
     },
+    setHospitals: (state, hospitals) => {
+      state.hospitals = hospitals;
+      state.loadedService = true;
+      if (hospitals.length != 0) {
+        state.isServiceEmpty = false;
+      } else {
+        state.isServiceEmpty = true;
+      }
+    },
+    setHospitalsData: (state, hospitals) => {
+      state.hospitalsData = hospitals;
+      state.loadedService = true;
+      if (hospitals.length != 0) {
+        state.isServiceEmpty = false;
+      } else {
+        state.isServiceEmpty = true;
+      }
+    },
+    setReports: (state, reports) => {
+      state.reports = null;
+      state.reports = reports;
+      state.loadedService = true;
+      if (reports.length != 0) {
+        state.isServiceEmpty = false;
+      } else {
+        state.isServiceEmpty = true;
+      }
+    },
   },
   actions: {
     async login({ commit }, payload) {
@@ -115,7 +148,7 @@ export default new Vuex.Store({
           payload.email,
           payload.password
         );
-        commit("login", response.user);
+        commit("login", payload.user);
       } catch (err) {
         this.state.isLoggingIn = true;
         throw err;
@@ -125,6 +158,26 @@ export default new Vuex.Store({
       await auth.signOut();
       this.state.isLoggingIn = true;
       context.commit("logout");
+    },
+    async resetPassword({ commit }, email) {
+      await auth.sendPasswordResetEmail(email);
+    },
+    async createHospitalCollection({ commit }, hospital) {
+      try {
+        await auth.createUserWithEmailAndPassword(
+          hospital.email.trim(),
+          hospital.password
+        );
+        let user = auth.currentUser;
+        let details = { name: hospital.name.trim() };
+        await db
+          .collection("Hospitals")
+          .doc(user.uid)
+          .set(details);
+        await auth.sendPasswordResetEmail(hospital.email);
+      } catch (err) {
+        throw err;
+      }
     },
     async downloadProfile({ commit }) {
       commit("setFooterStatus", false);
@@ -219,6 +272,50 @@ export default new Vuex.Store({
         });
       return resp;
     },
+
+    async downloadHospitals({ commit }) {
+      let resp = await db
+        .collection("Hospitals")
+        .orderBy("name", "asc")
+        .onSnapshot((snapshot) => {
+          let hospitals = [];
+          let hospitalsData = [];
+          snapshot.forEach((doc) => {
+            let data = {
+              id: doc.id,
+              data: doc.data(),
+              dialog: false,
+            };
+            let data1 = doc.data();
+            data1.uid = doc.id;
+            data1.dialog = false;
+
+            hospitals.push(data);
+            hospitalsData.push(data1);
+          });
+          commit("setHospitals", hospitals);
+          commit("setHospitalsData", hospitalsData);
+        });
+      return resp;
+    },
+    async downloadReports({ commit }, uid) {
+      await db
+        .collection("Hospitals")
+        .doc(uid)
+        .collection("Reports")
+        .orderBy("timestamp", "asc")
+        .onSnapshot((snapshot) => {
+          let reports = [];
+          snapshot.forEach((doc) => {
+            let data = doc.data();
+            data.docId = doc.id;
+
+            reports.push(data);
+          });
+          commit("setReports", reports);
+        });
+    },
+
     async uploadMessage(context, message) {
       await db.collection("Messages").add(message);
     },
@@ -242,6 +339,7 @@ export default new Vuex.Store({
     async uploadService(context, post) {
       var uploadFileName = Date.now();
       post.details.timestamp = Date(Date.now());
+
       post.details.fileName = uploadFileName;
       if (post.files.image != null && post.files.brochure != null) {
         let storageImageRef = storage.ref(
@@ -397,6 +495,36 @@ export default new Vuex.Store({
           timestamp: post.details.timestamp,
         };
         await db.collection("Announcements").add(announcementInfo);
+      }
+    },
+    async uploadReport(context, report) {
+      if (report.file != null) {
+        let reportRef = storage.ref(
+          "Reports/" + report.hospital + "/" + report.file.name
+        );
+        let uploadFile = reportRef.put(report.file);
+        uploadFile.on(
+          "state_changed",
+          (snapshot) => {},
+          (error) => {
+            console.log("Couldn't Upload Post Due To Error : ", error);
+          },
+          async () => {
+            let docUrl = await uploadFile.snapshot.ref.getDownloadURL();
+            let split = report.file.name.split(".");
+            let details = {
+              timestamp: Date.now(),
+              path: "Reports/" + report.hospital + "/" + report.file.name,
+              url: docUrl,
+              srfid: split[0],
+            };
+            await db
+              .collection("Hospitals")
+              .doc(report.id)
+              .collection("Reports")
+              .add(details);
+          }
+        );
       }
     },
     async editService(context, service) {
@@ -625,6 +753,36 @@ export default new Vuex.Store({
         await deleteBrochureRef.delete();
       }
     },
+
+    async deleteFile({ state }, path) {
+      let deleteRef = storageRef.child(path);
+      await deleteRef.delete();
+    },
+    async deleteReport({ state }, report) {
+      await db
+        .collection("Hospitals")
+        .doc(report.collectionDocId)
+        .collection("Reports")
+        .doc(report.subCollectionDocId)
+        .delete();
+      this.dispatch("deleteFile", report.path);
+    },
+    async deleteAllReports({ state }, docId) {
+      await db
+        .collection("Hospitals")
+        .doc(docId)
+        .collection("Reports")
+        .orderBy("timestamp", "asc")
+        .onSnapshot((snapshot) => {
+          snapshot.forEach((doc) => {
+            this.dispatch("deleteReport", {
+              collectionDocId: docId,
+              subCollectionDocId: doc.id,
+              path: doc.data().path,
+            });
+          });
+        });
+    },
   },
   getters: {
     getNavColor: (store) => {
@@ -669,6 +827,15 @@ export default new Vuex.Store({
     getYear: (store) => {
       let date = new Date();
       return date.getFullYear();
+    },
+    getHospitals: (store) => {
+      return store.hospitals;
+    },
+    getHospitalsData: (store) => {
+      return store.hospitalsData;
+    },
+    getReports: (store) => {
+      return store.reports;
     },
   },
 });

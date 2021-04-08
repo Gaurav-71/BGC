@@ -31,6 +31,15 @@ import Resource from "../views/Admin/Create/Resource.vue";
 import Training from "../views/Admin/Create/Training.vue";
 import Workshop from "../views/Admin/Create/Workshop.vue";
 
+//admin > covid
+import Covid from "../views/Admin/Covid/Choice.vue";
+import Hospitals from "../views/Admin/Covid/Hospital.vue";
+import Upload from "../views/Admin/Covid/Upload.vue";
+
+//Hospital
+import HospitalLogin from "../views/Hospitals/Login.vue";
+import HospitalDashboard from "../views/Hospitals/Dashboard.vue";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -64,6 +73,23 @@ const routes = [
     component: Team,
     meta: {
       title: "BGC | Team",
+    },
+  },
+  {
+    path: "/covid-19/testing/login",
+    name: "HospitalLogin",
+    component: HospitalLogin,
+    meta: {
+      title: "BGC | Login",
+    },
+  },
+  {
+    path: "/covid-19/testing/reports",
+    name: "HospitalDashboard",
+    component: HospitalDashboard,
+    meta: {
+      title: "BGC | Reports",
+      requiresAuth: true,
     },
   },
   {
@@ -217,6 +243,32 @@ const routes = [
           requiresAuth: true,
         },
       },
+      {
+        path: "/admin/covid-reports",
+        component: Covid,
+        meta: {
+          title: "Admin | Covid",
+          requiresAuth: true,
+        },
+      },
+      {
+        path: "/admin/covid-reports/hospitals",
+        name: "Hospitals",
+        component: Hospitals,
+        meta: {
+          title: "Admin | Hospitals",
+          requiresAuth: true,
+        },
+      },
+      {
+        path: "/admin/covid-reports/upload",
+        name: "Upload",
+        component: Upload,
+        meta: {
+          title: "Admin | Reports",
+          requiresAuth: true,
+        },
+      },
     ],
   },
 ];
@@ -241,7 +293,7 @@ router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
   document.title = to.meta.title;
   if (!loggedIn && requiresAuth) {
-    next("/admin/login");
+    next("/");
   } else {
     next();
   }

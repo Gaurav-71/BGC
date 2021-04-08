@@ -166,6 +166,7 @@ export default {
     },
     publish() {
       this.post.timestamp = Date(Date.now());
+
       this.$store
         .dispatch("uploadResource", this.post)
         .then(() => {

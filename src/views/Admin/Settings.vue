@@ -247,6 +247,7 @@ export default {
     },
     addConference() {
       this.newConference.timestamp = Date(Date.now());
+
       this.$store
         .dispatch("uploadConference", this.newConference)
         .then(() => {

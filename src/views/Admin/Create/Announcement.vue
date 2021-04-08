@@ -176,6 +176,7 @@ export default {
     },
     publish() {
       this.post.timestamp = Date(Date.now());
+
       this.$store
         .dispatch("uploadAnnouncement", this.post)
         .then(() => {
