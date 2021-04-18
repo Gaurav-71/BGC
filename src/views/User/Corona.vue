@@ -10,32 +10,24 @@
               Coronavirus disease (COVID-19) is an infectious disease, feeling
               any symptoms ? Get tested immediately by booking a test with us.
             </p>
-            <div class="lh show-in-mob">
+            <div class="lh my-flex1 dshow-in-mob">
               <v-btn
                 color="rgb(230, 190, 138)"
                 rounded
                 raised
-                class="show-in-mob"
+                class="mr-5"
+                @click="route(1)"
               >
-                <v-icon>mdi-phone</v-icon>
-                <a
-                  :href="'tel:' + $store.getters.getProfile.data.phNo"
-                  style="text-decoration: none; color: #1c8d76"
-                  class="ml-2"
-                  >Book a test</a
+                <v-icon>mdi-hospital</v-icon>
+                <a style="text-decoration: none; color: #1c8d76" class="ml-2"
+                  >Hospital Login</a
                 >
               </v-btn>
-            </div>
-            <div class="lh dshow-in-mob">
-              <v-btn
-                color="rgb(230, 190, 138)"
-                rounded
-                raised
-                class="dshow-in-mob"
-                @click="route()"
-              >
+              <v-btn color="#1a5b4b" rounded raised @click="route(2)">
                 <v-icon>mdi-phone</v-icon>
-                <a style="text-decoration: none; color: #1c8d76" class="ml-2"
+                <a
+                  style="text-decoration: none; color: rgb(230, 190, 138)"
+                  class="ml-2"
                   >Book a test</a
                 >
               </v-btn>
@@ -94,8 +86,13 @@ export default {
     this.$store.commit("setNavColor", 1);
   },
   methods: {
-    route() {
-      this.$router.push("/contact-us");
+    route(page) {
+      if (page == 1) {
+        this.$router.push("/covid-19/testing/login");
+      }
+      if (page == 2) {
+        this.$router.push("/contact-us");
+      }
     },
   },
   mounted() {
@@ -178,6 +175,11 @@ export default {
           }
           .lh {
             width: 100%;
+            .v-btn {
+              @include responsive($phone) {
+                font-size: x-small;
+              }
+            }
             @include responsive($tablet-portrait) {
               padding: 0.5rem 1rem;
               margin: 0;

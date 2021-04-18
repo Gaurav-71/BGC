@@ -173,11 +173,23 @@ export default {
       display: flex;
       justify-content: space-around;
       align-items: center;
+      @include responsive($phone) {
+        flex-wrap: wrap;
+      }
       .whitebg {
         border-radius: 0.3rem;
         background: whitesmoke;
+        @include responsive($phone) {
+          margin: 0.5rem 0 !important;
+        }
       }
     }
+  }
+}
+
+.v-btn {
+  @include responsive($phone) {
+    font-size: x-small;
   }
 }
 </style>

@@ -5,7 +5,7 @@
       <v-data-table
         :headers="headers"
         :items="$store.getters.getReports"
-        item-key="name"
+        item-key="tid"
         :search="search"
         light
         :custom-filter="filterOnlyCapsText"
@@ -47,7 +47,7 @@ export default {
   },
   data() {
     return {
-      name: "",
+      date: "",
       unsubscribe: null,
       select: "",
       search: "",
@@ -66,11 +66,19 @@ export default {
       },
       headers: [
         {
-          text: "SRFID",
+          text: "Date Uploaded",
           align: "start",
+          value: "time",
+        },
+        {
+          text: "SRFID",
           value: "srfid",
         },
-        { text: "URL", value: "url" },
+        {
+          text: "Name",
+          value: "name",
+        },
+        { text: "URL", value: "url", width: "20%" },
         { text: "Actions", value: "controls", sortable: false },
       ],
     };

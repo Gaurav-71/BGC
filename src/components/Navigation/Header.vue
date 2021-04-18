@@ -181,6 +181,22 @@
               </v-list-item-content>
             </v-list-item>
             <v-divider></v-divider>
+            <v-list-item to="/admin/covid-reports/upload">
+              <v-list-item-content>
+                <v-btn depressed color="transparent" class="btn-menu">
+                  Covid Reports
+                </v-btn>
+              </v-list-item-content>
+            </v-list-item>
+            <v-divider></v-divider>
+            <v-list-item to="/admin/covid-reports/hospitals">
+              <v-list-item-content>
+                <v-btn depressed color="transparent" class="btn-menu">
+                  Hospitals
+                </v-btn>
+              </v-list-item-content>
+            </v-list-item>
+            <v-divider></v-divider>
           </v-list-item-group>
         </v-list> </v-navigation-drawer
     ></transition>

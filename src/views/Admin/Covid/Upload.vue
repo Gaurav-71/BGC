@@ -18,6 +18,7 @@
           v-model="report"
           class="ml-2 pb-2 pt-6 whitebg px-5 elevation-4"
           show-size
+          multiple
           counter
           color="white"
           label="Upload Report File"
@@ -25,7 +26,7 @@
       </div>
       <v-btn
         block
-        class="my-4"
+        class="my-4 upload-btn"
         style="color: #266255"
         light
         @click="uploadReport"
@@ -68,7 +69,7 @@
               <v-data-table
                 :headers="headers"
                 :items="$store.getters.getReports"
-                item-key="name"
+                item-key="tid"
                 :search="search"
                 light
                 :custom-filter="filterOnlyCapsText"
@@ -178,11 +179,19 @@ export default {
       },
       headers: [
         {
-          text: "SRFID",
+          text: "Date Uploaded",
           align: "start",
+          value: "time",
+        },
+        {
+          text: "SRFID",
           value: "srfid",
         },
-        { text: "URL", value: "url" },
+        {
+          text: "Name",
+          value: "name",
+        },
+        { text: "URL", value: "url", width: "20%" },
         { text: "Actions", value: "controls", sortable: false },
       ],
     };
@@ -204,29 +213,31 @@ export default {
     },
     uploadReport() {
       if (this.report != null) {
-        this.$store
-          .dispatch("uploadReport", {
-            id: this.select.id,
-            hospital: this.select.data.name,
-            file: this.report,
-          })
-          .then((resp) => {
-            this.text = "File uploaded successfully";
-            this.snackbarToggle();
-            this.unsubscribe = resp;
-            this.select = "";
-            this.report = null;
-          })
-          .catch((err) => {
-            this.text = "Couldn't upload the file";
-            this.snackbarToggle();
-            console.log(err);
-          });
+        for (var i = 0; i < this.report.length; i++) {
+          this.$store
+            .dispatch("uploadReport", {
+              id: this.select.id,
+              hospital: this.select.data.name,
+              file: this.report[i],
+            })
+            .then((resp) => {
+              this.text = "File uploaded successfully";
+              this.snackbarToggle();
+            })
+            .catch((err) => {
+              this.text = "Couldn't upload the file";
+              this.snackbarToggle();
+              console.log(err);
+            });
+        }
+        this.select = "";
+        this.report = null;
       } else {
         this.text = "Please upload the report file";
         this.snackbarToggle();
       }
     },
+
     deleteReport(collectionDocId, subCollectionDocId, path) {
       this.$store
         .dispatch("deleteReport", { collectionDocId, subCollectionDocId, path })
@@ -305,11 +316,23 @@ export default {
       display: flex;
       justify-content: space-around;
       align-items: center;
+      @include responsive($phone) {
+        flex-wrap: wrap;
+      }
       .whitebg {
         border-radius: 0.3rem;
         background: whitesmoke;
+        @include responsive($phone) {
+          margin: 0.5rem 0 !important;
+        }
       }
     }
+  }
+}
+
+.v-btn {
+  @include responsive($phone) {
+    font-size: xx-small;
   }
 }
 </style>

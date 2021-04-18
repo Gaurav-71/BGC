@@ -160,7 +160,11 @@ export default new Vuex.Store({
       context.commit("logout");
     },
     async resetPassword({ commit }, email) {
-      await auth.sendPasswordResetEmail(email);
+      var actionCodeSettings = {
+        url: "https://www.bgc-genomics.com/covid-19/testing/login",
+        handleCodeInApp: false,
+      };
+      await auth.sendPasswordResetEmail(email, actionCodeSettings);
     },
     async createHospitalCollection({ commit }, hospital) {
       try {
@@ -303,13 +307,20 @@ export default new Vuex.Store({
         .collection("Hospitals")
         .doc(uid)
         .collection("Reports")
-        .orderBy("timestamp", "asc")
+        .orderBy("timestamp", "desc")
         .onSnapshot((snapshot) => {
           let reports = [];
+          let counter = 0;
           snapshot.forEach((doc) => {
             let data = doc.data();
+            counter++;
+            data.tid = counter;
             data.docId = doc.id;
-
+            let time = new String(new Date(doc.data().timestamp));
+            data.time = time.substring(0, 25);
+            let split = doc.data().srfid.split("-");
+            data.srfid = split[0];
+            data.name = split[1];
             reports.push(data);
           });
           commit("setReports", reports);
@@ -527,6 +538,7 @@ export default new Vuex.Store({
         );
       }
     },
+
     async editService(context, service) {
       if (service.files.image != null && service.files.brochure != null) {
         let storageImageRef = storage.ref(
