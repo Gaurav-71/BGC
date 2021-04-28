@@ -1,6 +1,7 @@
 <template>
   <div class="upload">
     <Heading :headingObj="headingObj" />
+
     <div
       v-if="$store.getters.getHospitals"
       class="upload-reports elevation-2 mb-10"
@@ -146,6 +147,93 @@
       </v-expansion-panels>
     </div>
     <EmptyMessage v-else serviceType="hospitals" />
+    <v-dialog v-model="dialog2" scrollable persistent max-width="80vw">
+      <v-card>
+        <v-card-title
+          v-if="
+            this.$store.getters.getSuccesfulUploads.length +
+              this.$store.getters.getFailedUploads.length +
+              this.$store.getters.getRepeatUploads.length !=
+            totalfiles
+          "
+          style="background: #093630; color: white"
+          >Upload in Progress (
+          {{
+            this.$store.getters.getSuccesfulUploads.length +
+            this.$store.getters.getFailedUploads.length +
+            this.$store.getters.getRepeatUploads.length
+          }}
+          of {{ totalfiles }} )
+        </v-card-title>
+        <v-card-title v-else style="background: #093630; color: white"
+          >Completed (
+          {{
+            this.$store.getters.getSuccesfulUploads.length +
+            this.$store.getters.getFailedUploads.length +
+            this.$store.getters.getRepeatUploads.length
+          }}
+          of {{ totalfiles }} )
+        </v-card-title>
+        <v-divider></v-divider>
+        <div class="upload-status" style="height: 50vh">
+          <div class="left">
+            <div class="succesful">
+              Succesful Uploads :
+              {{ this.$store.getters.getSuccesfulUploads.length }}
+            </div>
+            <div
+              v-for="(file, index) in $store.getters.getSuccesfulUploads"
+              :key="index"
+              class="file"
+            >
+              {{ file }}
+            </div>
+          </div>
+          <div class="center">
+            <div class="repeat">
+              Repeated Uploads :
+              {{ this.$store.getters.getRepeatUploads.length }}
+            </div>
+            <div
+              v-for="(file, index) in $store.getters.getRepeatUploads"
+              :key="index"
+              class="file"
+            >
+              {{ file }}
+            </div>
+          </div>
+          <div class="right">
+            <div class="failed">
+              Failed Uploads : {{ this.$store.getters.getFailedUploads.length }}
+            </div>
+            <div
+              v-for="(file, index) in $store.getters.getFailedUploads"
+              :key="index"
+              class="file"
+            >
+              {{ file }}
+            </div>
+          </div>
+        </div>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn
+            v-if="
+              this.$store.getters.getSuccesfulUploads.length +
+                this.$store.getters.getFailedUploads.length +
+                this.$store.getters.getRepeatUploads.length ==
+              totalfiles
+            "
+            color="green darken-1"
+            class="ml-auto"
+            text
+            @click="resetProgress"
+          >
+            Close
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -160,6 +248,12 @@ export default {
   data() {
     return {
       dialog: false,
+      dialog2: false,
+      dialog3: false,
+
+      totalfiles: 0,
+
+      deleteItem: null,
 
       unsubscribe: null,
       select: "",
@@ -211,8 +305,17 @@ export default {
           console.log(err);
         });
     },
+    resetProgress() {
+      this.$store.commit("resetSuccess");
+      this.$store.commit("resetFailure");
+      this.$store.commit("resetRepeat");
+      this.dialog2 = false;
+      this.totalfiles = 0;
+    },
     uploadReport() {
       if (this.report != null) {
+        this.totalfiles = this.report.length;
+        this.dialog2 = true;
         for (var i = 0; i < this.report.length; i++) {
           this.$store
             .dispatch("uploadReport", {
@@ -237,7 +340,6 @@ export default {
         this.snackbarToggle();
       }
     },
-
     deleteReport(collectionDocId, subCollectionDocId, path) {
       this.$store
         .dispatch("deleteReport", { collectionDocId, subCollectionDocId, path })
@@ -326,6 +428,58 @@ export default {
           margin: 0.5rem 0 !important;
         }
       }
+    }
+  }
+}
+
+.upload-status {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .left,
+  .right,
+  .center {
+    flex-basis: calc(100% / 3);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    overflow-y: scroll;
+    .file {
+      width: 100%;
+      background: rgb(238, 236, 236);
+      border-bottom: 0.5px solid $primary;
+      padding: 0.5rem 1.5rem;
+    }
+  }
+  .left {
+    border-right: 1px solid $primary;
+    .succesful {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      background: #266255;
+      color: white;
+    }
+  }
+  .center {
+    border-left: 1px solid $primary;
+    border-right: 1px solid $primary;
+    .repeat {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      background: $accent;
+      color: white;
+    }
+  }
+  .right {
+    border-left: 1px solid $primary;
+    .failed {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      background: red;
+      color: white;
     }
   }
 }

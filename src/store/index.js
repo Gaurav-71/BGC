@@ -28,6 +28,12 @@ export default new Vuex.Store({
     hospitals: null,
     hospitalsData: null,
     reports: null,
+
+    succesfulUploads: [],
+    failedUploads: [],
+    repeatUploads: [],
+
+    deletedFiles: [],
   },
   mutations: {
     login: (state, user) => {
@@ -138,6 +144,27 @@ export default new Vuex.Store({
       } else {
         state.isServiceEmpty = true;
       }
+    },
+    succesfulReportUpload: (state, report) => {
+      state.succesfulUploads.push(report);
+    },
+    failedReportUpload: (state, report) => {
+      state.failedUploads.push(report);
+    },
+    repeatReportUpload: (state, report) => {
+      state.repeatUploads.push(report);
+    },
+    resetSuccess: (state) => {
+      state.succesfulUploads = [];
+    },
+    resetFailure: (state) => {
+      state.failedUploads = [];
+    },
+    resetRepeat: (state) => {
+      state.repeatUploads = [];
+    },
+    setDeletedFiles: (state, filepath) => {
+      state.deletedFiles.push(filepath);
     },
   },
   actions: {
@@ -510,32 +537,51 @@ export default new Vuex.Store({
     },
     async uploadReport(context, report) {
       if (report.file != null) {
-        let reportRef = storage.ref(
-          "Reports/" + report.hospital + "/" + report.file.name
-        );
-        let uploadFile = reportRef.put(report.file);
-        uploadFile.on(
-          "state_changed",
-          (snapshot) => {},
-          (error) => {
-            console.log("Couldn't Upload Post Due To Error : ", error);
-          },
-          async () => {
-            let docUrl = await uploadFile.snapshot.ref.getDownloadURL();
-            let split = report.file.name.split(".");
-            let details = {
-              timestamp: Date.now(),
-              path: "Reports/" + report.hospital + "/" + report.file.name,
-              url: docUrl,
-              srfid: split[0],
-            };
-            await db
-              .collection("Hospitals")
-              .doc(report.id)
-              .collection("Reports")
-              .add(details);
-          }
-        );
+        let split = report.file.name.split(".");
+        db.collection("Hospitals")
+          .doc(report.id)
+          .collection("Reports")
+          .where("srfid", "==", split[0])
+          .get()
+          .then((querySnapshot) => {
+            if (querySnapshot.empty) {
+              // console.log("new file");
+              let reportRef = storage.ref(
+                "Reports/" + report.hospital + "/" + report.file.name
+              );
+              let uploadFile = reportRef.put(report.file);
+              uploadFile.on(
+                "state_changed",
+                (snapshot) => {},
+                (error) => {
+                  this.commit("failedReportUpload", report.file.name);
+                  console.log("Couldn't Upload Post Due To Error : ", error);
+                },
+                async () => {
+                  let docUrl = await uploadFile.snapshot.ref.getDownloadURL();
+                  let details = {
+                    timestamp: Date.now(),
+                    path: "Reports/" + report.hospital + "/" + report.file.name,
+                    url: docUrl,
+                    srfid: split[0],
+                  };
+                  await db
+                    .collection("Hospitals")
+                    .doc(report.id)
+                    .collection("Reports")
+                    .add(details);
+                  this.commit("succesfulReportUpload", report.file.name);
+                  //console.log("Uploaded : ", report.file.name);
+                }
+              );
+            } else {
+              //console.log("already uploaded");
+              this.commit(
+                "repeatReportUpload",
+                report.file.name + " already uploaded"
+              );
+            }
+          });
       }
     },
 
@@ -765,35 +811,32 @@ export default new Vuex.Store({
         await deleteBrochureRef.delete();
       }
     },
-
     async deleteFile({ state }, path) {
+      //console.log("del file", path);
       let deleteRef = storageRef.child(path);
       await deleteRef.delete();
     },
     async deleteReport({ state }, report) {
+      this.dispatch("deleteFile", report.path);
+      //console.log("del rep");
       await db
         .collection("Hospitals")
         .doc(report.collectionDocId)
         .collection("Reports")
         .doc(report.subCollectionDocId)
         .delete();
-      this.dispatch("deleteFile", report.path);
     },
     async deleteAllReports({ state }, docId) {
-      await db
-        .collection("Hospitals")
-        .doc(docId)
-        .collection("Reports")
-        .orderBy("timestamp", "asc")
-        .onSnapshot((snapshot) => {
-          snapshot.forEach((doc) => {
-            this.dispatch("deleteReport", {
-              collectionDocId: docId,
-              subCollectionDocId: doc.id,
-              path: doc.data().path,
-            });
-          });
+      //   console.log("del all", docId);
+
+      // console.log(this.getters.getReports);
+      for (let index = 0; index < this.getters.getReports.length; index++) {
+        this.dispatch("deleteReport", {
+          collectionDocId: docId,
+          subCollectionDocId: this.getters.getReports[index].docId,
+          path: this.getters.getReports[index].path,
         });
+      }
     },
   },
   getters: {
@@ -848,6 +891,18 @@ export default new Vuex.Store({
     },
     getReports: (store) => {
       return store.reports;
+    },
+    getSuccesfulUploads: (store) => {
+      return store.succesfulUploads;
+    },
+    getFailedUploads: (store) => {
+      return store.failedUploads;
+    },
+    getRepeatUploads: (store) => {
+      return store.repeatUploads;
+    },
+    getDeletedFiles: (store) => {
+      return store.deletedFiles;
     },
   },
 });
