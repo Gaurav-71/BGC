@@ -16,6 +16,7 @@ import UserResource from "../views/User/Resources.vue";
 import UserWorkshop from "../views/User/Workshop.vue";
 import UserInternship from "../views/User/Internships.vue";
 import Team from "../views/User/Team.vue";
+import Report from "../views/User/Report.vue";
 
 //admin
 import Login from "../views/Admin/Login.vue";
@@ -49,6 +50,14 @@ const routes = [
     component: Landing,
     meta: {
       title: "BGC | Home",
+    },
+  },
+  {
+    path: "/user-report",
+    name: "Report",
+    component: Report,
+    meta: {
+      title: "BGC | Report",
     },
   },
   {

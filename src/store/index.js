@@ -29,6 +29,8 @@ export default new Vuex.Store({
     hospitalsData: null,
     reports: null,
 
+    userReportUrl: "",
+
     succesfulUploads: [],
     failedUploads: [],
     repeatUploads: [],
@@ -165,6 +167,9 @@ export default new Vuex.Store({
     },
     setDeletedFiles: (state, filepath) => {
       state.deletedFiles.push(filepath);
+    },
+    setUserReportUrl: (state, url) => {
+      state.userReportUrl = url;
     },
   },
   actions: {
@@ -352,6 +357,25 @@ export default new Vuex.Store({
           });
           commit("setReports", reports);
         });
+    },
+    async downloadUserReport({ commit }, srfid) {
+      if (srfid != "") {
+        db.collection("Reports")
+          .where("srfid", "==", srfid)
+          .get()
+          .then((querySnapshot) => {
+            if (querySnapshot.empty) {
+              // console.log("no file");
+              commit("setUserReportUrl", "no file");
+            } else {
+              querySnapshot.forEach((doc) => {
+                // doc.data() is never undefined for query doc snapshots
+                //console.log(doc.id, " => ", doc.data());
+                commit("setUserReportUrl", doc.data().url);
+              });
+            }
+          });
+      }
     },
 
     async uploadMessage(context, message) {
@@ -570,6 +594,13 @@ export default new Vuex.Store({
                     .doc(report.id)
                     .collection("Reports")
                     .add(details);
+                  let idSplit = split[0].split("-");
+                  let urlDetails = {
+                    srfid: idSplit[0],
+                    url: docUrl,
+                  };
+                  console.log("urlDeets : ", urlDetails);
+                  await db.collection("Reports").add(urlDetails);
                   this.commit("succesfulReportUpload", report.file.name);
                   //console.log("Uploaded : ", report.file.name);
                 }
@@ -828,7 +859,6 @@ export default new Vuex.Store({
     },
     async deleteAllReports({ state }, docId) {
       //   console.log("del all", docId);
-
       // console.log(this.getters.getReports);
       for (let index = 0; index < this.getters.getReports.length; index++) {
         this.dispatch("deleteReport", {
@@ -903,6 +933,9 @@ export default new Vuex.Store({
     },
     getDeletedFiles: (store) => {
       return store.deletedFiles;
+    },
+    getUserReportUrl: (store) => {
+      return store.userReportUrl;
     },
   },
 });
